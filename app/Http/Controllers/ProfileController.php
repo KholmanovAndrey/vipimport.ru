@@ -61,7 +61,7 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Profile $profile
      * @return \Illuminate\Http\Response
      */
     public function show(Profile $profile)

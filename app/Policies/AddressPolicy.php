@@ -30,7 +30,7 @@ class AddressPolicy
      */
     public function view(User $user, Address $address)
     {
-        return $user->id === $address->user_id;
+        return (int)$user->id === (int)$address->user_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class AddressPolicy
      */
     public function update(User $user, Address $address)
     {
-        return $user->id === $address->user_id;
+        return (int)$user->id === (int)$address->user_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class AddressPolicy
      */
     public function delete(User $user, Address $address)
     {
-        return $user->id === $address->user_id;
+        return (int)$user->id === (int)$address->user_id;
     }
 
     /**
