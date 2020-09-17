@@ -6,7 +6,7 @@
     @parent
 
     <div class="sidebar col">
-        <p>{{ $item->name }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, unde.</p>
+        <x-office/>
     </div>
 @endsection
 

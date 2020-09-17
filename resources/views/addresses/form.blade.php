@@ -1,28 +1,21 @@
 @extends('layouts.app')
 
+@section('title', 'Создание/Редактирование')
+
+@section('sidebar')
+    @parent
+
+    <div class="sidebar col">
+        <x-office/>
+    </div>
+@endsection
+
 @section('content')
-    <form class="col-12"
+    <form class="col-lg-9"
           method="POST"
           action="@if (!$address->id){{ route('address.store') }}@else{{ route('address.update', $address) }}@endif">
         @csrf
         @if ($address->id) @method('PUT') @endif
-
-        <div class="form-group row">
-            <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Имя') }}</label>
-            <div class="col-md-6">
-                <input id="firstname"
-                       type="text"
-                       class="form-control @error('firstname') is-invalid @enderror"
-                       name="firstname"
-                       value="{{ $address->firstname ?? old('firstname') }}"
-                       required autofocus>
-                @error('firstname')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
 
         <div class="form-group row">
             <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Фамилия') }}</label>
@@ -34,6 +27,23 @@
                        value="{{ $address->lastname ?? old('lastname') }}"
                        required autofocus>
                 @error('lastname')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Имя') }}</label>
+            <div class="col-md-6">
+                <input id="firstname"
+                       type="text"
+                       class="form-control @error('firstname') is-invalid @enderror"
+                       name="firstname"
+                       value="{{ $address->firstname ?? old('firstname') }}"
+                       required autofocus>
+                @error('firstname')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>

@@ -6,13 +6,7 @@
     @parent
 
     <div class="sidebar col">
-        <div class="list-group">
-            @foreach ($categories as $item)
-                <a href="{{ route('category.show', $item) }}" class="list-group-item list-group-item-action">
-                    {{ $item->title }}
-                </a>
-            @endforeach
-        </div>
+        <x-office/>
     </div>
 @endsection
 

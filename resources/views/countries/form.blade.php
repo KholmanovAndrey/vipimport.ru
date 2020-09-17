@@ -1,7 +1,17 @@
 @extends('layouts.app')
 
+@section('title', 'Создание/Редактирование')
+
+@section('sidebar')
+    @parent
+
+    <div class="sidebar col">
+        <x-office/>
+    </div>
+@endsection
+
 @section('content')
-    <form class="col-12"
+    <form class="col-lg-9"
           method="POST"
           action="@if (!$country->id){{ route('country.store') }}@else{{ route('country.update', $country) }}@endif">
         @csrf

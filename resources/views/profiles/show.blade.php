@@ -6,15 +6,16 @@
     @parent
 
     <div class="sidebar col">
-        <p>{{ $item->name }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, unde.</p>
+        <x-office/>
     </div>
 @endsection
 
 @section('content')
-    <div class="item col-lg-10">
+    <div class="item col-lg-9">
         {{ $item->lastname }}
         {{ $item->firstname }}
         {{ $item->othername }}
-        <a href="{{ route('profile.edit', $item) }}">{{ __('Редактировать') }}</a>
+        <a href="{{ route('profile.edit', $item) }}" class="btn btn-danger">{{ __('Редактировать') }}</a>
+        <a href="#" class="btn btn-danger">{{ __('Сменить пароль') }}</a>
     </div>
 @endsection

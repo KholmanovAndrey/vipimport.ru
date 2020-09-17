@@ -4,7 +4,10 @@
 
 @section('sidebar')
     @parent
-    
+
+    <div class="sidebar col">
+        <x-office/>
+    </div>
 @endsection
 
 @section('content')

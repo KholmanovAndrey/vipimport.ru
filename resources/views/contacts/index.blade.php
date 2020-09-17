@@ -2,8 +2,16 @@
 
 @section('title', 'Все категории')
 
+@section('sidebar')
+    @parent
+
+    <div class="sidebar col">
+        <x-office/>
+    </div>
+@endsection
+
 @section('content')
-    <div class="items col-12">
+    <div class="items col-lg-9">
         <div class="items__btn">
             @auth
                 <a href="{{ route('contact.create') }}" class="btn btn-danger items__link">Добавить контакты</a>
