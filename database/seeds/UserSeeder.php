@@ -29,6 +29,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
         ];
         $data[] = [
+            'name' => 'Manager',
+            'email' => 'manager@vipimport.ru',
+            'password' => Hash::make('manager'),
+        ];
+        $data[] = [
             'name' => 'Client',
             'email' => 'client@vipimport.ru',
             'password' => Hash::make('client'),

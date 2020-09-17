@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -30,8 +30,9 @@ Route::resource('/category', 'CategoryController');
 Route::get('/article/view/{category}', 'ArticleController@view')->name('article.view');
 Route::resource('/article', 'ArticleController');
 
-Route::resource('/profile', 'ProfileController');
+Route::resource('/profile', 'ProfileController')->except('view');
 Route::resource('/address', 'AddressController')->except('show');
 Route::resource('/country', 'CountryController')->except('show');
 Route::resource('/city', 'CityController')->except('show');
+Route::resource('/order', 'OrderController');
 

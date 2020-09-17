@@ -22,7 +22,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        return view('counties.index', [
+        return view('countries.index', [
             'countries' => Country::all()
         ]);
     }
@@ -34,7 +34,7 @@ class CountryController extends Controller
      */
     public function create()
     {
-        return view('counties.form', [
+        return view('countries.form', [
             'country' => new Country()
         ]);
     }

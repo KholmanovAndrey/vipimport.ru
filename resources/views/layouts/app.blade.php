@@ -97,25 +97,34 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @if(!$profile = \App\Profile::query()->where('user_id', '=', Auth::user()->id)->first())
+                                        <a class="dropdown-item" href="{{ route('profile.create') }}">{{ __('Профиль') }}</a>
+                                    @else
+                                        <a class="dropdown-item" href="{{ route('profile.show', $profile) }}">{{ __('Профиль') }}</a>
+                                    @endif
+
                                     @if(Auth::user()->hasRole('superAdmin'))
-                                        <a class="dropdown-item" href="{{ route('category.index') }}">{{ __('Категории') }}</a>
-                                        <a class="dropdown-item" href="{{ route('article.index') }}">{{ __('Статьи') }}</a>
-                                        <a class="dropdown-item" href="{{ route('contact.index') }}">{{ __('Контакты') }}</a>
+                                        <h5 class="dropdown-item">{{ __('СуперАдмин') }}</h5>
                                     @endif
 
                                     @if(Auth::user()->hasRole('admin'))
-                                        Администратор
+                                        <h5 class="dropdown-item">{{ __('Администратор') }}</h5>
+                                        <a class="dropdown-item" href="{{ route('category.index') }}">{{ __('Категории') }}</a>
+                                        <a class="dropdown-item" href="{{ route('article.index') }}">{{ __('Статьи') }}</a>
+                                        <a class="dropdown-item" href="{{ route('contact.index') }}">{{ __('Контакты') }}</a>
+                                        <a class="dropdown-item" href="{{ route('country.index') }}">{{ __('Страны') }}</a>
+                                    @endif
+
+                                    @if(Auth::user()->hasRole('manager'))
+                                            <h5 class="dropdown-item">{{ __('Менеджер') }}</h5>
                                     @endif
 
                                     @if(Auth::user()->hasRole('client'))
-                                        Клиент
+                                            <h5 class="dropdown-item">{{ __('Клиент') }}</h5>
+                                            <a class="dropdown-item" href="{{ route('address.index') }}">{{ __('Адреса доставки') }}</a>
+                                            <a class="dropdown-item" href="{{ route('order.index') }}">{{ __('Заказы') }}</a>
                                     @endif
 
-                                    {{--@if(!$profile = \App\Profile::query()->where('user_id', '=', Auth::user()->id)->first())--}}
-                                        {{--<a class="dropdown-item" href="{{ route('profile.create') }}">{{ __('Профиль') }}</a>--}}
-                                    {{--@else--}}
-                                        {{--<a class="dropdown-item" href="{{ route('profile.edit', $profile) }}">{{ __('Профиль') }}</a>--}}
-                                    {{--@endif--}}
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

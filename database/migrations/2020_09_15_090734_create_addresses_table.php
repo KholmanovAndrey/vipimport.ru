@@ -13,7 +13,7 @@ class CreateAddressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('`addresses`', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
@@ -27,8 +27,8 @@ class CreateAddressesTable extends Migration
             $table->string('city')->comment('Город');
             $table->string('street')->comment('Улица');
             $table->string('building')->comment('№ здания');
-            $table->string('body')->comment('Корпус');
-            $table->string('apartment')->comment('Квартира');
+            $table->string('body')->nullable(true)->comment('Корпус');
+            $table->string('apartment')->nullable(true)->comment('Квартира');
             $table->string('phone')->comment('Телефон');
             $table->timestamps();
         });
@@ -41,6 +41,6 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('`addresses`');
+        Schema::dropIfExists('addresses');
     }
 }

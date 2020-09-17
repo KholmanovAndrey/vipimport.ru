@@ -30,7 +30,7 @@
                 <input id="name"
                        type="text"
                        class="form-control @error('name') is-invalid @enderror"
-                       name="title"
+                       name="name"
                        value="{{ $country->name ?? old('name') }}"
                        required autofocus>
                 @error('name')

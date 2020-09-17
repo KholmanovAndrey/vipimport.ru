@@ -13,7 +13,7 @@ class CategoryController extends Controller
      */
     function __construct()
     {
-        $this->middleware('role:superAdmin')->except('view', 'show');
+        $this->middleware('role:admin')->except('view', 'show');
     }
 
     /**

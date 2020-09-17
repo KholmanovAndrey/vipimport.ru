@@ -3,7 +3,7 @@
 @section('content')
     <form class="col-12"
           method="POST"
-          action="@if (!$profile->id){{ route('article.store') }}@else{{ route('article.update', $profile) }}@endif">
+          action="@if (!$profile->id){{ route('profile.store') }}@else{{ route('profile.update', $profile) }}@endif">
         @csrf
         @if ($profile->id) @method('PUT') @endif
 
@@ -59,15 +59,53 @@
         </div>
 
         <div class="form-group row">
+            <label for="country_id" class="col-md-4 col-form-label text-md-right">{{ __('Страна') }}</label>
+            <div class="col-md-6">
+                <select name="country_id"
+                        id="country_id"
+                        class="form-control @error('country_id') is-invalid @enderror"
+                        required>
+                    @foreach ($countries as $country)
+                        <option {{ $country->id === $profile->country_id ? 'selected="selected"' : '' }} value="{{ $country->id }}">
+                            {{ $country->title }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('country_id')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row">
             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail') }}</label>
             <div class="col-md-6">
                 <input id="email"
                        type="email"
                        class="form-control @error('email') is-invalid @enderror"
                        name="email"
-                       value="{{ $profile->email ?? old('email') }}"
+                       value="{{ $profile->email ?? (old('email') ?? \Illuminate\Support\Facades\Auth::user()->email) }}"
                        required autofocus>
                 @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Телефон') }}</label>
+            <div class="col-md-6">
+                <input id="phone"
+                       type="text"
+                       class="form-control @error('phone') is-invalid @enderror"
+                       name="phone"
+                       value="{{ $profile->phone ?? old('phone') }}"
+                       required autofocus>
+                @error('phone')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>

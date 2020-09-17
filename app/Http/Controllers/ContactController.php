@@ -13,7 +13,7 @@ class ContactController extends Controller
      */
     function __construct()
     {
-        $this->middleware('role:superAdmin')->except('view');
+        $this->middleware('role:admin')->except('view');
     }
 
     public function view()

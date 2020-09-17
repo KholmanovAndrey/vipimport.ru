@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Все адреса')
+@section('title', 'Все страны')
 
 @section('sidebar')
     @parent
@@ -15,7 +15,7 @@
             @endauth
         </div>
         <section class="items__section">
-            @foreach ($counties as $item)
+            @foreach ($countries as $item)
                 <address class="items__item">
                     <header><h2 class="items__title">{{ $item->title }}</h2></header>
                     <footer class="items__footer">
