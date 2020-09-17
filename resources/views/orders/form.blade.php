@@ -13,20 +13,21 @@
 @section('content')
     <form class="col-lg-9"
           method="POST"
-          action="@if (!$address->id){{ route('address.store') }}@else{{ route('address.update', $address) }}@endif">
+          action="@if (!$order->id){{ route('order.store') }}@else{{ route('order.update', $order) }}@endif">
         @csrf
-        @if ($address->id) @method('PUT') @endif
+        @if ($order->id) @method('PUT') @endif
 
         <div class="form-group row">
-            <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Имя') }}</label>
+            <label for="title" class="col-md-4 col-form-label text-md-right">{{ __('Наименование заказа') }}</label>
             <div class="col-md-6">
-                <input id="firstname"
+                <input id="title"
                        type="text"
-                       class="form-control @error('firstname') is-invalid @enderror"
-                       name="firstname"
-                       value="{{ $address->firstname ?? old('firstname') }}"
+                       class="form-control @error('title') is-invalid @enderror"
+                       name="title"
+                       placeholder="Наименование заказа"
+                       value="{{ $order->title ?? old('title') }}"
                        required autofocus>
-                @error('firstname')
+                @error('title')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -35,15 +36,49 @@
         </div>
 
         <div class="form-group row">
-            <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Фамилия') }}</label>
+            <label for="count" class="col-md-4 col-form-label text-md-right">{{ __('Количество') }}</label>
             <div class="col-md-6">
-                <input id="lastname"
+                <input id="count"
+                       type="number"
+                       class="form-control @error('count') is-invalid @enderror"
+                       name="count"
+                       value="{{ $order->count ?? (old('count') ?? 1) }}"
+                       required>
+                @error('count')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="link" class="col-md-4 col-form-label text-md-right">{{ __('Ссылка') }}</label>
+            <div class="col-md-6">
+                <input id="link"
+                       type="url"
+                       class="form-control @error('link') is-invalid @enderror"
+                       name="link"
+                       placeholder="http://"
+                       value="{{ $order->link ?? old('link') }}">
+                @error('link')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Цена') }}</label>
+            <div class="col-md-6">
+                <input id="price"
                        type="text"
-                       class="form-control @error('lastname') is-invalid @enderror"
-                       name="lastname"
-                       value="{{ $address->lastname ?? old('lastname') }}"
-                       required autofocus>
-                @error('lastname')
+                       class="form-control @error('price') is-invalid @enderror"
+                       name="price"
+                       placeholder="Цена"
+                       value="{{ $order->price ?? old('price') }}">
+                @error('price')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -52,15 +87,15 @@
         </div>
 
         <div class="form-group row">
-            <label for="othername" class="col-md-4 col-form-label text-md-right">{{ __('Отчество') }}</label>
+            <label for="color" class="col-md-4 col-form-label text-md-right">{{ __('Цвет') }}</label>
             <div class="col-md-6">
-                <input id="othername"
+                <input id="color"
                        type="text"
-                       class="form-control @error('othername') is-invalid @enderror"
-                       name="othername"
-                       value="{{ $address->othername ?? old('othername') }}"
-                       required autofocus>
-                @error('othername')
+                       class="form-control @error('color') is-invalid @enderror"
+                       name="color"
+                       placeholder="Цвет"
+                       value="{{ $order->color ?? old('color') }}">
+                @error('color')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -69,36 +104,15 @@
         </div>
 
         <div class="form-group row">
-            <label for="country_id" class="col-md-4 col-form-label text-md-right">{{ __('Страна') }}</label>
+            <label for="size" class="col-md-4 col-form-label text-md-right">{{ __('Размер') }}</label>
             <div class="col-md-6">
-                <select name="country_id"
-                        id="country_id"
-                        class="form-control @error('country_id') is-invalid @enderror"
-                        required>
-                    @foreach ($countries as $country)
-                        <option {{ $country->id === $address->country_id ? 'selected="selected"' : '' }} value="{{ $country->id }}">
-                            {{ $country->title }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('country_id')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="postal_code" class="col-md-4 col-form-label text-md-right">{{ __('Почтовый индекс') }}</label>
-            <div class="col-md-6">
-                <input id="postal_code"
+                <input id="size"
                        type="text"
-                       class="form-control @error('postal_code') is-invalid @enderror"
-                       name="postal_code"
-                       value="{{ $address->postal_code ?? old('postal_code') }}"
-                       required autofocus>
-                @error('postal_code')
+                       class="form-control @error('size') is-invalid @enderror"
+                       name="size"
+                       placeholder="Размер"
+                       value="{{ $order->size ?? old('size') }}">
+                @error('size')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -107,117 +121,15 @@
         </div>
 
         <div class="form-group row">
-            <label for="region" class="col-md-4 col-form-label text-md-right">{{ __('Область/край/республика') }}</label>
+            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Описание') }}</label>
             <div class="col-md-6">
-                <input id="region"
-                       type="text"
-                       class="form-control @error('region') is-invalid @enderror"
-                       name="region"
-                       value="{{ $address->region ?? old('region') }}"
-                       required autofocus>
-                @error('region')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('Город') }}</label>
-            <div class="col-md-6">
-                <input id="city"
-                       type="text"
-                       class="form-control @error('city') is-invalid @enderror"
-                       name="city"
-                       value="{{ $address->city ?? old('city') }}"
-                       required autofocus>
-                @error('city')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="street" class="col-md-4 col-form-label text-md-right">{{ __('Улица') }}</label>
-            <div class="col-md-6">
-                <input id="street"
-                       type="text"
-                       class="form-control @error('street') is-invalid @enderror"
-                       name="street"
-                       value="{{ $address->street ?? old('street') }}"
-                       required autofocus>
-                @error('street')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="building" class="col-md-4 col-form-label text-md-right">{{ __('№ здания') }}</label>
-            <div class="col-md-6">
-                <input id="building"
-                       type="text"
-                       class="form-control @error('building') is-invalid @enderror"
-                       name="building"
-                       value="{{ $address->building ?? old('building') }}"
-                       required autofocus>
-                @error('building')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="body" class="col-md-4 col-form-label text-md-right">{{ __('Корпус') }}</label>
-            <div class="col-md-6">
-                <input id="body"
-                       type="text"
-                       class="form-control @error('body') is-invalid @enderror"
-                       name="body"
-                       value="{{ $address->body ?? old('body') }}"
-                       >
-                @error('body')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="apartment" class="col-md-4 col-form-label text-md-right">{{ __('Квартира') }}</label>
-            <div class="col-md-6">
-                <input id="apartment"
-                       type="text"
-                       class="form-control @error('apartment') is-invalid @enderror"
-                       name="apartment"
-                       value="{{ $address->apartment ?? old('apartment') }}"
-                       required autofocus>
-                @error('apartment')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Телефон') }}</label>
-            <div class="col-md-6">
-                <input id="phone"
-                       type="text"
-                       class="form-control @error('phone') is-invalid @enderror"
-                       name="phone"
-                       value="{{ $address->phone ?? old('phone') }}"
-                       required autofocus>
-                @error('phone')
+                <textarea name="description"
+                          id="description"
+                          class="form-control @error('description') is-invalid @enderror"
+                          placeholder="Описание заказа"
+                          required
+                          cols="30" rows="10">{!! $article->description ?? old('description') !!}</textarea>
+                @error('description')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
