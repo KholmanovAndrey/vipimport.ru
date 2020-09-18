@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -45,7 +46,38 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->isMethod('post')) {
+            $request->flash();
+
+            for ($i = 0; $i < count($request->title); $i++) {
+                $order = new Order();
+                $order->user_id = Auth::user()->id;
+                $order->manager_id = 1;
+                $order->status_id = 1;
+                $order->title = $request->title[$i];
+                $order->count = $request->count[$i];
+                $order->link = $request->link[$i];
+                $order->price = $request->price[$i] ?? 0;
+                $order->color = $request->color[$i];
+                $order->size = $request->size[$i];
+                $order->description = $request->description[$i];
+                $order->save();
+            }
+
+            return redirect()->route('order.index')
+                    ->with('success', 'Данные успешно добавлены!');
+
+//            $this->validate($request, Order::rules());
+//            $order->fill($request->all());
+
+//            if ($order->save()) {
+//                return redirect()->route('order.index')
+//                    ->with('success', 'Данные успешно добавлены!');
+//            }
+//
+//            return redirect()->route('order.create')
+//                ->with('success', 'Ошибка добавления данных!');
+        }
     }
 
     /**

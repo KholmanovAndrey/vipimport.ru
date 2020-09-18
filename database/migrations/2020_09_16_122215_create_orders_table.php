@@ -17,6 +17,8 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('manager_id')->unsigned();
+            $table->foreign('manager_id')->references('id')->on('users');
             $table->string('title')->comment('Название');
             $table->integer('count')->comment('Количество');
             $table->string('link')->nullable(true)->comment('Ссылка');

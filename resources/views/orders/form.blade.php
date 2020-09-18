@@ -23,7 +23,7 @@
                 <input id="title"
                        type="text"
                        class="form-control @error('title') is-invalid @enderror"
-                       name="title"
+                       name="title[]"
                        placeholder="Наименование заказа"
                        value="{{ $order->title ?? old('title') }}"
                        required autofocus>
@@ -41,7 +41,7 @@
                 <input id="count"
                        type="number"
                        class="form-control @error('count') is-invalid @enderror"
-                       name="count"
+                       name="count[]"
                        value="{{ $order->count ?? (old('count') ?? 1) }}"
                        required>
                 @error('count')
@@ -58,7 +58,7 @@
                 <input id="link"
                        type="url"
                        class="form-control @error('link') is-invalid @enderror"
-                       name="link"
+                       name="link[]"
                        placeholder="http://"
                        value="{{ $order->link ?? old('link') }}">
                 @error('link')
@@ -75,7 +75,7 @@
                 <input id="price"
                        type="text"
                        class="form-control @error('price') is-invalid @enderror"
-                       name="price"
+                       name="price[]"
                        placeholder="Цена"
                        value="{{ $order->price ?? old('price') }}">
                 @error('price')
@@ -92,7 +92,7 @@
                 <input id="color"
                        type="text"
                        class="form-control @error('color') is-invalid @enderror"
-                       name="color"
+                       name="color[]"
                        placeholder="Цвет"
                        value="{{ $order->color ?? old('color') }}">
                 @error('color')
@@ -109,7 +109,7 @@
                 <input id="size"
                        type="text"
                        class="form-control @error('size') is-invalid @enderror"
-                       name="size"
+                       name="size[]"
                        placeholder="Размер"
                        value="{{ $order->size ?? old('size') }}">
                 @error('size')
@@ -123,7 +123,7 @@
         <div class="form-group row">
             <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Описание') }}</label>
             <div class="col-md-6">
-                <textarea name="description"
+                <textarea name="description[]"
                           id="description"
                           class="form-control @error('description') is-invalid @enderror"
                           placeholder="Описание заказа"

@@ -21,10 +21,6 @@ class Order extends Model
         return [
             'title' => 'required|string|min:3|max:50',
             'count' => 'required|integer',
-            'link' => 'string|min:3|max:50',
-            'price' => 'float',
-            'color' => 'string',
-            'size' => 'string',
             'description' => 'required|string|min:10|max:250',
         ];
     }
