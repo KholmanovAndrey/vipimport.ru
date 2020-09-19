@@ -14,6 +14,7 @@ class Order extends Model
         'color',
         'size',
         'description',
+        'isDeleted'
     ];
 
     public static function rules()
@@ -23,5 +24,15 @@ class Order extends Model
             'count' => 'required|integer',
             'description' => 'required|string|min:10|max:250',
         ];
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class,'manager_id','id');
     }
 }

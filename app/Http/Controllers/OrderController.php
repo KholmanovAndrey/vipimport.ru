@@ -20,7 +20,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::query()->where('isDeleted', '=', false)->get();
+        $orders = Order::query()->where('user_id', '=', Auth::user()->id)->get();
         return view('orders.index', [
             'orders' => $orders
         ]);
@@ -94,24 +94,42 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Order $order
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Order $order)
     {
-        //
+        return view('orders.form-update', [
+            'order' => $order,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Order $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Order $order)
     {
-        //
+        if ($request->isMethod('put')) {
+
+            $request->flash();
+
+            $this->validate($request, Order::rules());
+
+            $order->fill($request->all());
+
+            if ($order->save()) {
+                return redirect()->route('order.index')
+                    ->with('success', 'Данные успешно изменены!');
+            }
+
+            return redirect()->route('order.edit', $order)
+                ->with('success', 'Ошибка изменения данных!');
+
+        }
     }
 
     /**
@@ -120,8 +138,27 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Order $order)
     {
-        //
+        if ($request->isMethod('delete')) {
+            $request->flash();
+
+            //$this->validate($request, Order::rules());
+
+            $order->isDeleted = 1;
+
+            if ($order->save()) {
+                return redirect()->route('order.index')
+                    ->with('success', 'Данные успешно изменены!');
+            }
+
+//            if ($order->delete()) {
+//                return redirect()->route('contact.index')
+//                    ->with('success', 'Данные успешно удаленны!');
+//            }
+
+            return redirect()->route('contact.index')
+                ->with('success', 'Ошибка удаления данных!');
+        }
     }
 }

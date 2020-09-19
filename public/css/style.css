@@ -1,0 +1,19 @@
+.item-font {
+  background-color: #f3f3f3; }
+  .item-font:nth-child(even) {
+    background-color: #f1f1f1; }
+
+.item-border-bottom {
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem; }
+
+.items__btn {
+  margin-bottom: 2rem; }
+.items__footer {
+  display: flex;
+  justify-content: flex-end; }
+.items__link {
+  margin-left: 0.5rem; }
+
+/*# sourceMappingURL=style.css.map */
