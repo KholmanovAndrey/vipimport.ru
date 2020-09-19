@@ -52,7 +52,7 @@
                     </div>
                     <footer class="items__footer">
                         @auth
-                            @if($item->status_id === 1)
+                            @if((int)$item->status_id === 1)
                                 <a href="{{ route('order.edit', $item) }}" class="btn btn-danger items__link">Редактировать</a>
                             @endif
                             @if(!$item->isDeleted)
