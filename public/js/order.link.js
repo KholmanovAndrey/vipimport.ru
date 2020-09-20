@@ -1,9 +1,7 @@
-/**
- * Created by Rusich on 20.09.2020.
- */
-
-const divLinkVisible = document.querySelectorAll('.div-link-visible');
 const btnLinkVisible = document.querySelectorAll('.btn-link-visible');
+const divLinkVisible = document.querySelectorAll('.div-link-visible');
+
+console.log(divLinkVisible);
 
 for (let i = 0; i < btnLinkVisible.length; i++) {
     divLinkVisible[i].classList.add('invisible');
