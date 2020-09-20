@@ -30,6 +30,8 @@
                            class="form-control @error('title') is-invalid @enderror"
                            name="title[]"
                            placeholder="Наименование заказа"
+                           minlength="3"
+                           maxlength="50"
                            value="{{ $order->title ?? old('title') }}"
                            required autofocus>
                     @error('title')
@@ -130,7 +132,9 @@
                               class="form-control @error('description') is-invalid @enderror"
                               placeholder="Описание заказа"
                               required
-                              cols="30" rows="10">{!! $order->description ?? old('description') !!}</textarea>
+                              minlength="3"
+                              maxlength="250"
+                              cols="20" rows="5">{!! $order->description ?? old('description') !!}</textarea>
                     @error('description')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

@@ -49,6 +49,8 @@ class OrderController extends Controller
         if ($request->isMethod('post')) {
             $request->flash();
 
+            $this->validate($request, Order::rulesArray());
+
             for ($i = 0; $i < count($request->title); $i++) {
                 $order = new Order();
                 $order->user_id = Auth::user()->id;

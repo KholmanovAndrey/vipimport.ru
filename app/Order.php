@@ -22,7 +22,16 @@ class Order extends Model
         return [
             'title' => 'required|string|min:3|max:50',
             'count' => 'required|integer',
-            'description' => 'required|string|min:10|max:250',
+            'description' => 'required|string|min:3|max:250',
+        ];
+    }
+
+    public static function rulesArray()
+    {
+        return [
+            'title.*' => 'required|string|min:3|max:50',
+            'count.*' => 'required|integer',
+            'description.*' => 'required|string|min:3|max:250',
         ];
     }
 
