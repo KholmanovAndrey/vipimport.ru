@@ -2,6 +2,10 @@
 
 @section('title', 'Создание/Редактирование' )
 
+@section('scripts')
+    <script src="{{ asset('js/order.link.js') }}" defer></script>
+@endsection
+
 @section('sidebar')
     @parent
 
@@ -53,6 +57,13 @@
         </div>
 
         <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right"></label>
+            <div class="col-md-6">
+                <label><input type="checkbox" class="btn-link-visible" /> добавить ссылку</label>
+            </div>
+        </div>
+
+        <div class="form-group row div-link-visible">
             <label for="link" class="col-md-4 col-form-label text-md-right">{{ __('Ссылка') }}</label>
             <div class="col-md-6">
                 <input id="link"

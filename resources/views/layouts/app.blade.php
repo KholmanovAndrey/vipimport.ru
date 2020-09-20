@@ -11,6 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    @section('scripts')
+    @show
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
