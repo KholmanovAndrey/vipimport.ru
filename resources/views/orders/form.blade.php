@@ -130,7 +130,7 @@
                               class="form-control @error('description') is-invalid @enderror"
                               placeholder="Описание заказа"
                               required
-                              cols="30" rows="10">{!! $article->description ?? old('description') !!}</textarea>
+                              cols="30" rows="10">{!! $order->description ?? old('description') !!}</textarea>
                     @error('description')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

@@ -4,13 +4,19 @@ const divLinkVisible = document.querySelectorAll('.div-link-visible');
 console.log(divLinkVisible);
 
 for (let i = 0; i < btnLinkVisible.length; i++) {
-    divLinkVisible[i].classList.add('invisible');
+    let input = divLinkVisible[i].querySelector('input[name=link]');
+    if (input.value) {
+        btnLinkVisible[i].checked = true;
+    } else {
+        divLinkVisible[i].classList.add('invisible');
+    }
 
     btnLinkVisible[i].addEventListener('change', event => {
         if (!event.target.checked) {
             divLinkVisible[i].classList.add('invisible');
         } else {
             divLinkVisible[i].classList.remove('invisible');
+            input.value = '';
         }
     });
 }
