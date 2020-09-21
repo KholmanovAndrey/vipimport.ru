@@ -1,14 +1,13 @@
 const btnLinkVisible = document.querySelectorAll('.btn-link-visible');
 const divLinkVisible = document.querySelectorAll('.div-link-visible');
 
-console.log(divLinkVisible);
-
 for (let i = 0; i < btnLinkVisible.length; i++) {
-    let input = divLinkVisible[i].querySelector('input[name=link]');
+    let input = divLinkVisible[i].querySelector('input[type=url]');
+    divLinkVisible[i].classList.add('invisible');
+
     if (input.value) {
         btnLinkVisible[i].checked = true;
-    } else {
-        divLinkVisible[i].classList.add('invisible');
+        divLinkVisible[i].classList.remove('invisible');
     }
 
     btnLinkVisible[i].addEventListener('change', event => {
@@ -16,7 +15,7 @@ for (let i = 0; i < btnLinkVisible.length; i++) {
             divLinkVisible[i].classList.add('invisible');
         } else {
             divLinkVisible[i].classList.remove('invisible');
-            input.value = '';
+            //input.value = '';
         }
     });
 }
