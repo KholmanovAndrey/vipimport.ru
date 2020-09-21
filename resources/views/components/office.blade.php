@@ -25,6 +25,7 @@
     <h5 class="dropdown-item">{{ __('Клиент') }}</h5>
     <a class="dropdown-item" href="{{ route('address.index') }}">{{ __('Адреса доставки') }}</a>
     <a class="dropdown-item" href="{{ route('order.index') }}">{{ __('Заказы') }}</a>
+    <a class="dropdown-item" href="{{ route('parcel.index') }}">{{ __('Посылки') }}</a>
 @endif
 
 <a class="dropdown-item" href="{{ route('logout') }}"

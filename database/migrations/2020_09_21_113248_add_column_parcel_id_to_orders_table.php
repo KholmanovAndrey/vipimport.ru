@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateParcelOrdersTable extends Migration
+class AddColumnParcelIdToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateParcelOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('parcel_orders', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('parcel_id')->unsigned();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->bigInteger('parcel_id')->unsigned()->nullable(true);
             $table->foreign('parcel_id')->references('id')->on('parcels');
-            $table->bigInteger('order_id')->unsigned();
-            $table->foreign('order_id')->references('id')->on('orders');
-            $table->timestamps();
         });
     }
 
@@ -30,6 +26,9 @@ class CreateParcelOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parcel_orders');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign('orders_parcel_id_foreign');
+            $table->dropColumn('parcel_id');
+        });
     }
 }

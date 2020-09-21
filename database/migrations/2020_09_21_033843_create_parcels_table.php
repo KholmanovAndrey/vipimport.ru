@@ -22,7 +22,7 @@ class CreateParcelsTable extends Migration
             $table->string('title')->comment('Название');
             $table->text('description')->nullable(true)->comment('Описание');
             $table->string('fio')->comment('ФИО');
-            $table->integer('address')->comment('Сборка из таблицы адресов');
+            $table->string('address')->comment('Сборка из таблицы адресов');
             $table->string('phone')->comment('Телефон');
             $table->timestamps();
         });

@@ -17,14 +17,17 @@ class Parcel extends Model
     public static function rules()
     {
         return [
-            'fio' => "required|string|min:3|max:150",
-            'address' => "required|string|min:3|max:1000",
-            'phone' => 'required|string|min:3|max:50',
+
         ];
     }
 
-    public function parcelOrders()
+    public function orders()
     {
-        return $this->hasMany(ParcelOrder::class, 'parcel_id', 'id');
+        return $this->hasMany(Order::class, 'parcel_id', 'id');
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 }

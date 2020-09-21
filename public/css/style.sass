@@ -1,7 +1,16 @@
 .item-font
-  background-color: #f3f3f3
+  padding-top: .5rem
+  padding-bottom: .5rem
+  background-color: #999999
   &:nth-child(even)
-    background-color: #f1f1f1
+    background-color: #ffffff
+  &:hover:not(:first-child)
+    background-color: #333333
+    color: #ffffff
+    cursor: pointer
+  &:first-child
+    background-color: #333333
+    color: #ffffff
 
 .item-border-bottom
   border-bottom: 1px solid lightgray

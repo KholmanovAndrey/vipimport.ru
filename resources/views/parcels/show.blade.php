@@ -17,9 +17,9 @@
             <div class="item__text">{{ $item->description }}</div>
             <footer class="item__footer">
                 @auth
-                    <a href="{{ route('category.edit', $item) }}" class="btn btn-danger item__link">Редактировать</a>
+                    <a href="{{ route('parcel.edit', $item) }}" class="btn btn-danger item__link">Редактировать</a>
                     <form method="POST"
-                          action="{{ route('category.destroy', $item) }}">
+                          action="{{ route('parcel.destroy', $item) }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger item__link">
@@ -31,28 +31,50 @@
         </article>
 
         <h2>Заказы:</h2>
-        <a href="{{ route('parcel-order.create') }}" class="btn btn-danger items__link">Добавить заказ в посылку</a>
-        <section class="items__section">
-            @foreach ($item->parcelOrders as $order)
-                <article class="items__item">
-                    <header><h2 class="items__title">{{ $order->title }}</h2></header>
-                    <footer class="items__footer">
-                        @auth
-                            <a href="{{ route('order.edit', $order) }}" class="btn btn-danger items__link">Редактировать</a>
-                            @if($item->category_id !== 1)
-                                <form method="POST"
-                                      action="{{ route('parcel-order.destroy', $order) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger items__link">
-                                        {{ __('Удалить') }}
-                                    </button>
-                                </form>
-                            @endif
-                        @endauth
-                    </footer>
-                </article>
+        <section>
+            <div class="row item-font">
+                <div class="col-sm-2">№</div>
+                <div class="col-sm-6">Наименование</div>
+                <div class="col-sm-2">Кол-во</div>
+                <div class="col-sm-2"></div>
+            </div>
+            @foreach($item->orders as $order)
+                <div class="row item-font">
+                    <div class="col-sm-2">Z{{ $order->id }}</div>
+                    <div class="col-sm-6">{{ $order->title }}</div>
+                    <div class="col-sm-2">{{ $order->count }}</div>
+                    <div class="col-sm-2">Удалить</div>
+                </div>
             @endforeach
         </section>
+        <form method="POST"
+              action="{{ route('parcel.order-add', $item) }}">
+            @csrf
+            <div class="form-group row">
+                <div class="col">
+                    <label for="order_id" class="col-form-label text-md-right">{{ __('Выберете заказы в посылку') }} <span class="star">*</span></label>
+                    <select name="order_id[]"
+                            id="order_id"
+                            class="form-control @error('order_id') is-invalid @enderror"
+                            multiple
+                            size="10"
+                            required>
+                        @foreach ($orders as $order)
+                            <option {{ $order->id === $item->order_id ? 'selected="selected"' : '' }} value="{{ $order->id }}">
+                                {{ $order->title }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('order_id')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                    @enderror
+                </div>
+            </div>
+            <button type="submit" class="btn btn-danger item__link">
+                {{ __('Добавить заказы в посылку') }}
+            </button>
+        </form>
     </div>
 @endsection

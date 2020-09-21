@@ -18,8 +18,8 @@
         @if ($parcel->id) @method('PUT') @endif
 
         <div class="form-group row">
-            <label for="title" class="col-md-4 col-form-label text-md-right">{{ __('Наименование') }} <span class="star">*</span></label>
             <div class="col-md-6">
+                <label for="title" class="col-form-label text-md-right">{{ __('Наименование') }} <span class="star">*</span></label>
                 <input id="title"
                        type="text"
                        class="form-control @error('title') is-invalid @enderror"
@@ -32,11 +32,8 @@
                 </span>
                 @enderror
             </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="address_id" class="col-md-4 col-form-label text-md-right">{{ __('Адрес') }} <span class="star">*</span></label>
             <div class="col-md-6">
+                <label for="address_id" class="col-form-label text-md-right">{{ __('Адрес') }} <span class="star">*</span></label>
                 <select name="address_id"
                         id="address_id"
                         class="form-control @error('address_id') is-invalid @enderror"
@@ -56,13 +53,12 @@
         </div>
 
         <div class="form-group row">
-            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Описание') }}</label>
-            <div class="col-md-6">
+            <div class="col">
+                <label for="description" class="col-form-label text-md-right">{{ __('Описание') }}</label>
                 <textarea name="description"
                           id="description"
                           class="form-control @error('description') is-invalid @enderror"
-                          required
-                          cols="30" rows="10">{{ $parcel->description ?? old('description') }}</textarea>
+                          cols="30" rows="3">{{ $parcel->description ?? old('description') }}</textarea>
                 @error('description')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -72,9 +68,9 @@
         </div>
 
         <div class="form-group row mb-0">
-            <div class="col-md-6 offset-md-4">
+            <div class="col">
                 <button type="submit" class="btn btn-primary">
-                    {{ __('Сохранить') }}
+                    @if (!$parcel->id){{ __('Далее') }}@else{{ __('Сохранить') }}@endif
                 </button>
             </div>
         </div>
