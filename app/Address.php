@@ -29,6 +29,11 @@ class Address extends Model
             'lastname' => 'required|string|min:3|max:50',
             'othername' => 'required|string|min:3|max:50',
             'country_id' => "required|exists:{$tableCountry},id",
+            'postal_code' => 'required|string|min:3|max:50',
+            'region' => 'required|string|min:3|max:50',
+            'city' => 'required|string|min:3|max:50',
+            'street' => 'required|string|min:3|max:50',
+            'building' => 'required|string|min:3|max:50',
             'phone' => 'required|string|min:3|max:50',
         ];
     }

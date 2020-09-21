@@ -35,4 +35,6 @@ Route::resource('/address', 'AddressController')->except('show');
 Route::resource('/country', 'CountryController')->except('show');
 Route::resource('/city', 'CityController')->except('show');
 Route::resource('/order', 'OrderController');
+Route::resource('/parcel', 'ParcelController');
+Route::resource('/parcel-order', 'ParcelOrderController');
 
