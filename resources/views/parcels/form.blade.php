@@ -25,6 +25,7 @@
                        class="form-control @error('title') is-invalid @enderror"
                        name="title"
                        value="{{ $parcel->title ?? old('title') }}"
+                       placeholder="Наименование посылки"
                        required autofocus>
                 @error('title')
                 <span class="invalid-feedback" role="alert">
@@ -58,6 +59,7 @@
                 <textarea name="description"
                           id="description"
                           class="form-control @error('description') is-invalid @enderror"
+                          placeholder="Напишите Ваши пожелания по посылке, для нашего менеджера"
                           cols="30" rows="3">{{ $parcel->description ?? old('description') }}</textarea>
                 @error('description')
                 <span class="invalid-feedback" role="alert">

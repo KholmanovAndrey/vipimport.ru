@@ -23,7 +23,7 @@
                     <header><h2 class="items__title">{{ $item->title }}</h2></header>
                     <footer class="items__footer">
                         @auth
-                            <a href="{{ route('parcel.edit', $item) }}" class="btn btn-danger items__link">Редактировать</a>
+                            <a href="{{ route('parcel.show', $item) }}" class="btn btn-danger items__link">Редактировать</a>
                             <form method="POST"
                                   action="{{ route('parcel.destroy', $item) }}">
                                 @csrf
