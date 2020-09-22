@@ -42,7 +42,7 @@
                        class="form-control @error('firstname') is-invalid @enderror"
                        name="firstname"
                        value="{{ $address->firstname ?? old('firstname') }}"
-                       required autofocus>
+                       required>
                 @error('firstname')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -59,7 +59,7 @@
                        class="form-control @error('othername') is-invalid @enderror"
                        name="othername"
                        value="{{ $address->othername ?? old('othername') }}"
-                       required autofocus>
+                       required>
                 @error('othername')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -97,7 +97,7 @@
                        class="form-control @error('postal_code') is-invalid @enderror"
                        name="postal_code"
                        value="{{ $address->postal_code ?? old('postal_code') }}"
-                       required autofocus>
+                       required>
                 @error('postal_code')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -114,7 +114,7 @@
                        class="form-control @error('region') is-invalid @enderror"
                        name="region"
                        value="{{ $address->region ?? old('region') }}"
-                       required autofocus>
+                       required>
                 @error('region')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -131,7 +131,7 @@
                        class="form-control @error('city') is-invalid @enderror"
                        name="city"
                        value="{{ $address->city ?? old('city') }}"
-                       required autofocus>
+                       required>
                 @error('city')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -148,7 +148,7 @@
                        class="form-control @error('street') is-invalid @enderror"
                        name="street"
                        value="{{ $address->street ?? old('street') }}"
-                       required autofocus>
+                       required>
                 @error('street')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -165,7 +165,7 @@
                        class="form-control @error('building') is-invalid @enderror"
                        name="building"
                        value="{{ $address->building ?? old('building') }}"
-                       required autofocus>
+                       required>
                 @error('building')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -199,7 +199,7 @@
                        class="form-control @error('apartment') is-invalid @enderror"
                        name="apartment"
                        value="{{ $address->apartment ?? old('apartment') }}"
-                       required autofocus>
+                       >
                 @error('apartment')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
