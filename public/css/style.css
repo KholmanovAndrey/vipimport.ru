@@ -25,6 +25,14 @@
 .items__link {
   margin-left: 0.5rem; }
 
+.item__btn {
+  margin-bottom: 2rem; }
+.item__footer {
+  display: flex;
+  justify-content: flex-end; }
+.item__link {
+  margin-left: 0.5rem; }
+
 .invisible {
   display: none; }
 

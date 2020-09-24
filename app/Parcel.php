@@ -11,7 +11,8 @@ class Parcel extends Model
         'description',
         'fio',
         'address',
-        'phone'
+        'phone',
+        'status_id'
     ];
 
     public static function rules()
@@ -29,5 +30,15 @@ class Parcel extends Model
     public function address()
     {
         return $this->belongsTo(Address::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class,'manager_id','id');
     }
 }

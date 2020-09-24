@@ -33,6 +33,9 @@
                             @if((int)$item->manager_id !== 1)
                                 <div>Ваш менеджер: {{ $item->manager->name }}</div>
                             @endif
+                            @if($item->parcel_id !== null)
+                                <div>Посылка: {{ $item->parcel['title'] }}</div>
+                            @endif
                             <div>Дата создания заказа: {{ date('d.m.Y H:i', date_timestamp_get($item->created_at)) }}</div>
                             <div>Дата обновления заказа: {{ date('d.m.Y H:i', date_timestamp_get($item->updated_at)) }}</div>
                         </div>

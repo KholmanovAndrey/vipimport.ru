@@ -20,10 +20,12 @@
         <section class="items__section">
             @foreach ($parcels as $item)
                 <article class="items__item">
-                    <header><h2 class="items__title">{{ $item->title }}</h2></header>
+                    <header><h2 class="items__title">{{ $item->title }}
+                            <span class="badge badge-warning">{{ $item->status->title }}</span>
+                        </h2></header>
                     <footer class="items__footer">
                         @auth
-                            <a href="{{ route('parcel.show', $item) }}" class="btn btn-danger items__link">Редактировать</a>
+                            <a href="{{ route('parcel.show', $item) }}" class="btn btn-danger items__link">Перейти в посылку</a>
                             <form method="POST"
                                   action="{{ route('parcel.destroy', $item) }}">
                                 @csrf

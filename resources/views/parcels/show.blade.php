@@ -13,8 +13,13 @@
 @section('content')
     <div class="item col-lg-9">
         <article class="item__article">
-            <header><h1 class="item__title">{{ $item->title }}</h1></header>
-            <div class="item__text">{{ $item->description }}</div>
+            <header><h1 class="item__title">{{ $item->title }}
+                    <span class="badge badge-warning">{{ $item->status->title }}</span>
+                </h1></header>
+            <div class="item__text row">
+                <div class="col-md-6">{{ $item->description }}</div>
+                <div class="col-md-6">{{ $item->address }}</div>
+            </div>
             <footer class="item__footer">
                 @auth
                     <a href="{{ route('parcel.edit', $item) }}" class="btn btn-danger item__link">Редактировать</a>
@@ -43,13 +48,23 @@
                     <div class="col-sm-2">Z{{ $order->id }}</div>
                     <div class="col-sm-6">{{ $order->title }}</div>
                     <div class="col-sm-2">{{ $order->count }}</div>
-                    <div class="col-sm-2">Удалить</div>
+                    <div class="col-sm-2">
+                        <form method="POST"
+                              action="{{ route('parcel.order-delete-parcel-id', $order) }}">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-danger item__link">
+                                {{ __('Удалить') }}
+                            </button>
+                        </form>
+                    </div>
                 </div>
             @endforeach
         </section>
         <form method="POST"
-              action="{{ route('parcel.order-add', $item) }}">
+              action="{{ route('parcel.order-add-parcel-id', $item) }}">
             @csrf
+            @method('PUT')
             <div class="form-group row">
                 <div class="col">
                     <label for="order_id" class="col-form-label text-md-right">{{ __('Выберете заказы в посылку') }} <span class="star">*</span></label>
