@@ -54,6 +54,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Профиль пользователя
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
+    }
+
+    /**
      * Проверка на существования роли у пользователя
      *
      * @param string $check

@@ -30,8 +30,8 @@ class UserSeeder extends Seeder
         ];
         $data[] = [
             'name' => 'Manager',
-            'email' => 'manager@vipimport.ru',
-            'password' => Hash::make('manager'),
+            'email' => 'managers@vipimport.ru',
+            'password' => Hash::make('managers'),
         ];
         $data[] = [
             'name' => 'Client',

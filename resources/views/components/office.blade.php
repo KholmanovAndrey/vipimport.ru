@@ -19,6 +19,9 @@
 
 @if(Auth::user()->hasRole('manager'))
     <h5 class="dropdown-item">{{ __('Менеджер') }}</h5>
+    <a class="dropdown-item" href="{{ route('manager.index') }}">{{ __('Кабинет') }}</a>
+    <a class="dropdown-item" href="{{ route('manager.order-new') }}">{{ __('Новые заказы') }}</a>
+    <a class="dropdown-item" href="{{ route('manager.order-my') }}">{{ __('Мои заказы') }}</a>
 @endif
 
 @if(Auth::user()->hasRole('client'))
