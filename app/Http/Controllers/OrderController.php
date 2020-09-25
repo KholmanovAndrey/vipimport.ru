@@ -54,7 +54,6 @@ class OrderController extends Controller
             for ($i = 0; $i < count($request->title); $i++) {
                 $order = new Order();
                 $order->user_id = Auth::user()->id;
-                $order->manager_id = 1;
                 $order->status_id = 1;
                 $order->title = $request->title[$i];
                 $order->count = $request->count[$i];
