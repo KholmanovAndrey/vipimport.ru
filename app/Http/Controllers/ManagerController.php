@@ -86,7 +86,7 @@ class ManagerController extends Controller
 
     public function orderShow(Order $order)
     {
-        if (Auth::user()->id === $order->manager_id) {
+        if ((int)Auth::user()->id === (int)$order->manager_id) {
             $statuses = Status::query()
                 ->where([
                     ['table_name', '=', 'orders'],
