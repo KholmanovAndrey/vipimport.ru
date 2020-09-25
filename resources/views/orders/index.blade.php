@@ -30,7 +30,7 @@
                     </header>
                     <div class="items__body">
                         <div>
-                            @if((int)$item->manager_id !== 1)
+                            @if($item->manager_id !== null)
                                 <div>Ваш менеджер: {{ $item->manager->name }}</div>
                             @endif
                             @if($item->parcel_id !== null)

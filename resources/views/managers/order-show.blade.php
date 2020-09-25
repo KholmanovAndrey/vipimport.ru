@@ -23,7 +23,7 @@
                     class="form-control"
                     required>
                 @foreach ($statuses as $status)
-                    <option {{ $status->id === $order->status_id ? 'selected="selected"' : '' }} value="{{ $status->id }}">
+                    <option {{ (int)$status->id === (int)$order->status_id ? 'selected="selected"' : '' }} value="{{ $status->id }}">
                         {{ $status->title }}
                     </option>
                 @endforeach
@@ -42,7 +42,7 @@
                     class="form-control"
                     required>
                 @foreach ($managers as $manager)
-                    <option {{ $manager->id === $order->manager_id ? 'selected="selected"' : '' }} value="{{ $manager->id }}">
+                    <option {{ (int)$manager->id === (int)$order->manager_id ? 'selected="selected"' : '' }} value="{{ $manager->id }}">
                         {{ $manager->profile['lastname'] }} ({{ $manager->name }})
                     </option>
                 @endforeach
