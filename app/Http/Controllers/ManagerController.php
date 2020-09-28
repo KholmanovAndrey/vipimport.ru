@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Parcel;
 use App\Policies\ManagerPolicy;
 use App\Status;
 use App\User;
@@ -29,7 +30,7 @@ class ManagerController extends Controller
     }
 
     /**
-     * Вывод всех заказов со статутос "новый"
+     * Вывод всех заказов со статусом "новый"
      */
     public function orderNew()
     {
@@ -121,5 +122,32 @@ class ManagerController extends Controller
         }
 
         return redirect()->route('manager.order-my');
+    }
+
+    /**
+     * Вывод всех посылок со статусом "отправлено на упаковку"
+     */
+    public function parcelNew()
+    {
+        $parcels = Parcel::query()->where([
+            ['manager_id', '=', null],
+            ['status_id', '=', 7]
+        ])->get();
+        return view('managers.parcel-new', [
+            'parcels' => $parcels
+        ]);
+    }
+
+    /**
+     * Вывод всех заказов данного менеджера
+     */
+    public function parcelMy()
+    {
+        $parcels = Parcel::query()->where('manager_id', '=', Auth::user()->id)->get();
+        $statuses = Status::query()->where('table_name', '=', 'parcel')->get();
+        return view('managers.parcel-my', [
+            'parcels' => $parcels,
+            'statuses' => $statuses
+        ]);
     }
 }

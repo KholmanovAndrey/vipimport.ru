@@ -11,8 +11,33 @@
 @endsection
 
 @section('content')
-    <div class="items col-lg-9">
+    <div class="item col-lg-9">
         <h2>Заказы:</h2>
+        <div class="item__body">
+            <div>
+                @if($order->manager_id !== null)
+                    <div>Менеджер: {{ $order->manager->name }}</div>
+                @endif
+                @if($order->parcel_id !== null)
+                    <div>Посылка: {{ $order->parcel['title'] }}</div>
+                @endif
+                <div>Дата создания заказа: {{ date('d.m.Y H:i', date_timestamp_get($order->created_at)) }}</div>
+                <div>Дата обновления заказа: {{ date('d.m.Y H:i', date_timestamp_get($order->updated_at)) }}</div>
+            </div>
+            <div>
+                <div>Количество: {{ $order->count }}</div>
+                @if($order->link)
+                    <div>Ссылка: <a href="{{ $order->link }}">{{ $order->link }}</a></div>
+                @endif
+                @if($order->color)
+                    <div>Ссылка: {{ $order->color }}</div>
+                @endif
+                @if($order->size)
+                    <div>Ссылка: {{ $order->size }}</div>
+                @endif
+                <p>{{ $order->description }}</p>
+            </div>
+        </div>
 
         <form method="POST"
               action="{{ route('manager.order-status', $order) }}">

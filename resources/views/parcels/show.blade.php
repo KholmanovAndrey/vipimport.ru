@@ -22,6 +22,16 @@
             </div>
             <footer class="item__footer">
                 @auth
+                    @if((int)$item->status_id === 6)
+                        <form method="POST"
+                              action="{{ route('client.parcel-send-to-packaging', $item) }}">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-danger item__link">
+                                {{ __('Отправить на упаковку') }}
+                            </button>
+                        </form>
+                    @endif
                     <a href="{{ route('parcel.edit', $item) }}" class="btn btn-danger item__link">Редактировать</a>
                     <form method="POST"
                           action="{{ route('parcel.destroy', $item) }}">

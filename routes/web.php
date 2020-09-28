@@ -51,4 +51,18 @@ Route::group([
     Route::get('/order-show/{order}', 'ManagerController@orderShow')->name('order-show');
     Route::put('/order-status/{order}', 'ManagerController@orderStatus')->name('order-status');
     Route::put('/order-transfer/{order}', 'ManagerController@orderTransfer')->name('order-transfer');
+    Route::get('/parcel-new', 'ManagerController@parcelNew')->name('parcel-new');
+    Route::get('/parcel-my', 'ManagerController@parcelMy')->name('parcel-my');
+    Route::put('/parcel-accept/{order}', 'ManagerController@parcelAccept')->name('parcel-accept');
+    Route::get('/parcel-show/{order}', 'ManagerController@parcelShow')->name('parcel-show');
+    Route::put('/parcel-status/{order}', 'ManagerController@parcelStatus')->name('parcel-status');
+    Route::put('/parcel-transfer/{order}', 'ManagerController@parcelTransfer')->name('parcel-transfer');
+});
+
+Route::group([
+    'prefix' => 'client',
+    'as' => 'client.'
+], function() {
+    Route::get('/', 'ClientController@index')->name('index');
+    Route::put('/parcel-send-to-packaging/{parcel}', 'ClientController@parcelSendToPackaging')->name('parcel-send-to-packaging');
 });

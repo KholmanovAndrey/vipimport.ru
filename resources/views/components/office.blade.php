@@ -22,6 +22,8 @@
     <a class="dropdown-item" href="{{ route('manager.index') }}">{{ __('Кабинет') }}</a>
     <a class="dropdown-item" href="{{ route('manager.order-new') }}">{{ __('Новые заказы') }}</a>
     <a class="dropdown-item" href="{{ route('manager.order-my') }}">{{ __('Мои заказы') }}</a>
+    <a class="dropdown-item" href="{{ route('manager.parcel-new') }}">{{ __('Посылки в работу') }}</a>
+    <a class="dropdown-item" href="{{ route('manager.parcel-my') }}">{{ __('Мои посылки') }}</a>
 @endif
 
 @if(Auth::user()->hasRole('client'))
