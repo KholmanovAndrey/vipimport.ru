@@ -100,6 +100,10 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        if (status((int)$order->status_id)) {
+            return redirect()->back();
+        }
+
         return view('orders.form-update', [
             'order' => $order,
         ]);
@@ -141,6 +145,10 @@ class OrderController extends Controller
      */
     public function destroy(Request $request, Order $order)
     {
+        if (status((int)$order->status_id)) {
+            return redirect()->back();
+        }
+
         if ($request->isMethod('delete')) {
             $request->flash();
 
@@ -154,11 +162,11 @@ class OrderController extends Controller
             }
 
 //            if ($order->delete()) {
-//                return redirect()->route('contact.index')
+//                return redirect()->route('order.index')
 //                    ->with('success', 'Данные успешно удаленны!');
 //            }
 
-            return redirect()->route('contact.index')
+            return redirect()->route('order.index')
                 ->with('success', 'Ошибка удаления данных!');
         }
     }

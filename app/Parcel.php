@@ -41,4 +41,9 @@ class Parcel extends Model
     {
         return $this->belongsTo(User::class,'manager_id','id');
     }
+
+    public function client()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

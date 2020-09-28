@@ -17,8 +17,18 @@
                     <span class="badge badge-warning">{{ $item->status->title }}</span>
                 </h1></header>
             <div class="item__text row">
-                <div class="col-md-6">{{ $item->description }}</div>
-                <div class="col-md-6">{{ $item->address }}</div>
+                <div class="col-md-6">
+                    <div class="item__client">Клиент: {{ $item->client->name }}</div>
+                    <div>Дата создания: {{ date('d.m.Y H:i', date_timestamp_get($item->created_at)) }}</div>
+                    <div>Дата обновления: {{ date('d.m.Y H:i', date_timestamp_get($item->updated_at)) }}</div>
+                    <div class="item__description">{{ $item->description }}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="item__title">Данные доставки:</div>
+                    <div class="item__fio">ФИО: {{ $item->fio }}</div>
+                    <div class="item__address">Адрес: {{ $item->address }}</div>
+                    <div class="item__phone">Телефон: {{ $item->phone }}</div>
+                </div>
             </div>
             <footer class="item__footer">
                 @auth
@@ -31,16 +41,16 @@
                                 {{ __('Отправить на упаковку') }}
                             </button>
                         </form>
+                        <a href="{{ route('parcel.edit', $item) }}" class="btn btn-danger item__link">Редактировать</a>
+                        <form method="POST"
+                              action="{{ route('parcel.destroy', $item) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger item__link">
+                                {{ __('Удалить') }}
+                            </button>
+                        </form>
                     @endif
-                    <a href="{{ route('parcel.edit', $item) }}" class="btn btn-danger item__link">Редактировать</a>
-                    <form method="POST"
-                          action="{{ route('parcel.destroy', $item) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger item__link">
-                            {{ __('Удалить') }}
-                        </button>
-                    </form>
                 @endauth
             </footer>
         </article>
@@ -51,28 +61,31 @@
                 <div class="col-sm-2">№</div>
                 <div class="col-sm-6">Наименование</div>
                 <div class="col-sm-2">Кол-во</div>
-                <div class="col-sm-2"></div>
+                @if((int)$item->status_id === 6)<div class="col-sm-2"></div>@endif
             </div>
             @foreach($item->orders as $order)
                 <div class="row item-font">
                     <div class="col-sm-2">Z{{ $order->id }}</div>
                     <div class="col-sm-6">{{ $order->title }}</div>
                     <div class="col-sm-2">{{ $order->count }}</div>
-                    <div class="col-sm-2">
-                        <form method="POST"
-                              action="{{ route('parcel.order-delete-parcel-id', $order) }}">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-danger item__link">
-                                {{ __('Удалить') }}
-                            </button>
-                        </form>
-                    </div>
+                    @if((int)$item->status_id === 6)
+                        <div class="col-sm-2">
+                            <form method="POST"
+                                  action="{{ route('client.order-delete-parcel-id', $order) }}">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-danger item__link">
+                                    {{ __('Удалить') }}
+                                </button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             @endforeach
         </section>
+        @if((int)$item->status_id === 6)
         <form method="POST"
-              action="{{ route('parcel.order-add-parcel-id', $item) }}">
+              action="{{ route('client.order-add-parcel-id', $item) }}">
             @csrf
             @method('PUT')
             <div class="form-group row">
@@ -101,5 +114,6 @@
                 {{ __('Добавить заказы в посылку') }}
             </button>
         </form>
+        @endif
     </div>
 @endsection

@@ -36,8 +36,6 @@ Route::resource('/country', 'CountryController')->except('show');
 Route::resource('/city', 'CityController')->except('show');
 Route::resource('/order', 'OrderController');
 
-Route::put('/parcel/{parcel}/order-add-parcel-id', 'ParcelController@orderAddParcelID')->name('parcel.order-add-parcel-id');
-Route::put('/parcel/{order}/order-delete-parcel-id', 'ParcelController@orderDeleteParcelID')->name('parcel.order-delete-parcel-id');
 Route::resource('/parcel', 'ParcelController');
 
 Route::group([
@@ -53,10 +51,10 @@ Route::group([
     Route::put('/order-transfer/{order}', 'ManagerController@orderTransfer')->name('order-transfer');
     Route::get('/parcel-new', 'ManagerController@parcelNew')->name('parcel-new');
     Route::get('/parcel-my', 'ManagerController@parcelMy')->name('parcel-my');
-    Route::put('/parcel-accept/{order}', 'ManagerController@parcelAccept')->name('parcel-accept');
-    Route::get('/parcel-show/{order}', 'ManagerController@parcelShow')->name('parcel-show');
-    Route::put('/parcel-status/{order}', 'ManagerController@parcelStatus')->name('parcel-status');
-    Route::put('/parcel-transfer/{order}', 'ManagerController@parcelTransfer')->name('parcel-transfer');
+    Route::put('/parcel-accept/{parcel}', 'ManagerController@parcelAccept')->name('parcel-accept');
+    Route::get('/parcel-show/{parcel}', 'ManagerController@parcelShow')->name('parcel-show');
+    Route::put('/parcel-status/{parcel}', 'ManagerController@parcelStatus')->name('parcel-status');
+    Route::put('/parcel-transfer/{parcel}', 'ManagerController@parcelTransfer')->name('parcel-transfer');
 });
 
 Route::group([
@@ -64,5 +62,7 @@ Route::group([
     'as' => 'client.'
 ], function() {
     Route::get('/', 'ClientController@index')->name('index');
+    Route::put('/order-add-parcel-id/{parcel}', 'ClientController@orderAddParcelID')->name('order-add-parcel-id');
+    Route::put('/order-delete-parcel-id/{order}', 'ClientController@orderDeleteParcelID')->name('order-delete-parcel-id');
     Route::put('/parcel-send-to-packaging/{parcel}', 'ClientController@parcelSendToPackaging')->name('parcel-send-to-packaging');
 });

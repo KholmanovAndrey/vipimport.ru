@@ -26,14 +26,16 @@
                     <footer class="items__footer">
                         @auth
                             <a href="{{ route('parcel.show', $item) }}" class="btn btn-danger items__link">Перейти в посылку</a>
-                            <form method="POST"
-                                  action="{{ route('parcel.destroy', $item) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger item__link">
-                                    {{ __('Удалить') }}
-                                </button>
-                            </form>
+                            @if((int)$item->status_id === 6)
+                                <form method="POST"
+                                      action="{{ route('parcel.destroy', $item) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger item__link">
+                                        {{ __('Удалить') }}
+                                    </button>
+                                </form>
+                            @endif
                         @endauth
                     </footer>
                 </article>

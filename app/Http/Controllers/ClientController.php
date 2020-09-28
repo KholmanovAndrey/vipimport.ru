@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\Parcel;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,42 @@ class ClientController extends Controller
         return view('clients.index', [
             'client' => Auth::user()->id
         ]);
+    }
+
+    /**
+     * Функция для добавления заказа в посылку
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function orderAddParcelID(Request $request, Parcel $parcel)
+    {
+        if ($request->isMethod('put')) {
+            for ($i = 0; $i < count($request->order_id); $i++) {
+                $order = Order::query()->where('id', '=', (int)$request->order_id[$i])->first();
+                $order->parcel_id = $parcel->id;
+                $order->save();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Функция для удаления заказа из посылки
+     *
+     * @param Request $request
+     * @param Order $order
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function orderDeleteParcelID(Request $request, Order $order)
+    {
+        if ($request->isMethod('put')) {
+            $order->parcel_id = null;
+            $order->save();
+        }
+
+        return redirect()->back();
     }
 
     /**

@@ -58,7 +58,7 @@ class ParcelController extends Controller
             $parcel->description = $request->description;
             $parcel->user_id = Auth::user()->id;
             $address = Address::query()->where('id', '=', (int)$request->address_id)->first();
-            $fio = "{$address->lastname}, {$address->firstname} {$address->othername}";
+            $fio = "{$address->lastname} {$address->firstname} {$address->othername}";
             $parcel->fio = trim($fio);
             $addressStr = "{$address->postal_code}, {$address->country->title}, {$address->region}, {$address->city}, {$address->street}, дом {$address->building}";
             if ($address->body) {
@@ -94,6 +94,7 @@ class ParcelController extends Controller
             ->where([
                 ['user_id', '=', Auth::user()->id],
                 ['parcel_id', '=', null],
+                ['isDeleted', '=', 0],
             ])
             ->get();
         return view('parcels.show', [
@@ -110,6 +111,10 @@ class ParcelController extends Controller
      */
     public function edit(Parcel $parcel)
     {
+        if (status((int)$parcel->status_id, 'parcels')) {
+            return redirect()->back();
+        }
+
         $addresses = Address::query()->where('user_id', '=', Auth::user()->id)->get();
         return view('parcels.form', [
             'parcel' => $parcel,
@@ -136,7 +141,7 @@ class ParcelController extends Controller
             $parcel->description = $request->description;
             $parcel->user_id = Auth::user()->id;
             $address = Address::query()->where('id', '=', (int)$request->address_id)->first();
-            $fio = "{$address->lastname}, {$address->firstname} {$address->othername}";
+            $fio = "{$address->lastname} {$address->firstname} {$address->othername}";
             $parcel->fio = trim($fio);
             $addressStr = "{$address->postal_code}, {$address->country->title}, {$address->region}, {$address->city}, {$address->street}, дом {$address->building}";
             if ($address->body) {
@@ -169,28 +174,5 @@ class ParcelController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function orderAddParcelID(Request $request, Parcel $parcel)
-    {
-        if ($request->isMethod('put')) {
-            for ($i = 0; $i < count($request->order_id); $i++) {
-                $order = Order::query()->where('id', '=', (int)$request->order_id[$i])->first();
-                $order->parcel_id = $parcel->id;
-                $order->save();
-            }
-        }
-
-        return redirect()->back();
-    }
-
-    public function orderDeleteParcelID(Request $request, Order $order)
-    {
-        if ($request->isMethod('put')) {
-            $order->parcel_id = null;
-            $order->save();
-        }
-
-        return redirect()->back();
     }
 }

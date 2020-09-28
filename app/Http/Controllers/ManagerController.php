@@ -70,21 +70,10 @@ class ManagerController extends Controller
     }
 
     /**
-     * Функция для изменения статуса заказа
-     * @param Request $request
+     * Просмотр заказа
      * @param Order $order
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function orderStatus(Request $request, Order $order)
-    {
-        if ($request->isMethod('put')) {
-            $order->status_id = (int)$request->status_id;
-            $order->save();
-        }
-
-        return redirect()->back();
-    }
-
     public function orderShow(Order $order)
     {
         if ((int)Auth::user()->id === (int)$order->manager_id) {
@@ -114,6 +103,28 @@ class ManagerController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Функция для изменения статуса заказа
+     * @param Request $request
+     * @param Order $order
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function orderStatus(Request $request, Order $order)
+    {
+        if ($request->isMethod('put')) {
+            $order->status_id = (int)$request->status_id;
+            $order->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Передача заказа клиента другому менеджеру
+     * @param Request $request
+     * @param Order $order
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function orderTransfer(Request $request, Order $order)
     {
         if ($request->isMethod('put')) {
@@ -149,5 +160,55 @@ class ManagerController extends Controller
             'parcels' => $parcels,
             'statuses' => $statuses
         ]);
+    }
+
+    /**
+     * Функция для принятия посылки клиента
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function parcelAccept(Request $request, Parcel $parcel)
+    {
+        if ($request->isMethod('put')) {
+            $parcel->manager_id = Auth::user()->id;
+            $parcel->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Просмотр заказа
+     * @param Parcel $parcel
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function parcelShow(Parcel $parcel)
+    {
+        if ((int)Auth::user()->id === (int)$parcel->manager_id) {
+            $statuses = Status::query()
+                ->where([
+                    ['table_name', '=', 'parcels'],
+                    ['id', '!=', 6]
+                ])
+                ->get();
+            $managers = User::query()
+                ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                ->where('user_roles.role_id', '=', 3)
+                ->get();
+            foreach ($managers as $key => $manager) {
+                if ($manager->hasRole('superAdmin')) {
+                    unset($managers[$key]);
+                }
+            }
+
+            return view('managers.parcel-show', [
+                'parcel' => $parcel,
+                'statuses' => $statuses,
+                'managers' => $managers
+            ]);
+        }
+
+        return redirect()->back();
     }
 }
