@@ -102,7 +102,7 @@ class OrderPolicy
         $allowedStatuses = [1];
 
         foreach ($allowedStatuses as $item) {
-            if ($order->status_id === $item) {
+            if ((int)$order->status_id === (int)$item) {
                 return true;
             }
         }
