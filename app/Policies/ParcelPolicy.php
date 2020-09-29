@@ -102,7 +102,7 @@ class ParcelPolicy
         $allowedStatuses = [6];
 
         foreach ($allowedStatuses as $item) {
-            if ($parcel->status_id === $item) {
+            if ((int)$parcel->status_id === (int)$item) {
                 return true;
             }
         }
