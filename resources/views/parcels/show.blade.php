@@ -32,7 +32,7 @@
             </div>
             <footer class="item__footer">
                 @auth
-                    @if((int)$item->status_id === 6)
+                    @can('canEditByStatus', $item)
                         <form method="POST"
                               action="{{ route('client.parcel-send-to-packaging', $item) }}">
                             @csrf
@@ -50,7 +50,7 @@
                                 {{ __('Удалить') }}
                             </button>
                         </form>
-                    @endif
+                    @endcan
                 @endauth
             </footer>
         </article>

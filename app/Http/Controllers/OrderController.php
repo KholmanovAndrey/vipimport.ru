@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -100,7 +101,8 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        if (status((int)$order->status_id)) {
+        if (!Gate::allows('canEditByStatus', $order) ||
+            !Gate::allows('canDelete', $order)) {
             return redirect()->back();
         }
 

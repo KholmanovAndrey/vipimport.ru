@@ -211,4 +211,36 @@ class ManagerController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Функция для изменения статуса посылки
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function parcelStatus(Request $request, Parcel $parcel)
+    {
+        if ($request->isMethod('put')) {
+            $parcel->status_id = (int)$request->status_id;
+            $parcel->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Передача заказа клиента другому менеджеру
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function parcelTransfer(Request $request, Parcel $parcel)
+    {
+        if ($request->isMethod('put')) {
+            $parcel->manager_id = (int)$request->manager_id;
+            $parcel->save();
+        }
+
+        return redirect()->route('manager.parcel-my');
+    }
 }

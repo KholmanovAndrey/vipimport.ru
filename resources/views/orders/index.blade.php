@@ -55,19 +55,19 @@
                     </div>
                     <footer class="items__footer">
                         @auth
-                            @if((int)$item->status_id === 1)
-                                <a href="{{ route('order.edit', $item) }}" class="btn btn-danger items__link">Редактировать</a>
-                            @endif
-                            @if(!$item->isDeleted)
-                                <form method="POST"
-                                      action="{{ route('order.destroy', $item) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger items__link">
-                                        {{ __('Удалить') }}
-                                    </button>
-                                </form>
-                            @endif
+                            @can('canEditByStatus', $item)
+                                @can('canDelete', $item)
+                                    <a href="{{ route('order.edit', $item) }}" class="btn btn-danger items__link">Редактировать</a>
+                                    <form method="POST"
+                                          action="{{ route('order.destroy', $item) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger items__link">
+                                            {{ __('Удалить') }}
+                                        </button>
+                                    </form>
+                                @endcan
+                            @endcan
                         @endauth
                     </footer>
                 </article>

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Order;
+use App\Parcel;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class OrderPolicy
+class ParcelPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class OrderPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Order  $order
+     * @param  \App\Parcel  $parcel
      * @return mixed
      */
-    public function view(User $user, Order $order)
+    public function view(User $user, Parcel $parcel)
     {
         //
     }
@@ -48,34 +48,34 @@ class OrderPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Order  $order
+     * @param  \App\Parcel  $parcel
      * @return mixed
      */
-    public function update(User $user, Order $order)
+    public function update(User $user, Parcel $parcel)
     {
-        return (int)$user->id === (int)$order->user_id;
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Order  $order
+     * @param  \App\Parcel  $parcel
      * @return mixed
      */
-    public function delete(User $user, Order $order)
+    public function delete(User $user, Parcel $parcel)
     {
-        return (int)$user->id === (int)$order->user_id;
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Order  $order
+     * @param  \App\Parcel  $parcel
      * @return mixed
      */
-    public function restore(User $user, Order $order)
+    public function restore(User $user, Parcel $parcel)
     {
         //
     }
@@ -84,40 +84,29 @@ class OrderPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Order  $order
+     * @param  \App\Parcel  $parcel
      * @return mixed
      */
-    public function forceDelete(User $user, Order $order)
+    public function forceDelete(User $user, Parcel $parcel)
     {
         //
     }
 
     /**
-     * Функция для проверки, может ли пользователь редактировать заказ, согласно статусу заказа
-     * @param Order $order
+     * Функция для проверки, может ли пользователь редактировать посылку, согласно статусу заказа
+     * @param Parcel $parcel
      * @return bool
      */
-    public function canEditByStatus(User $user, Order $order)
+    public function canEditByStatus(User $user, Parcel $parcel)
     {
-        $allowedStatuses = [1];
+        $allowedStatuses = [6];
 
         foreach ($allowedStatuses as $item) {
-            if ($order->status_id === $item) {
+            if ($parcel->status_id === $item) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    /**
-     * Функция на проверку поля isDeleted
-     * @param User $user
-     * @param Order $order
-     * @return bool
-     */
-    public function canDelete(User $user, Order $order)
-    {
-        return !$order->isDeleted;
     }
 }

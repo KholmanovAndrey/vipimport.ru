@@ -32,7 +32,7 @@
             </div>
             <footer class="item__footer">
                 <form method="POST"
-                      action="{{ route('manager.order-status', $parcel) }}">
+                      action="{{ route('manager.parcel-status', $parcel) }}">
                     @csrf
                     @method('PUT')
                     <select name="status_id"
@@ -51,7 +51,7 @@
                 </form>
 
                 <form method="POST"
-                      action="{{ route('manager.order-transfer', $parcel) }}">
+                      action="{{ route('manager.parcel-transfer', $parcel) }}">
                     @csrf
                     @method('PUT')
                     <select name="manager_id"

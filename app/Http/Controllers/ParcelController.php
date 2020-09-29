@@ -7,6 +7,7 @@ use App\Order;
 use App\Parcel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ParcelController extends Controller
 {
@@ -111,7 +112,7 @@ class ParcelController extends Controller
      */
     public function edit(Parcel $parcel)
     {
-        if (status((int)$parcel->status_id, 'parcels')) {
+        if (!Gate::allows('canEditByStatus', $parcel)) {
             return redirect()->back();
         }
 
@@ -168,11 +169,16 @@ class ParcelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Request $request
+     * @param  Parcel $parcel
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Parcel $parcel)
     {
-        //
+        if (!Gate::allows('canEditByStatus', $parcel)) {
+            return redirect()->back();
+        }
+
+        echo 'Удаление посылки. Находиться в разработке!';
     }
 }
