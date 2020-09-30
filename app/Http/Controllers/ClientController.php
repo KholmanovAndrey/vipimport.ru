@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Parcel;
+use App\Support;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -79,5 +81,52 @@ class ClientController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function supportAll()
+    {
+        $supports = Support::query()->where('client_id', '=', Auth::user()->id)->get();
+        return view('clients.support-all', [
+            'supports' => $supports
+        ]);
+    }
+
+    public function supportView(Support $support)
+    {
+        return view('clients.support-view', [
+            'item' => $support
+        ]);
+    }
+
+    public function supportCreate()
+    {
+        $orders = Order::query()->get();
+        $parcels = Parcel::query()->get();
+        return view('supports.form', [
+            'support' => new Support(),
+            'orders' => $orders,
+            'parcels' => $parcels
+        ]);
+    }
+
+    public function supportStore(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $request->flash();
+
+            $this->validate($request, Support::rules());
+
+            $support = new Support();
+            $support->client_id = Auth::user()->id;
+            $support->fill($request->all());
+
+            if ($support->save()) {
+                return redirect()->route('client.support-view', $support)
+                    ->with('success', 'Данные успешно добавлены!');
+            }
+
+            return redirect()->route('client.support-create')
+                ->with('success', 'Ошибка добавления данных!');
+        }
     }
 }

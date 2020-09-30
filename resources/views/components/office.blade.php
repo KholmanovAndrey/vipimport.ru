@@ -31,6 +31,7 @@
     <a class="dropdown-item" href="{{ route('address.index') }}">{{ __('Адреса доставки') }}</a>
     <a class="dropdown-item" href="{{ route('order.index') }}">{{ __('Заказы') }}</a>
     <a class="dropdown-item" href="{{ route('parcel.index') }}">{{ __('Посылки') }}</a>
+    <a class="dropdown-item" href="{{ route('client.support-all') }}">{{ __('Поддержка') }}</a>
 @endif
 
 <a class="dropdown-item" href="{{ route('logout') }}"
@@ -42,3 +43,5 @@
 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
 </form>
+
+<a class="btn btn-danger" href="{{ route('client.support-create') }}">{{ __('Написать в поддержку') }}</a>

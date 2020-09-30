@@ -35,7 +35,6 @@ Route::resource('/address', 'AddressController')->except('show');
 Route::resource('/country', 'CountryController')->except('show');
 Route::resource('/city', 'CityController')->except('show');
 Route::resource('/order', 'OrderController');
-
 Route::resource('/parcel', 'ParcelController');
 
 Route::group([
@@ -65,4 +64,9 @@ Route::group([
     Route::put('/order-add-parcel-id/{parcel}', 'ClientController@orderAddParcelID')->name('order-add-parcel-id');
     Route::put('/order-delete-parcel-id/{order}', 'ClientController@orderDeleteParcelID')->name('order-delete-parcel-id');
     Route::put('/parcel-send-to-packaging/{parcel}', 'ClientController@parcelSendToPackaging')->name('parcel-send-to-packaging');
+
+    Route::post('/support', 'ClientController@supportStore')->name('support-store');
+    Route::get('/support', 'ClientController@supportAll')->name('support-all');
+    Route::get('/support/create', 'ClientController@supportCreate')->name('support-create');
+    Route::get('/support/{support}', 'ClientController@supportView')->name('support-view');
 });
