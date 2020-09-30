@@ -18,7 +18,7 @@ class CreateSupportsTable extends Migration
             $table->string('title')->comment('Название');
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('users');
-            $table->integer('manager_id')->unsigned();
+            $table->integer('manager_id')->unsigned()->nullable(true);
             $table->foreign('manager_id')->references('id')->on('users');
             $table->integer('order_id')->unsigned()->nullable(true);
             $table->foreign('order_id')->references('id')->on('orders');
