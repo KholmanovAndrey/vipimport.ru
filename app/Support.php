@@ -30,4 +30,9 @@ class Support extends Model
     {
         return $this->belongsTo(Parcel::class);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'support_id', 'id');
+    }
 }

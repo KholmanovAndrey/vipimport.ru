@@ -14,7 +14,7 @@ class AddColumnStatusIdToParcelsTable extends Migration
     public function up()
     {
         Schema::table('parcels', function (Blueprint $table) {
-            $table->integer('status_id')->unsigned()->default(6);
+            $table->integer('status_id')->unsigned()->nullable(true)->default(6);
             $table->foreign('status_id')->references('id')->on('statuses');
         });
     }

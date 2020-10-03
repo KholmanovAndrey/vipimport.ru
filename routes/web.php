@@ -69,4 +69,6 @@ Route::group([
     Route::get('/support', 'ClientController@supportAll')->name('support-all');
     Route::get('/support/create', 'ClientController@supportCreate')->name('support-create');
     Route::get('/support/{support}', 'ClientController@supportView')->name('support-view');
+
+    Route::post('/message/{support}', 'ClientController@messageStore')->name('message-store');
 });

@@ -15,7 +15,12 @@ class Message extends Model
     public static function rules()
     {
         return [
-            'message' => 'required|string|min:10',
+            'message' => 'required|string|min:5',
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

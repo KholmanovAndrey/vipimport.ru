@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Message;
 use App\Order;
 use App\Parcel;
 use App\Support;
@@ -121,6 +122,28 @@ class ClientController extends Controller
             $support->fill($request->all());
 
             if ($support->save()) {
+                return redirect()->route('client.support-view', $support)
+                    ->with('success', 'Данные успешно добавлены!');
+            }
+
+            return redirect()->route('client.support-create')
+                ->with('success', 'Ошибка добавления данных!');
+        }
+    }
+
+    public function messageStore(Request $request, Support $support)
+    {
+        if ($request->isMethod('post')) {
+            $request->flash();
+
+            $this->validate($request, Message::rules());
+
+            $message = new Message();
+            $message->user_id = Auth::user()->id;
+            $message->support_id = $support->id;
+            $message->fill($request->all());
+
+            if ($message->save()) {
                 return redirect()->route('client.support-view', $support)
                     ->with('success', 'Данные успешно добавлены!');
             }

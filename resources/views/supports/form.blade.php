@@ -88,7 +88,7 @@
 
         <div class="form-group row mb-0">
             <div class="col">
-                <button type="submit" class="btn btn-primary">{{ __('Сохранить') }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Далее') }}</button>
             </div>
         </div>
     </form>
