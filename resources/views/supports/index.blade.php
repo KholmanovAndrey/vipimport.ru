@@ -12,9 +12,11 @@
 
 @section('content')
     <div class="items col-lg-9">
-        <div class="items__btn">
-            <a class="btn btn-danger" href="{{ route('client.support-create') }}">{{ __('Написать в поддержку') }}</a>
-        </div>
+        @if(Auth::user()->hasRole('client'))
+            <div class="items__btn">
+                <a class="btn btn-danger" href="{{ route('support.create') }}">{{ __('Написать в поддержку') }}</a>
+            </div>
+        @endif
         <section>
             <div class="row item-font">
                 <div class="col-sm-2">№</div>
@@ -39,7 +41,7 @@
                     </div>
                     <div class="col-sm-2">
                         <div class="col-sm-2">
-                            <a class="btn btn-danger" href="{{ route('client.support-view', $item) }}">{{ __('Перейти') }}</a>
+                            <a class="btn btn-danger" href="{{ route('support.show', $item) }}">{{ __('Перейти') }}</a>
                         </div>
                     </div>
                 </div>

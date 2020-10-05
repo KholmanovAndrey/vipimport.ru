@@ -24,11 +24,23 @@
             @endforeach
         </div>
 
+        @if(Auth::user()->hasRole('manager') && !$item->manager_id)
+            <form method="POST"
+                  action="{{ route('manager.support-accept', $item) }}">
+                @csrf
+                @method('PUT')
+                <button type="submit" class="btn btn-danger item__link">
+                    {{ __('Принять') }}
+                </button>
+            </form>
+        @endif
+
         <form class="col-lg-9"
               method="POST"
-              action="{{ route('client.message-store', $item) }}">
+              action="{{ route('message.store') }}">
             @csrf
 
+            <input type="hidden" name="support_id" value="{{ $item->id }}">
             <div class="form-group row">
                 <div class="col">
                     <textarea name="message"

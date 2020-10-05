@@ -6,10 +6,12 @@ use App\Order;
 use App\Parcel;
 use App\Policies\ManagerPolicy;
 use App\Status;
+use App\Support;
 use App\User;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Manager;
 
 class ManagerController extends Controller
@@ -243,4 +245,41 @@ class ManagerController extends Controller
 
         return redirect()->route('manager.parcel-my');
     }
+
+    public function supportNew()
+    {
+        $supports = Support::query()->where([
+            ['manager_id', '=', null]
+        ])->get();
+        return view('supports.index', [
+            'supports' => $supports
+        ]);
+    }
+
+    public function supportMy()
+    {
+        $supports = Support::query()->where([
+            ['manager_id', '=', Auth::user()->id]
+        ])->get();
+        return view('supports.index', [
+            'supports' => $supports
+        ]);
+    }
+
+    /**
+     * Функция для принятия запроса в тех. поддержку
+     * @param Request $request
+     * @param Support $support
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function supportAccept(Request $request, Support $support)
+    {
+        if ($request->isMethod('put')) {
+            $support->manager_id = Auth::user()->id;
+            $support->save();
+        }
+
+        return redirect()->back();
+    }
+
 }

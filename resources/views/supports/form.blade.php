@@ -17,7 +17,7 @@
 @section('content')
     <form class="col-lg-9"
           method="POST"
-          action="{{ route('client.support-store') }}">
+          action="{{ route('support.store') }}">
         @csrf
 
         <div class="form-group row">

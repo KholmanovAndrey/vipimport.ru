@@ -36,6 +36,8 @@ Route::resource('/country', 'CountryController')->except('show');
 Route::resource('/city', 'CityController')->except('show');
 Route::resource('/order', 'OrderController');
 Route::resource('/parcel', 'ParcelController');
+Route::resource('/support', 'SupportController');
+Route::resource('/message', 'MessageController');
 
 Route::group([
     'prefix' => 'manager',
@@ -54,6 +56,10 @@ Route::group([
     Route::get('/parcel-show/{parcel}', 'ManagerController@parcelShow')->name('parcel-show');
     Route::put('/parcel-status/{parcel}', 'ManagerController@parcelStatus')->name('parcel-status');
     Route::put('/parcel-transfer/{parcel}', 'ManagerController@parcelTransfer')->name('parcel-transfer');
+    Route::get('/support-new', 'ManagerController@supportNew')->name('support-new');
+    Route::get('/support-my', 'ManagerController@supportMy')->name('support-my');
+    Route::get('/support-view/{support}', 'ManagerController@supportView')->name('support-view');
+    Route::put('/support-accept/{support}', 'ManagerController@supportAccept')->name('support-accept');
 });
 
 Route::group([

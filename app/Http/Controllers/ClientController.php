@@ -84,23 +84,25 @@ class ClientController extends Controller
         return redirect()->back();
     }
 
+
     public function supportAll()
     {
         $supports = Support::query()->where('client_id', '=', Auth::user()->id)->get();
-        return view('clients.support-all', [
+        return view('supports.index', [
             'supports' => $supports
         ]);
     }
 
     public function supportView(Support $support)
     {
-        return view('clients.support-view', [
+        return view('supports.view', [
             'item' => $support
         ]);
     }
 
     public function supportCreate()
     {
+
         $orders = Order::query()->get();
         $parcels = Parcel::query()->get();
         return view('supports.form', [
@@ -119,6 +121,7 @@ class ClientController extends Controller
 
             $support = new Support();
             $support->client_id = Auth::user()->id;
+            $support->manager_id = $this->supportManagerID($request);
             $support->fill($request->all());
 
             if ($support->save()) {
@@ -129,6 +132,19 @@ class ClientController extends Controller
             return redirect()->route('client.support-create')
                 ->with('success', 'Ошибка добавления данных!');
         }
+    }
+
+    private function supportManagerID(Request $request)
+    {
+        if ($request->order_id) {
+            $order = Order::find($request->order_id);
+            return $order->manager_id;
+        }
+        if ($request->parcel_id) {
+            $parcel = Parcel::find($request->parcel_id);
+            return $parcel->manager_id;
+        }
+        return null;
     }
 
     public function messageStore(Request $request, Support $support)

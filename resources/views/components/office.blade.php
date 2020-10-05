@@ -24,6 +24,8 @@
     <a class="dropdown-item" href="{{ route('manager.order-my') }}">{{ __('Мои заказы') }}</a>
     <a class="dropdown-item" href="{{ route('manager.parcel-new') }}">{{ __('Посылки в работу') }}</a>
     <a class="dropdown-item" href="{{ route('manager.parcel-my') }}">{{ __('Мои посылки') }}</a>
+    <a class="dropdown-item" href="{{ route('manager.support-new') }}">{{ __('Запросы в поддрежку') }}</a>
+    <a class="dropdown-item" href="{{ route('manager.support-my') }}">{{ __('Моя поддержка') }}</a>
 @endif
 
 @if(Auth::user()->hasRole('client'))
@@ -43,5 +45,3 @@
 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
 </form>
-
-<a class="btn btn-danger" href="{{ route('client.support-create') }}">{{ __('Написать в поддержку') }}</a>
