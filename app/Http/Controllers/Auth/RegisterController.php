@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -64,10 +65,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        if ($user) {
+            DB::table('user_roles')->insert($this->getData($user->id));
+        }
+
+        return $user;
+    }
+
+    private function getData($user_id)
+    {
+        $data[] = [
+            'user_id' => $user_id,
+            'role_id' => 4
+        ];
+        return $data;
     }
 }
