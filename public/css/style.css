@@ -17,6 +17,13 @@
   padding-bottom: 1rem;
   margin-bottom: 1rem; }
 
+.btn-primary {
+  border-color: #fe696a;
+  background-color: #fe696a; }
+  .btn-primary:hover {
+    border-color: #fe696a;
+    background-color: #fe696a; }
+
 .items__btn {
   margin-bottom: 2rem; }
 .items__footer {
@@ -39,6 +46,17 @@
 .star {
   color: red; }
 
+.slider__text {
+  height: 90%; }
+
+@media (min-width: 992px) {
+  .slider__text {
+    height: 70%;
+    text-align: left; }
+  .slider__title2 {
+    font-size: 5rem; }
+  .slider__p {
+    font-size: 1.2rem; } }
 .footer__link {
   color: rgba(255, 255, 255, 0.65); }
   .footer__link:hover {

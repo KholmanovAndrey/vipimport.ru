@@ -17,6 +17,13 @@
   padding-bottom: 1rem
   margin-bottom: 1rem
 
+.btn-primary
+  border-color: #fe696a
+  background-color: #fe696a
+  &:hover
+    border-color: #fe696a
+    background-color: #fe696a
+
 .items
   &__btn
     margin-bottom: 2rem
@@ -40,6 +47,22 @@
 
 .star
   color: red
+
+
+.slider
+  &__text
+    height: 90%
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px)
+  .slider
+    &__text
+      height: 70%
+      text-align: left
+    &__title2
+      font-size: 5rem
+    &__p
+      font-size: 1.2rem
 
 .footer
   &__link

@@ -109,7 +109,9 @@
         </div>
     </nav>
 
-    <main class="py-4">
+    <main>
+        @section('topbar')
+        @show
         <div class="container">
             <div class="row">
                 @section('sidebar')
