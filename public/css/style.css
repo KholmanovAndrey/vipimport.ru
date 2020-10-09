@@ -46,14 +46,16 @@
 .star {
   color: red; }
 
-.topbar__link {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.65); }
-  .topbar__link:hover {
-    color: #ffffff;
-    text-decoration: none; }
-.topbar__icon {
-  color: #fe696a; }
+.topbar {
+  background-color: #373f50; }
+  .topbar__link {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.65); }
+    .topbar__link:hover {
+      color: #ffffff;
+      text-decoration: none; }
+  .topbar__icon {
+    color: #fe696a; }
 
 .header {
   margin: 0 auto;
@@ -84,16 +86,36 @@
   .search__submit {
     height: 100%; }
 
-.icon {
+.icon__icon {
   width: 40px;
   height: 40px;
   border-radius: 20px;
   background-color: #f3f5f9 !important; }
-  .icon__i {
-    font-size: 1.5rem; }
+.icon__i {
+  font-size: 1.3rem; }
+.icon__box {
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding-left: 0.875rem;
+  transition: color 0.25s ease-in-out;
+  font-size: 0.875rem;
+  text-decoration: none !important;
+  white-space: nowrap; }
+.icon__text1 {
+  margin-bottom: -5px;
+  font-size: 80%;
+  color: #7d879c; }
+.icon__text2 {
+  color: #2b3445; }
+.icon__price {
+  font-size: 100%; }
+.icon:hover .icon__i {
+  color: #fe696a; }
+.icon:hover .icon__text2 {
+  color: #fe696a; }
 
 .navbar .navbar-nav .nav-link {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   color: #4b566b;
   font-size: 1rem;
   font-weight: 600; }

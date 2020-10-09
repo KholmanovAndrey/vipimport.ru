@@ -27,11 +27,11 @@
 <div id="app">
     <header class="header">
         <div class="topbar topbar-dark bg-dark">
-            <div class="container py-1">
+            <div class="container py-2">
                 <a class="topbar__link" href="tel:+100331697720"><i class="topbar__icon czi-support mr-2"></i>(00) 33 169 7720</a>
             </div>
         </div>
-        <div class="container py-4">
+        <div class="container py-3">
             <div class="row align-items-center">
                 <div class="header__col col-md-3 d-none d-md-block">
                     <a class="header__logo" href="{{ url('/') }}"><img width="80%" src="{{ asset('storage/images/logo.png') }}"></a>
@@ -56,13 +56,13 @@
                                 <!-- Authentication Links -->
                                 @guest
                                     <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            <span class="icon d-inline-flex align-items-center justify-content-center mr-1">
+                                        <a id="navbarDropdown" class="icon d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            <span class="icon__icon d-inline-flex align-items-center justify-content-center mr-1">
                                                 <i class="icon__i czi-user"></i>
                                             </span>
-                                            <span class="d-none d-inline-block">
-                                                <span class="d-block">Мои</span>
-                                                <span class="d-block">Аккаунт</span>
+                                            <span class="icon__box d-none d-inline-block">
+                                                <span class="icon__text1 d-block">Мои</span>
+                                                <span class="icon__text2 d-block">Аккаунт</span>
                                             </span>
                                         </a>
 
@@ -75,13 +75,13 @@
                                     </li>
                                 @else
                                     <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="icon d-inline-flex align-items-center justify-content-center mr-1">
+                                        <a id="navbarDropdown" class="icon d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon__icon d-inline-flex align-items-center justify-content-center mr-1">
                                                 <i class="icon__i czi-user"></i>
                                             </span>
-                                            <span class="d-none d-inline-block">
-                                                <span class="d-block">Привет!</span>
-                                                <span class="d-block">{{ Auth::user()->name }}</span>
+                                            <span class="icon__box d-none d-inline-block">
+                                                <span class="icon__text1 d-block">Привет!</span>
+                                                <span class="icon__text2 d-block">{{ Auth::user()->name }}</span>
                                             </span>
                                         </a>
 
@@ -96,13 +96,13 @@
                             <!-- Right Side Of Navbar -->
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <span class="icon d-inline-flex align-items-center justify-content-center mr-1">
+                                    <a id="navbarDropdown" class="icon d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        <span class="icon__icon d-inline-flex align-items-center justify-content-center mr-1">
                                             <i class="icon__i czi-cart"></i>
                                         </span>
-                                        <span class="d-none d-inline-block">
-                                            <span class="d-block">Корзина</span>
-                                            <span class="d-block">10 000 руб.</span>
+                                        <span class="icon__box d-none d-inline-block">
+                                            <span class="icon__text1 d-block">Корзина</span>
+                                            <span class="icon__text2 icon__price d-block">10 000 руб.</span>
                                         </span>
                                     </a>
 
@@ -128,6 +128,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">{{ __('Главная') }}</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ __('Полезная информация') }}
