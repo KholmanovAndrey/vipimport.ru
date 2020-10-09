@@ -13,11 +13,13 @@
                     <h2 class="slider__title1">Добро пожаловать в VIP сервис</h2>
                     <h1 class="slider__title2">товаров из США</h1>
                     <p class="slider__p">Мы организуем приобретение и отправку любых товаров для Вас</p>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn btn-primary">
-                            <span class="czgb-button--inner">{{ __('Зарегистрироваться') }}</span><i class="czi czi-arrow-right ml-2 mr-n1"></i>
-                        </a>
-                    @endif
+                    @guest
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="btn btn-primary">
+                                <span class="czgb-button--inner">{{ __('Зарегистрироваться') }}</span><i class="czi czi-arrow-right ml-2 mr-n1"></i>
+                            </a>
+                        @endif
+                    @endguest
                 </div>
 
             </div>
@@ -30,11 +32,13 @@
                     <h2 class="slider__title1">Начни покупать в США</h2>
                     <h2 class="slider__title2">Прямо сейчас</h2>
                     <p class="slider__p">Миллионы товаров по выгодным ценам выбирай качество, будь в тренде</p>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn btn-primary">
-                            <span class="czgb-button--inner">{{ __('Зарегистрироваться') }}</span><i class="czi czi-arrow-right ml-2 mr-n1"></i>
-                        </a>
-                    @endif
+                    @guest
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="btn btn-primary">
+                                <span class="czgb-button--inner">{{ __('Зарегистрироваться') }}</span><i class="czi czi-arrow-right ml-2 mr-n1"></i>
+                            </a>
+                        @endif
+                    @endguest
                 </div>
 
             </div>
@@ -47,11 +51,13 @@
                     <h2 class="slider__title1">Регистрируйся и заказывай</h2>
                     <h2 class="slider__title2">любые товары из США</h2>
                     <p class="slider__p">Мы берем на себя полностью всю работу по подбору подходящего по Вашей заявки товара, согласуем с Вами, выкупим и отправим в Ваш адрес.</p>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn btn-primary">
-                            <span class="czgb-button--inner">{{ __('Зарегистрироваться') }}</span><i class="czi czi-arrow-right ml-2 mr-n1"></i>
-                        </a>
-                    @endif
+                    @guest
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="btn btn-primary">
+                                <span class="czgb-button--inner">{{ __('Зарегистрироваться') }}</span><i class="czi czi-arrow-right ml-2 mr-n1"></i>
+                            </a>
+                        @endif
+                    @endguest
                 </div>
 
             </div>

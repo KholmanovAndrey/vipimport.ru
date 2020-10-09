@@ -21,13 +21,93 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/cartzilla-icons.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
+    <nav class="header py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="header__col col-md-3 d-none d-md-block">
+                    <a class="header__logo" href="{{ url('/') }}"><img width="80%" src="{{ asset('storage/images/logo.png') }}"></a>
+                </div>
+                <div class="header__col col-md-5">
+                    <form method="post" action="#">
+                        <div class="search row justify-content-start d-none">
+                            <div class="search__col1 col-10 px-0">
+                                <input class="search__text" type="text" name="text" placeholder="Поиск по сайту">
+                            </div>
+                            <div class="search__col2 col-2 px-0">
+                                <button class="search__submit" type="submit" name="submit">Поиск</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="header__col col-md-4">
+                    <div class="row align-items-center">
+                        <div class="header__account col-6 px-0">
+                            <!-- Right Side Of Navbar -->
+                            <ul class="navbar-nav ml-auto">
+                                <!-- Authentication Links -->
+                                @guest
+                                    <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            <span class="icon d-inline-block mr-1">
+                                                <i class="icon__i czi-user"></i>
+                                            </span>
+                                            Мой аккаунт
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('login') }}">{{ __('Вход') }}</a>
+                                            @if (Route::has('register'))
+                                                <a class="dropdown-item" href="{{ route('register') }}">{{ __('Регистрация') }}</a>
+                                            @endif
+                                        </div>
+                                    </li>
+                                @else
+                                    <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            <span class="icon d-inline-block mr-1">
+                                                <i class="icon__i czi-user"></i>
+                                            </span>
+                                            {{ Auth::user()->name }}
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <x-office/>
+                                        </div>
+                                    </li>
+                                    @endguest
+                            </ul>
+                        </div>
+                        <div class="header__basket col-6 px-0">
+                            <!-- Right Side Of Navbar -->
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        <div class="icon d-inline-block mr-1">
+                                            <i class="icon__i czi-cart"></i>
+                                        </div>
+                                        Корзина
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        Корзина пуста
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                VIP IMPORT
+            <a class="navbar-brand d-block d-md-none" href="{{ url('/') }}">
+                <img width="100" src="{{ asset('storage/images/logo.png') }}">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
@@ -80,31 +160,6 @@
                         <a class="nav-link" href="{{ route('contact.view') }}">{{ __('Контакты') }}</a>
                     </li>
                 </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
-                    @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <x-office/>
-                            </div>
-                        </li>
-                        @endguest
-                </ul>
             </div>
         </div>
     </nav>
@@ -112,8 +167,10 @@
     <main>
         @section('topbar')
         @show
+        @section('dashboard')
+        @show
         <div class="container">
-            <div class="row">
+            <div class="row py-4">
                 @section('sidebar')
                 @show
 
@@ -173,7 +230,7 @@
                         <h3 class="footer__title">Будьте в курсе событий</h3>
                         <div>
                             <noscript>Пожалуйста, включите JavaScript в вашем браузере для заполнения данной формы.</noscript>
-                            <form method="post" enctype="multipart/form-data" action="/">
+                            <form method="post" enctype="multipart/form-data" action="#">
                                 <div class="subscribe row justify-content-start">
                                     <div class="subscribe__col1">
                                         <input class="subscribe__email" type="email" name="email" placeholder="E-mail">

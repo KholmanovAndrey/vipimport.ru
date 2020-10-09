@@ -1,6 +1,23 @@
+<?php
+$title = 'Личные данные';
+$breadcrumbs = [
+    [
+        'name' => 'Личный кабинет',
+        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+    ],
+    [
+        'name' => $title,
+        'route' => '',
+    ]
+];
+?>
 @extends('layouts.app')
 
-@section('title', $item->title )
+@section('title', $title )
+
+@section('dashboard')
+    <x-dashboard :title="$title" :breadcrumbs="$breadcrumbs"/>
+@endsection
 
 @section('sidebar')
     @parent
