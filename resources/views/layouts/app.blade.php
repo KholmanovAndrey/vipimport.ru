@@ -55,7 +55,7 @@
                                             <span class="icon d-inline-flex align-items-center justify-content-center mr-1">
                                                 <i class="icon__i czi-user"></i>
                                             </span>
-                                            <span class="d-none d-md-inline-block">
+                                            <span class="d-none d-inline-block">
                                                 <span class="d-block">Мои</span>
                                                 <span class="d-block">Аккаунт</span>
                                             </span>
@@ -74,7 +74,7 @@
                                             <span class="icon d-inline-flex align-items-center justify-content-center mr-1">
                                                 <i class="icon__i czi-user"></i>
                                             </span>
-                                            <span class="d-none d-md-inline-block">
+                                            <span class="d-none d-inline-block">
                                                 <span class="d-block">Привет!</span>
                                                 <span class="d-block">{{ Auth::user()->name }}</span>
                                             </span>
@@ -95,7 +95,7 @@
                                         <span class="icon d-inline-flex align-items-center justify-content-center mr-1">
                                             <i class="icon__i czi-cart"></i>
                                         </span>
-                                        <span class="d-none d-md-inline-block">
+                                        <span class="d-none d-inline-block">
                                             <span class="d-block">Корзина</span>
                                             <span class="d-block">10 000 руб.</span>
                                         </span>
