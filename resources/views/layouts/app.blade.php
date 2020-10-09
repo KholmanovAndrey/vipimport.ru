@@ -26,6 +26,11 @@
 <body>
 <div id="app">
     <header class="header">
+        <div class="topbar topbar-dark bg-dark">
+            <div class="container py-1">
+                <a class="topbar__link" href="tel:+100331697720"><i class="topbar__icon czi-support mr-2"></i>(00) 33 169 7720</a>
+            </div>
+        </div>
         <div class="container py-4">
             <div class="row align-items-center">
                 <div class="header__col col-md-3 d-none d-md-block">
