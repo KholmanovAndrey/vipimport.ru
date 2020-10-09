@@ -47,7 +47,8 @@
   color: red; }
 
 .header {
-  margin: 0 auto; }
+  margin: 0 auto;
+  background-color: #ffffff; }
   .header__account a {
     color: #4b566b; }
   .header__basket a {
@@ -73,6 +74,24 @@
     transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
   .search__submit {
     height: 100%; }
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #f3f5f9 !important; }
+  .icon__i {
+    font-size: 1.5rem; }
+
+.navbar .navbar-nav .nav-link {
+  padding: 1rem;
+  color: #4b566b;
+  font-size: 1rem;
+  font-weight: 600; }
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+  color: #fe696a; }
 
 .slider__text {
   height: 90%; }

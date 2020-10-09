@@ -25,13 +25,13 @@
 </head>
 <body>
 <div id="app">
-    <nav class="header py-4">
-        <div class="container">
+    <header class="header">
+        <div class="container py-4">
             <div class="row align-items-center">
                 <div class="header__col col-md-3 d-none d-md-block">
                     <a class="header__logo" href="{{ url('/') }}"><img width="80%" src="{{ asset('storage/images/logo.png') }}"></a>
                 </div>
-                <div class="header__col col-md-5">
+                <div class="header__col col-md-6">
                     <form method="post" action="#">
                         <div class="search row justify-content-start d-none">
                             <div class="search__col1 col-10 px-0">
@@ -43,7 +43,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="header__col col-md-4">
+                <div class="header__col col-md-3">
                     <div class="row align-items-center">
                         <div class="header__account col-6 px-0">
                             <!-- Right Side Of Navbar -->
@@ -51,11 +51,14 @@
                                 <!-- Authentication Links -->
                                 @guest
                                     <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            <span class="icon d-inline-block mr-1">
+                                        <a id="navbarDropdown" class="d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            <span class="icon d-inline-flex align-items-center justify-content-center mr-1">
                                                 <i class="icon__i czi-user"></i>
                                             </span>
-                                            Мой аккаунт
+                                            <span class="d-none d-md-inline-block">
+                                                <span class="d-block">Мои</span>
+                                                <span class="d-block">Аккаунт</span>
+                                            </span>
                                         </a>
 
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -67,11 +70,14 @@
                                     </li>
                                 @else
                                     <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            <span class="icon d-inline-block mr-1">
+                                        <a id="navbarDropdown" class="d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon d-inline-flex align-items-center justify-content-center mr-1">
                                                 <i class="icon__i czi-user"></i>
                                             </span>
-                                            {{ Auth::user()->name }}
+                                            <span class="d-none d-md-inline-block">
+                                                <span class="d-block">Привет!</span>
+                                                <span class="d-block">{{ Auth::user()->name }}</span>
+                                            </span>
                                         </a>
 
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -85,11 +91,14 @@
                             <!-- Right Side Of Navbar -->
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <div class="icon d-inline-block mr-1">
+                                    <a id="navbarDropdown" class="d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        <span class="icon d-inline-flex align-items-center justify-content-center mr-1">
                                             <i class="icon__i czi-cart"></i>
-                                        </div>
-                                        Корзина
+                                        </span>
+                                        <span class="d-none d-md-inline-block">
+                                            <span class="d-block">Корзина</span>
+                                            <span class="d-block">10 000 руб.</span>
+                                        </span>
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -102,67 +111,66 @@
                 </div>
             </div>
         </div>
-    </nav>
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand d-block d-md-none" href="{{ url('/') }}">
+                    <img width="100" src="{{ asset('storage/images/logo.png') }}">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand d-block d-md-none" href="{{ url('/') }}">
-                <img width="100" src="{{ asset('storage/images/logo.png') }}">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ __('Полезная информация') }}
+                            </a>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ __('Полезная информация') }}
-                        </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(2)) }}">
+                                    {{ __('Информация для клиентов') }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(3)) }}">
+                                    {{ __('Юридическая информация') }}
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ __('Наши услуги') }}
+                            </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(2)) }}">
-                                {{ __('Информация для клиентов') }}
-                            </a>
-                            <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(3)) }}">
-                                {{ __('Юридическая информация') }}
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ __('Наши услуги') }}
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(4)) }}">
-                                {{ __('Запчасти из США') }}
-                            </a>
-                            <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(5)) }}">
-                                {{ __('Техника') }}
-                            </a>
-                            <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(6)) }}">
-                                {{ __('Одежда и Аксессуары') }}
-                            </a>
-                            <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(7)) }}">
-                                {{ __('Электроника') }}
-                            </a>
-                            <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(8)) }}">
-                                {{ __('Товары для дома и офиса') }}
-                            </a>
-                            <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(9)) }}">
-                                {{ __('Другие услуги') }}
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('contact.view') }}">{{ __('Контакты') }}</a>
-                    </li>
-                </ul>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(4)) }}">
+                                    {{ __('Запчасти из США') }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(5)) }}">
+                                    {{ __('Техника') }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(6)) }}">
+                                    {{ __('Одежда и Аксессуары') }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(7)) }}">
+                                    {{ __('Электроника') }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(8)) }}">
+                                    {{ __('Товары для дома и офиса') }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('category.view', \App\Category::find(9)) }}">
+                                    {{ __('Другие услуги') }}
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contact.view') }}">{{ __('Контакты') }}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <main>
         @section('topbar')
