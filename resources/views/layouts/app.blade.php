@@ -27,11 +27,11 @@
 <div id="app">
     <header class="header">
         <div class="topbar topbar-dark bg-dark">
-            <div class="container py-2">
+            <div class="container-fluid py-2">
                 <a class="topbar__link" href="tel:+100331697720"><i class="topbar__icon czi-support mr-2"></i>(00) 33 169 7720</a>
             </div>
         </div>
-        <div class="container py-3">
+        <div class="container-fluid py-3">
             <div class="row align-items-center">
                 <div class="header__col col-md-3 d-none d-md-block">
                     <a class="header__logo" href="{{ url('/') }}"><img width="80%" src="{{ asset('storage/images/logo.png') }}"></a>
@@ -116,8 +116,8 @@
                 </div>
             </div>
         </div>
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+        <div class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container-fluid">
                 <a class="navbar-brand d-block d-md-none" href="{{ url('/') }}">
                     <img width="100" src="{{ asset('storage/images/logo.png') }}">
                 </a>
@@ -185,8 +185,8 @@
         @show
         @section('dashboard')
         @show
-        <div class="container">
-            <div class="row py-4">
+        <div class="container-fluid pb-5 mb-2 mb-md-4">
+            <div class="row">
                 @section('sidebar')
                 @show
 
@@ -196,7 +196,7 @@
     </main>
 
     <footer class="footer bg-dark">
-        <div class="container pt-5">
+        <div class="container-fluid pt-5">
             <div class="row">
                 <div class="footer__nav col-md-4 col-sm-6">
                     <h3 class="footer__title">Магазин</h3>
@@ -264,7 +264,7 @@
         </div>
 
         <div class="pt-5 bg-darker">
-            <div class="container">
+            <div class="container-fluid">
                 {{--<div class="mas-static-content footer-static-content">--}}
                     {{--<div class="icon-block bg-darker">--}}
                         {{--<div class="container">--}}

@@ -1,17 +1,38 @@
+<?php
+$title = $item->title;
+$breadcrumbs = [
+    [
+        'name' => 'Мои аккаунт',
+        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+    ],
+    [
+        'name' => 'Все статьи',
+        'route' => route('articles.index'),
+    ],
+    [
+        'name' => $title,
+        'route' => '',
+    ]
+];
+?>
 @extends('layouts.app')
 
-@section('title', $item->title )
+@section('title', $title)
+
+@section('dashboard')
+    <x-dashboard :title="$title" :breadcrumbs="$breadcrumbs"/>
+@endsection
 
 @section('sidebar')
     @parent
 
-    <div class="sidebar col">
+    <div class="sidebar col-lg-3">
         <x-office/>
     </div>
 @endsection
 
 @section('content')
-    <div class="item col-lg-10">
+    <div class="item col-lg-9">
         <div class="item__btn">
             @auth
                 <a href="{{ route('article.create') }}" class="btn btn-danger item__link">Добавить новую статью</a>

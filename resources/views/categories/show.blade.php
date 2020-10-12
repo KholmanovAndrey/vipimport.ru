@@ -5,7 +5,7 @@
 @section('sidebar')
     @parent
 
-    <div class="sidebar col">
+    <div class="sidebar col-lg-3">
         <div class="list-group">
             @foreach ($categories as $cat)
                 <a href="{{ route('category.show', $cat) }}"

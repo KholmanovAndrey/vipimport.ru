@@ -5,7 +5,7 @@
 @section('sidebar')
     @parent
 
-    <div class="sidebar col">
+    <div class="sidebar col-lg-3">
         <x-office/>
     </div>
 @endsection
