@@ -135,11 +135,10 @@
   padding-bottom: 6.375rem
 .page-title-overlap + *
   position: relative
-  margin-top: -4.875rem
+  margin-top: -7.5rem
   z-index: 5
 .cz-sidebar-static
   width: 100%
-  max-width: 22rem
   background-color: #fff
 .active > .nav-link-style, .is-active > .nav-link-style, .nav-link-style.active, .nav-link-style:hover
   color: #fe696a
@@ -150,6 +149,47 @@
 .slider
   &__text
     height: 90%
+
+.index
+  &-advantages, &-about, &-services, &-reg, &-seo
+    width: 100%
+  &-reg, &-about
+    background-color: #fe696a
+    color: #ffffff
+    padding-top: 8rem
+    padding-bottom: 8rem
+  &-advantages
+    &-title
+      font-size: 3rem
+      padding-bottom: 2rem
+  &-services
+    &-title
+      font-size: 3rem
+    &-title-sub
+      padding-bottom: 2rem
+  &-about
+    &-title
+      font-size: 3rem
+.advantage
+  display: flex
+  flex-direction: column
+  font-size: 1.5rem
+  padding-bottom: 1rem
+  & i
+    font-size: 5rem
+    padding-bottom: 1rem
+    color: #fe696a
+  &-line-through
+    text-decoration: line-through
+.service
+  display: flex
+  flex-direction: column
+  font-size: 1.5rem
+  padding-bottom: 1rem
+  & i
+    font-size: 5rem
+    padding-bottom: 1rem
+    color: #fe696a
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px)

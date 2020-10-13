@@ -185,7 +185,7 @@
         @show
         @section('dashboard')
         @show
-        <div class="container-fluid pb-5 mb-2 mb-md-4">
+        <div class="container-fluid py-5 mb-2 mb-md-4">
             <div class="row">
                 @section('sidebar')
                 @show
@@ -193,6 +193,7 @@
                 @yield('content')
             </div>
         </div>
+        @yield('index')
     </main>
 
     <footer class="footer bg-dark">

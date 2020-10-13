@@ -1,6 +1,23 @@
+<?php
+$title = 'Посылки в работу';
+$breadcrumbs = [
+    [
+        'name' => 'Личный кабинет',
+        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+    ],
+    [
+        'name' => $title,
+        'route' => '',
+    ]
+];
+?>
 @extends('layouts.app')
 
-@section('title', 'Личный кабинет')
+@section('title', $title)
+
+@section('dashboard')
+    <x-dashboard :title="$title" :breadcrumbs="$breadcrumbs"/>
+@endsection
 
 @section('sidebar')
     @parent
@@ -12,6 +29,7 @@
 
 @section('content')
     <div class="items col-lg-9">
+        <x-user-title/>
         <h2>Заказы:</h2>
         <section>
             <div class="row item-font">

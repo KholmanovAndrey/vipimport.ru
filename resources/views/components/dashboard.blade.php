@@ -3,11 +3,11 @@
         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
             <nav>
                 <ol class="breadcrumb breadcrumb-light mt-n1">
-                    <li class="breadcrumb-item d-flex mt-1"><a href="{{ route('home') }}">Главная</a></li>
+                    <li class="breadcrumb-item d-flex mt-1"><a class="nav-link-style" href="{{ route('home') }}">Главная</a></li>
                     @foreach($breadcrumbs as $crumb)
                         <li class="breadcrumb-item d-flex mt-1">
                             @if($crumb['route'])
-                                <a href="{{ $crumb['route'] }}">{{ $crumb['name'] }}</a>
+                                <a class="nav-link-style" href="{{ $crumb['route'] }}">{{ $crumb['name'] }}</a>
                             @else
                                 {{ $crumb['name'] }}
                             @endif

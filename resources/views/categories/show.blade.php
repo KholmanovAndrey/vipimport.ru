@@ -23,6 +23,7 @@
 
 @section('content')
     <div class="item col-lg-9">
+        <x-user-title/>
         <article class="item__article">
             <header><h1 class="item__title">{{ $item->title }}</h1></header>
             <div class="item__text">{{ $item->text }}</div>

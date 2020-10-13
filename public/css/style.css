@@ -132,12 +132,11 @@
 
 .page-title-overlap + * {
   position: relative;
-  margin-top: -4.875rem;
+  margin-top: -7.5rem;
   z-index: 5; }
 
 .cz-sidebar-static {
   width: 100%;
-  max-width: 22rem;
   background-color: #fff; }
 
 .active > .nav-link-style, .is-active > .nav-link-style, .nav-link-style.active, .nav-link-style:hover {
@@ -149,6 +148,45 @@
 
 .slider__text {
   height: 90%; }
+
+.index-advantages, .index-about, .index-services, .index-reg, .index-seo {
+  width: 100%; }
+.index-reg, .index-about {
+  background-color: #fe696a;
+  color: #ffffff;
+  padding-top: 8rem;
+  padding-bottom: 8rem; }
+.index-advantages-title {
+  font-size: 3rem;
+  padding-bottom: 2rem; }
+.index-services-title {
+  font-size: 3rem; }
+.index-services-title-sub {
+  padding-bottom: 2rem; }
+.index-about-title {
+  font-size: 3rem; }
+
+.advantage {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  padding-bottom: 1rem; }
+  .advantage i {
+    font-size: 5rem;
+    padding-bottom: 1rem;
+    color: #fe696a; }
+  .advantage-line-through {
+    text-decoration: line-through; }
+
+.service {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  padding-bottom: 1rem; }
+  .service i {
+    font-size: 5rem;
+    padding-bottom: 1rem;
+    color: #fe696a; }
 
 @media (min-width: 992px) {
   .slider__text {

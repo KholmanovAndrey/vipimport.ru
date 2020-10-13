@@ -1,6 +1,27 @@
+<?php
+$title = $order->title;
+$breadcrumbs = [
+    [
+        'name' => 'Личный кабинет',
+        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+    ],
+    [
+        'name' => 'Мои заказы',
+        'route' => route('manager.order-my'),
+    ],
+    [
+        'name' => $title,
+        'route' => '',
+    ]
+];
+?>
 @extends('layouts.app')
 
-@section('title', 'Личный кабинет')
+@section('title', $title)
+
+@section('dashboard')
+    <x-dashboard :title="$title" :breadcrumbs="$breadcrumbs"/>
+@endsection
 
 @section('sidebar')
     @parent
@@ -12,6 +33,7 @@
 
 @section('content')
     <div class="item col-lg-9">
+        <x-user-title/>
         <h2>Заказы:</h2>
         <div class="item__body">
             <div>

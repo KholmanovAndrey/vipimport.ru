@@ -29,6 +29,7 @@ $breadcrumbs = [
 
 @section('content')
     <div class="items col-lg-9">
+        <x-user-title/>
         <div class="items__btn">
             @auth
                 <a href="{{ route('article.create') }}" class="btn btn-danger items__link">Добавить новую статью</a>

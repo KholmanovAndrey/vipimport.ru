@@ -3,7 +3,7 @@
 @section('title', 'Контактная информация')
 
 @section('content')
-    <div class="items col-10">
+    <div class="items">
         <h1>Контактная информация</h1>
         <p>{!! $article->text !!}</p>
         <section class="items__section row">
