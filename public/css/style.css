@@ -21,11 +21,33 @@
   margin-bottom: 1rem; }
 
 .btn-primary {
-  border-color: #fe696a;
-  background-color: #fe696a; }
-  .btn-primary:hover {
-    border-color: #fe696a;
-    background-color: #fe696a; }
+  color: #fff;
+  background-color: #fe696a;
+  border-color: #fe696a; }
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #fc4a4b;
+  border-color: #fc4a4b; }
+
+.btn-primary.focus, .btn-primary:focus {
+  color: #fff;
+  background-color: #fc4a4b;
+  border-color: #fc4a4b;
+  box-shadow: 0 0 0 0.2rem rgba(252, 74, 75, 0.5); }
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #fe696a;
+  border-color: #fe696a; }
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #fe696a;
+  border-color: #fe696a; }
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(252, 74, 75, 0.5); }
 
 .items__btn {
   margin-bottom: 2rem; }
@@ -187,6 +209,22 @@
     font-size: 5rem;
     padding-bottom: 1rem;
     color: #fe696a; }
+
+.messages {
+  display: flex;
+  flex-direction: column; }
+
+.message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  max-width: 60%; }
+  .message__you {
+    background-color: #3490dc;
+    color: #ffffff;
+    margin-left: 40%; }
+  .message__out {
+    border: 1px solid #3490dc; }
 
 @media (min-width: 992px) {
   .slider__text {

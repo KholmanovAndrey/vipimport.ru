@@ -30,66 +30,70 @@ $breadcrumbs = [
 @section('content')
     <div class="items col-lg-9">
         <x-user-title/>
-        <div class="items__btn">
-            @auth
-                <a href="{{ route('order.create') }}" class="btn btn-danger items__link">Добавить заказ</a>
-            @endauth
-        </div>
-        <section class="items__section">
-            @foreach ($orders as $item)
-                <article class="items__item item-border-bottom">
-                    <header>
-                        <h3 class="items__title">{{ $item->title }}
-                            <span class="badge badge-warning">{{ $item->status->title }}</span>
-                            @if($item->isDeleted)
-                                <span class="badge badge-danger">На удалении</span>
-                            @endif
-                        </h3>
-                    </header>
-                    <div class="items__body">
-                        <div>
-                            @if($item->manager_id !== null)
-                                <div>Ваш менеджер: {{ $item->manager->name }}</div>
-                            @endif
-                            @if($item->parcel_id !== null)
-                                <div>Посылка: {{ $item->parcel['title'] }}</div>
-                            @endif
-                            <div>Дата создания заказа: {{ date('d.m.Y H:i', date_timestamp_get($item->created_at)) }}</div>
-                            <div>Дата обновления заказа: {{ date('d.m.Y H:i', date_timestamp_get($item->updated_at)) }}</div>
-                        </div>
-                        <div>
-                            <div>Количество: {{ $item->count }}</div>
-                            @if($item->link)
-                                <div>Ссылка: <a href="{{ $item->link }}">{{ $item->link }}</a></div>
-                            @endif
-                            @if($item->color)
-                                <div>Ссылка: {{ $item->color }}</div>
-                            @endif
-                            @if($item->size)
-                                <div>Ссылка: {{ $item->size }}</div>
-                            @endif
-                            <p>{{ $item->description }}</p>
-                        </div>
-                    </div>
-                    <footer class="items__footer">
-                        @auth
-                            @can('canEditByStatus', $item)
-                                @can('canDelete', $item)
-                                    <a href="{{ route('order.edit', $item) }}" class="btn btn-danger items__link">Редактировать</a>
-                                    <form method="POST"
-                                          action="{{ route('order.destroy', $item) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger items__link">
-                                            {{ __('Удалить') }}
-                                        </button>
-                                    </form>
+        <div class="card py-4 mb-4">
+            <div class="card-body">
+                <div class="items__btn">
+                    @auth
+                    <a href="{{ route('order.create') }}" class="btn btn-primary items__link">Добавить заказ</a>
+                    @endauth
+                </div>
+                <section class="items__section">
+                    @foreach ($orders as $item)
+                        <article class="items__item item-border-bottom">
+                            <header>
+                                <h3 class="items__title">{{ $item->title }}
+                                    <span class="badge badge-warning">{{ $item->status->title }}</span>
+                                    @if($item->isDeleted)
+                                        <span class="badge badge-danger">На удалении</span>
+                                    @endif
+                                </h3>
+                            </header>
+                            <div class="items__body">
+                                <div>
+                                    @if($item->manager_id !== null)
+                                        <div>Ваш менеджер: {{ $item->manager->name }}</div>
+                                    @endif
+                                    @if($item->parcel_id !== null)
+                                        <div>Посылка: {{ $item->parcel['title'] }}</div>
+                                    @endif
+                                    <div>Дата создания заказа: {{ date('d.m.Y H:i', date_timestamp_get($item->created_at)) }}</div>
+                                    <div>Дата обновления заказа: {{ date('d.m.Y H:i', date_timestamp_get($item->updated_at)) }}</div>
+                                </div>
+                                <div>
+                                    <div>Количество: {{ $item->count }}</div>
+                                    @if($item->link)
+                                        <div>Ссылка: <a href="{{ $item->link }}">{{ $item->link }}</a></div>
+                                    @endif
+                                    @if($item->color)
+                                        <div>Ссылка: {{ $item->color }}</div>
+                                    @endif
+                                    @if($item->size)
+                                        <div>Ссылка: {{ $item->size }}</div>
+                                    @endif
+                                    <p>{{ $item->description }}</p>
+                                </div>
+                            </div>
+                            <footer class="items__footer">
+                                @auth
+                                @can('canEditByStatus', $item)
+                                    @can('canDelete', $item)
+                                        <a href="{{ route('order.edit', $item) }}" class="btn btn-primary items__link">Редактировать</a>
+                                        <form method="POST"
+                                              action="{{ route('order.destroy', $item) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-primary items__link">
+                                                {{ __('Удалить') }}
+                                            </button>
+                                        </form>
+                                    @endcan
                                 @endcan
-                            @endcan
-                        @endauth
-                    </footer>
-                </article>
-            @endforeach
-        </section>
+                                @endauth
+                            </footer>
+                        </article>
+                    @endforeach
+                </section>
+            </div>
+        </div>
     </div>
 @endsection

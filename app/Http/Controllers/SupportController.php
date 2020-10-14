@@ -93,6 +93,8 @@ class SupportController extends Controller
      */
     public function show(Support $support)
     {
+        $this->authorize('view', $support);
+
         return view('supports.view', [
             'item' => $support
         ]);

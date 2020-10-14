@@ -38,6 +38,7 @@ Route::resource('/order', 'OrderController');
 Route::resource('/parcel', 'ParcelController');
 Route::resource('/support', 'SupportController');
 Route::resource('/message', 'MessageController');
+Route::resource('/subscribe', 'SubscribeController')->only('store');
 
 Route::group([
     'prefix' => 'manager',

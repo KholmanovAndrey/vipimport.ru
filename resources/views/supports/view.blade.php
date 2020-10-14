@@ -34,37 +34,35 @@ $breadcrumbs = [
 @section('content')
     <div class="items col-lg-9">
         <x-user-title/>
-        <div>SUP{{ $item->id }}</div>
-        <div>{{ $item->title }}</div>
-
-        <div class="messages">
-            @foreach($item->messages as $message)
-                <div class="message">
-                    <div class="message__user">{{ $message->user->name }}</div>
-                    <div class="message__text">{{ $message->message }}</div>
+        <div class="card py-4 mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <h2 class="col-6 col-md-3">SUP{{ $item->id }}</h2>
+                    <h2 class="col-6 col-md-9">{{ $item->title }}</h2>
                 </div>
-            @endforeach
-        </div>
 
-        @if(Auth::user()->hasRole('manager') && !$item->manager_id)
-            <form method="POST"
-                  action="{{ route('manager.support-accept', $item) }}">
-                @csrf
-                @method('PUT')
-                <button type="submit" class="btn btn-danger item__link">
-                    {{ __('Принять') }}
-                </button>
-            </form>
-        @endif
+                <div class="messages">
+                    @foreach($item->messages as $message)
+                        <div class="message
+                            @if((int)Auth::user()->id === (int)$message->user->id)
+                                message__you
+                            @else
+                                message__out
+                            @endif">
+                            <div class="message__user">{{ $message->user->name }}</div>
+                            <div class="message__text">{{ $message->message }}</div>
+                        </div>
+                    @endforeach
+                </div>
 
-        <form class="col-lg-9"
-              method="POST"
-              action="{{ route('message.store') }}">
-            @csrf
+                <form class="col-lg-9"
+                      method="POST"
+                      action="{{ route('message.store') }}">
+                    @csrf
 
-            <input type="hidden" name="support_id" value="{{ $item->id }}">
-            <div class="form-group row">
-                <div class="col">
+                    <input type="hidden" name="support_id" value="{{ $item->id }}">
+                    <div class="form-group row">
+                        <div class="col">
                     <textarea name="message"
                               id="message"
                               class="form-control @error('message') is-invalid @enderror"
@@ -73,19 +71,21 @@ $breadcrumbs = [
                               cols="30" rows="5"
                               minlength="5"
                     ></textarea>
-                    @error('message')
-                        <span class="invalid-feedback" role="alert">
+                            @error('message')
+                            <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
-                    @enderror
-                </div>
-            </div>
+                            @enderror
+                        </div>
+                    </div>
 
-            <div class="form-group row mb-0">
-                <div class="col">
-                    <button type="submit" class="btn btn-primary">{{ __('Отправить') }}</button>
-                </div>
+                    <div class="form-group row mb-0">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">{{ __('Отправить') }}</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 @endsection

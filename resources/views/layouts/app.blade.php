@@ -225,13 +225,24 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="footer__nav">
                         <h3 class="footer__title">Личный кабинет</h3>
-                        <ul class="footer__menu">
-                            <li><a class="footer__link" href="{{ route('client.index') }}">{{ __('Ваш аккаунт') }}</a></li>
-                            <li><a class="footer__link" href="{{ route('order.index') }}">{{ __('Заказы') }}</a></li>
-                            <li><a class="footer__link" href="{{ route('parcel.index') }}">{{ __('Посылки') }}</li>
-                            <li><a class="footer__link" href="{{ route('client.support-all') }}">{{ __('Поддержка') }}</a></li>
-                            <li><a class="footer__link" href="#">История</a></li>
-                        </ul>
+                        @guest
+                            <ul class="footer__menu">
+                                <li><a class="footer__link" href="{{ route('login') }}">{{ __('Вход') }}</a></li>
+                                @if (Route::has('register'))
+                                    <li><a class="footer__link" href="{{ route('register') }}">{{ __('Регистрация') }}</a></li>
+                                @endif
+                            </ul>
+                        @endguest
+                        @auth
+                            @if(Auth::user()->hasRole('client'))
+                                <ul class="footer__menu">
+                                    <li><a class="footer__link" href="{{ route('client.index') }}">{{ __('Ваш аккаунт') }}</a></li>
+                                    <li><a class="footer__link" href="{{ route('order.index') }}">{{ __('Заказы') }}</a></li>
+                                    <li><a class="footer__link" href="{{ route('parcel.index') }}">{{ __('Посылки') }}</li>
+                                    <li><a class="footer__link" href="{{ route('client.support-all') }}">{{ __('Поддержка') }}</a></li>
+                                </ul>
+                            @endif
+                        @endauth
                     </div>
                     <div class="footer__nav">
                         <h3 class="footer__title">О нас</h3>
@@ -247,7 +258,8 @@
                         <h3 class="footer__title">Будьте в курсе событий</h3>
                         <div>
                             <noscript>Пожалуйста, включите JavaScript в вашем браузере для заполнения данной формы.</noscript>
-                            <form method="post" enctype="multipart/form-data" action="#">
+                            <form method="post" action="{{ route('subscribe.store') }}">
+                                @csrf
                                 <div class="subscribe row justify-content-start">
                                     <div class="subscribe__col1">
                                         <input class="subscribe__email" type="email" name="email" placeholder="E-mail">

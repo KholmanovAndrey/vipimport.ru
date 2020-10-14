@@ -30,6 +30,6 @@ class Profile extends Model
 
     public function country()
     {
-        return $this->belongsTo(Country::class, 'country_id')->first();
+        return $this->belongsTo(Country::class);
     }
 }

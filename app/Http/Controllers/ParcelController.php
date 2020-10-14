@@ -18,11 +18,12 @@ class ParcelController extends Controller
      */
     public function index()
     {
-        $parcels = Parcel::query()->where('user_id', '=', Auth::user()->id)->get();
-        $addresses = Address::query()->where('user_id', '=', Auth::user()->id)->get();
+        $parcels = Parcel::query()
+            ->where('user_id', '=', Auth::user()->id)
+            ->orderByDesc('id')
+            ->get();
         return view('parcels.index', [
             'parcels' => $parcels,
-            'addresses' => $addresses
         ]);
     }
 
@@ -91,12 +92,15 @@ class ParcelController extends Controller
      */
     public function show(Parcel $parcel)
     {
+        $this->authorize('view', $parcel);
+
         $orders = Order::query()
             ->where([
                 ['user_id', '=', Auth::user()->id],
                 ['parcel_id', '=', null],
                 ['isDeleted', '=', 0],
             ])
+            ->orderByDesc('id')
             ->get();
         return view('parcels.show', [
             'item' => $parcel,
@@ -112,6 +116,8 @@ class ParcelController extends Controller
      */
     public function edit(Parcel $parcel)
     {
+        $this->authorize('update', $parcel);
+
         if (!Gate::allows('canEditByStatus', $parcel)) {
             return redirect()->back();
         }
@@ -175,6 +181,8 @@ class ParcelController extends Controller
      */
     public function destroy(Request $request, Parcel $parcel)
     {
+        $this->authorize('delete', $parcel);
+
         if (!Gate::allows('canEditByStatus', $parcel)) {
             return redirect()->back();
         }

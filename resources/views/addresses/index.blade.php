@@ -30,32 +30,30 @@
 @section('content')
     <div class="items col-lg-9">
         <x-user-title/>
-        <div class="items__btn">
-            @auth
-                <a href="{{ route('address.create') }}" class="btn btn-danger items__link">Добавить адрес доставки</a>
-            @endauth
-        </div>
-        <section class="items__section">
-            @foreach ($addresses as $item)
-                <address class="items__item">
-                    <header><h2 class="items__title">{{ $item->city }}{{ $item->street }}{{ $item->building }}</h2></header>
-                    <footer class="items__footer">
-                        @auth
-                            <a href="{{ route('address.edit', $item) }}" class="btn btn-danger items__link">Редактировать</a>
-                            @if($item->category_id !== 1)
+        <div class="card py-4 mb-4">
+            <div class="card-body">
+                <div class="items__btn">
+                    <a href="{{ route('address.create') }}" class="btn btn-primary items__link">Добавить адрес доставки</a>
+                </div>
+                <section class="items__section">
+                    @foreach ($addresses as $item)
+                        <address class="items__item">
+                            <header><h2 class="items__title">{{ $item->city }}{{ $item->street }}{{ $item->building }}</h2></header>
+                            <footer class="items__footer">
+                                <a href="{{ route('address.edit', $item) }}" class="btn btn-primary items__link">Редактировать</a>
                                 <form method="POST"
                                       action="{{ route('address.destroy', $item) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger items__link">
+                                    <button type="submit" class="btn btn-primary items__link">
                                         {{ __('Удалить') }}
                                     </button>
                                 </form>
-                            @endif
-                        @endauth
-                    </footer>
-                </address>
-            @endforeach
-        </section>
+                            </footer>
+                        </address>
+                    @endforeach
+                </section>
+            </div>
+        </div>
     </div>
 @endsection

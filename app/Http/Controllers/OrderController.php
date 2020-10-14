@@ -21,7 +21,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::query()->where('user_id', '=', Auth::user()->id)->get();
+        $orders = Order::query()
+            ->where('user_id', '=', Auth::user()->id)
+            ->orderByDesc('id')
+            ->get();
         return view('orders.index', [
             'orders' => $orders
         ]);
@@ -101,6 +104,8 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $this->authorize('update', $order);
+
         if (!Gate::allows('canEditByStatus', $order) ||
             !Gate::allows('canDelete', $order)) {
             return redirect()->back();
