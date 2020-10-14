@@ -185,8 +185,15 @@
   font-size: 3rem; }
 .index-services-title-sub {
   padding-bottom: 2rem; }
-.index-about-title {
-  font-size: 3rem; }
+.index-about {
+  background: url("../storage/images/about-img.jpg") center center no-repeat;
+  background-size: cover; }
+  .index-about-title {
+    font-size: 3rem; }
+  .index-about-content {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 1rem 2rem;
+    border-radius: 1rem; }
 
 .advantage {
   display: flex;

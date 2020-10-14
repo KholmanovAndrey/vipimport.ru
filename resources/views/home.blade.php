@@ -21,14 +21,14 @@
         </div>
     </section>
 
-    <section class="index-about mb-5 bg-dark">
+    <section class="index-about mb-5">
         <div class="container-fluid">
-            <div class="content">
+            <div class="index-about-content w-50">
                 <div class="headlines">
                     <h2 class="index-about-title">Как мы работаем</h2>
                     <h3 class="index-about-title-sub">Покупаем для вас!</h3>
                 </div>
-                <p class="col-md-4">От Вас требуется только ссылка на товар и деньги, чтоб оплатить покупку и доставку. Не нужно регистрироваться в интернет-магазине, все это мы сделаем за Вас!</p>
+                <p>От Вас требуется только ссылка на товар и деньги, чтоб оплатить покупку и доставку. Не нужно регистрироваться в интернет-магазине, все это мы сделаем за Вас!</p>
                 <p class="button">
                     @guest
                         @if (Route::has('register'))

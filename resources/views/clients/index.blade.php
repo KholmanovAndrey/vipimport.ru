@@ -43,8 +43,3 @@ $breadcrumbs = [
         </div>
     </div>
 @endsection
-<div class="card py-4 mb-4">
-    <div class="card-body">
-
-    </div>
-</div>
