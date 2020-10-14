@@ -23,7 +23,7 @@
 
     <section class="index-about mb-5">
         <div class="container-fluid">
-            <div class="index-about-content w-50">
+            <div class="index-about-content col-md-5">
                 <div class="headlines">
                     <h2 class="index-about-title">Как мы работаем</h2>
                     <h3 class="index-about-title-sub">Покупаем для вас!</h3>
