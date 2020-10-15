@@ -6,7 +6,7 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="{{ asset('storage/images/slider/img1.jpg') }}" class="d-block w-100" alt="...">
+            <img src="{{ asset('public/storage/images/slider/img1.jpg') }}" class="d-block w-100" alt="...">
             <div class="slider__text carousel-caption">
 
                 <div class="slider__description">
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('storage/images/slider/img2.jpg') }}" class="d-block w-100" alt="...">
+            <img src="{{ asset('public/storage/images/slider/img2.jpg') }}" class="d-block w-100" alt="...">
             <div class="slider__text carousel-caption">
 
                 <div class="slider__description">
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('storage/images/slider/img3.jpg') }}" class="d-block w-100" alt="...">
+            <img src="{{ asset('public/storage/images/slider/img3.jpg') }}" class="d-block w-100" alt="...">
             <div class="slider__text carousel-caption">
 
                 <div class="slider__description">

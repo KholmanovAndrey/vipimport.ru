@@ -10,7 +10,7 @@
     <title>@yield('title') - VIP IMPORT</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('public/js/app.js') }}" defer></script>
 @section('scripts')
 @show
 
@@ -19,9 +19,9 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/cartzilla-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/cartzilla-icons.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -34,7 +34,7 @@
         <div class="container-fluid py-3">
             <div class="row align-items-center">
                 <div class="header__col col-md-3 d-none d-md-block">
-                    <a class="header__logo" href="{{ url('/') }}"><img width="80%" src="{{ asset('storage/images/logo.png') }}"></a>
+                    <a class="header__logo" href="{{ url('/') }}"><img width="80%" src="{{ asset('public/storage/images/logo.png') }}"></a>
                 </div>
                 <div class="header__col col-md-6">
                     <form method="post" action="#">
@@ -119,7 +119,7 @@
         <div class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand d-block d-md-none" href="{{ url('/') }}">
-                    <img width="100" src="{{ asset('storage/images/logo.png') }}">
+                    <img width="100" src="{{ asset('public/storage/images/logo.png') }}">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -281,7 +281,7 @@
                 <div class="row pb-2">
                     <div class="col-md-6 text-center text-md-left mb-4">
                         <div class="text-nowrap mb-4">
-                            <img width="50%" src="{{ asset('storage/images/logo.png') }}">
+                            <img width="50%" src="{{ asset('public/storage/images/logo.png') }}">
                         </div>
                         <div class="widget widget-links widget-light">
                             <ul class="footer__menu list-inline mb-0">
@@ -297,15 +297,13 @@
                     <div class="col-md-6 text-center text-md-right mb-4">
                         <div class="mb-3">
                             <ul id="menu-social-media" class="footer__menu list-inline mb-0">
-                                <li class="list-inline-item mr-20"><a title="Twitter" target="_blank" href="https://twitter.com/" class="footer__link"><i class="czi-twitter" aria-hidden="true"></i> Twitter</a></li>
-                                <li class="list-inline-item mr-20"><a title="Facebook" target="_blank" href="https://facebook.com/" class="footer__link"><i class="czi-facebook" aria-hidden="true"></i> Facebook</a></li>
-                                <li class="list-inline-item mr-20"><a title="Instagram" target="_blank" href="https://instagram.com/" class="footer__link"><i class="czi-instagram" aria-hidden="true"></i> Instagram</a></li>
-                                <li class="list-inline-item mr-20"><a title="Pinterest" href="https://pinterest.com" class="footer__link"><i class="czi-pinterest" aria-hidden="true"></i> Pinterest</a></li>
-                                <li class="list-inline-item mr-20"><a title="YouTube" href="https://youtube.com/" class="footer__link"><i class="czi-youtube" aria-hidden="true"></i> YouTube</a></li>
+                                <li class="list-inline-item mr-20"><a title="Facebook" target="_blank" href="https://www.facebook.com/vipimport.ru" class="footer__link"><i class="czi-facebook" aria-hidden="true"></i> Facebook</a></li>
+                                <li class="list-inline-item mr-20"><a title="Instagram" target="_blank" href="https://www.instagram.com/vipimport.ru" class="footer__link"><i class="czi-instagram" aria-hidden="true"></i> Instagram</a></li>
+                                <li class="list-inline-item mr-20"><a title="Vk" href="https://vk.com/marketusa" class="footer__link"><i class="czi-vk" aria-hidden="true"></i> Вконтакте</a></li>
                             </ul>
                         </div>
                         <div class="d-inline-block payment-methods" style="width: 187px">
-                            <img width="100%" src="{{ asset('storage/images/cards-alt.png') }}">
+                            <img width="100%" src="{{ asset('public/storage/images/cards-alt.png') }}">
                             <!-- Global site tag (gtag.js) - Google Analytics -->
                             <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153092867-1"></script>
                             <script>
