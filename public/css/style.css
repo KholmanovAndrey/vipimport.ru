@@ -1,6 +1,10 @@
 .container-fluid {
   max-width: 1260px; }
 
+.content {
+  padding-left: 1rem;
+  padding-right: 1rem; }
+
 .item-font {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;

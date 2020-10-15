@@ -49,7 +49,7 @@
                     </form>
                 </div>
                 <div class="header__col col-md-3">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center justify-content-end">
                         <div class="header__account col-6 px-0">
                             <!-- Right Side Of Navbar -->
                             <ul class="navbar-nav ml-auto">
@@ -92,26 +92,26 @@
                                     @endguest
                             </ul>
                         </div>
-                        <div class="header__basket col-6 px-0">
-                            <!-- Right Side Of Navbar -->
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="icon d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <span class="icon__icon d-inline-flex align-items-center justify-content-center mr-1">
-                                            <i class="icon__i czi-cart"></i>
-                                        </span>
-                                        <span class="icon__box d-none d-inline-block">
-                                            <span class="icon__text1 d-block">Корзина</span>
-                                            <span class="icon__text2 icon__price d-block">10 000 руб.</span>
-                                        </span>
-                                    </a>
+                        {{--<div class="header__basket col-6 px-0">--}}
+                            {{--<!-- Right Side Of Navbar -->--}}
+                            {{--<ul class="navbar-nav ml-auto">--}}
+                                {{--<li class="nav-item dropdown">--}}
+                                    {{--<a id="navbarDropdown" class="icon d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>--}}
+                                        {{--<span class="icon__icon d-inline-flex align-items-center justify-content-center mr-1">--}}
+                                            {{--<i class="icon__i czi-cart"></i>--}}
+                                        {{--</span>--}}
+                                        {{--<span class="icon__box d-none d-inline-block">--}}
+                                            {{--<span class="icon__text1 d-block">Корзина</span>--}}
+                                            {{--<span class="icon__text2 icon__price d-block">10 000 руб.</span>--}}
+                                        {{--</span>--}}
+                                    {{--</a>--}}
 
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        Корзина пуста
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                                    {{--<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">--}}
+                                        {{--Корзина пуста--}}
+                                    {{--</div>--}}
+                                {{--</li>--}}
+                            {{--</ul>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
             </div>
@@ -248,7 +248,6 @@
                         <h3 class="footer__title">О нас</h3>
                         <ul class="footer__menu">
                             <li><a class="footer__link" href="#">О компании</a></li>
-                            <li><a class="footer__link" href="#">Наша команда</a></li>
                             <li><a class="footer__link" href="{{ route('contact.view') }}">{{ __('Контакты') }}</a></li>
                         </ul>
                     </div>
@@ -278,50 +277,6 @@
 
         <div class="pt-5 bg-darker">
             <div class="container-fluid">
-                {{--<div class="mas-static-content footer-static-content">--}}
-                    {{--<div class="icon-block bg-darker">--}}
-                        {{--<div class="container">--}}
-                            {{--<div class="row pb-3">--}}
-                                {{--<div class="col-sm-6 col-md-3 mb-4">--}}
-                                    {{--<div class="media">--}}
-                                        {{--<i class="czi czi-rocket text-primary font-size-36 text-primary"></i>--}}
-                                        {{--<div class="media-body pl-3">--}}
-                                            {{--<div class="font-size-base mb-1 text-light">Fast and free delivery</div>--}}
-                                            {{--<p class="mb-0 font-size-ms opacity-50 text-light">Free delivery for all orders over $200</p>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="col-sm-6 col-md-3 mb-4">--}}
-                                    {{--<div class="media">--}}
-                                        {{--<i class="czi czi-currency-exchange text-primary font-size-36 text-primary"></i>--}}
-                                        {{--<div class="media-body pl-3">--}}
-                                            {{--<div class="font-size-base mb-1 text-light">Money back guarantee</div>--}}
-                                            {{--<p class="mb-0 font-size-ms opacity-50 text-light">We return money within 30 days</p>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="col-sm-6 col-md-3 mb-4">--}}
-                                    {{--<div class="media">--}}
-                                        {{--<i class="czi czi-support text-primary font-size-36 text-primary"></i>--}}
-                                        {{--<div class="media-body pl-3">--}}
-                                            {{--<div class="font-size-base mb-1 text-light">24/7 customer support</div>--}}
-                                            {{--<p class="mb-0 font-size-ms opacity-50 text-light">Friendly 24/7 customer support</p>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="col-sm-6 col-md-3 mb-4">--}}
-                                    {{--<div class="media">--}}
-                                        {{--<i class="czi czi-card text-primary font-size-36 text-primary"></i>--}}
-                                        {{--<div class="media-body pl-3">--}}
-                                            {{--<div class="font-size-base mb-1 text-light">Secure online payment</div>--}}
-                                            {{--<p class="mb-0 font-size-ms opacity-50 text-light">We possess SSL / Secure сertificate</p>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
                 <hr class="hr-light pb-4 mb-3">
                 <div class="row pb-2">
                     <div class="col-md-6 text-center text-md-left mb-4">
@@ -331,13 +286,10 @@
                         <div class="widget widget-links widget-light">
                             <ul class="footer__menu list-inline mb-0">
                                 <li class="list-inline-item mr-20">
-                                    <a class="footer__link" title="Outlets" href="https://usgo.ru/contacts/">Торговые точки</a>
+                                    <a class="footer__link" title="Privacy" href="#">Конфиденциальность</a>
                                 </li>
                                 <li class="list-inline-item mr-20">
-                                    <a class="footer__link" title="Privacy" href="https://usgo.ru/privacy-policy-2/">Конфиденциальность</a>
-                                </li>
-                                <li class="list-inline-item mr-20">
-                                    <a class="footer__link" title="Terms of use" href="https://usgo.ru/terms-conditions/">Условия использования</a>
+                                    <a class="footer__link" title="Terms of use" href="#">Условия использования</a>
                                 </li>
                             </ul>
                         </div>
@@ -354,6 +306,15 @@
                         </div>
                         <div class="d-inline-block payment-methods" style="width: 187px">
                             <img width="100%" src="{{ asset('storage/images/cards-alt.png') }}">
+                            <!-- Global site tag (gtag.js) - Google Analytics -->
+                            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153092867-1"></script>
+                            <script>
+                                window.dataLayer = window.dataLayer || [];
+                                function gtag(){dataLayer.push(arguments);}
+                                gtag('js', new Date());
+
+                                gtag('config', 'UA-153092867-1');
+                            </script>
                         </div>
                     </div>
                 </div>
