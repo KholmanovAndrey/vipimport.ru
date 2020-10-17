@@ -16,6 +16,13 @@ class ArticleController extends Controller
         $this->middleware('role:admin')->except(['show']);
     }
 
+    public function view(Article $article)
+    {
+        return view('articles.view', [
+            'item' => $article
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *

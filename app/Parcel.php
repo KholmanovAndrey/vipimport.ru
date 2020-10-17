@@ -46,4 +46,9 @@ class Parcel extends Model
     {
         return $this->belongsTo(User::class,'user_id','id');
     }
+
+    public function supports()
+    {
+        return $this->hasMany(Support::class, 'parcel_id', 'id');
+    }
 }

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Message;
 use App\Order;
 use App\Parcel;
+use App\Support;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -187,6 +189,27 @@ class ParcelController extends Controller
             return redirect()->back();
         }
 
-        echo 'Удаление посылки. Находиться в разработке!';
+        if ($request->isMethod('delete')) {
+            foreach ($parcel->orders as $orderParcel) {
+                if ($order = Order::find($orderParcel->id)) {
+                    $order->parcel_id = null;
+                    $order->save();
+                }
+            }
+            foreach ($parcel->supports as $supportParcel) {
+                if ($support = Support::find($supportParcel->id)) {
+                    foreach ($support->messages as $messageParcel) {
+                        if ($message = Message::find($messageParcel->id)) {
+                            $message->delete();
+                        }
+                    }
+                    $support->delete();
+                }
+            }
+            if ($parcel->delete()) {
+                return redirect()->route('parcel.index')
+                    ->with('success', 'Данные успешно добавлены!');
+            }
+        }
     }
 }

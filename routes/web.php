@@ -23,7 +23,7 @@ Route::resource('/contact', 'ContactController');
 Route::get('/category/view/{category}', 'CategoryController@view')->name('category.view');
 Route::resource('/category', 'CategoryController');
 
-Route::get('/article/view/{category}', 'ArticleController@view')->name('article.view');
+Route::get('/article/view/{article}', 'ArticleController@view')->name('article.view');
 Route::resource('/article', 'ArticleController');
 
 Route::resource('/profile', 'ProfileController')->except('view');
@@ -74,4 +74,11 @@ Route::group([
     Route::get('/support/{support}', 'ClientController@supportView')->name('support-view');
 
     Route::post('/message/{support}', 'ClientController@messageStore')->name('message-store');
+});
+
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.'
+], function() {
+    Route::get('/', 'AdminController@index')->name('index');
 });

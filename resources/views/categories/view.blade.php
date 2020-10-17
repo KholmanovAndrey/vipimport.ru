@@ -1,6 +1,9 @@
+<?php
+$title = $category->meta_title ?? $category->title;
+?>
 @extends('layouts.app')
 
-@section('title', $category->title )
+@section('title', $title)
 
 @section('content')
     <div class="content">

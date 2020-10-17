@@ -31,10 +31,6 @@
             @endif
 
             @if(Auth::user()->hasRole('admin'))
-                <a class="dropdown-item" href="{{ route('category.index') }}">{{ __('Категории') }}</a>
-                <a class="dropdown-item" href="{{ route('article.index') }}">{{ __('Статьи') }}</a>
-                <a class="dropdown-item" href="{{ route('contact.index') }}">{{ __('Контакты') }}</a>
-                <a class="dropdown-item" href="{{ route('country.index') }}">{{ __('Страны') }}</a>
                 <li class="border-top mb-0">
                     <a href="{{ route('category.index') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
                         <i class="czi-bag align-middle opacity-60 mr-2"></i>Категории

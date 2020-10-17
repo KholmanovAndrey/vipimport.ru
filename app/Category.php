@@ -10,6 +10,9 @@ class Category extends Model
         'title',
         'name',
         'description',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
     ];
 
     public static function rules()
@@ -18,6 +21,9 @@ class Category extends Model
             'title' => 'required|min:5|max:150',
             'name' => 'required|string|min:3|max:150',
             'description' => 'required|string|min:10|max:250',
+            'meta_title' => 'nullable|string|max:150',
+            'meta_description' => 'nullable|string|max:150',
+            'meta_keywords' => 'nullable|string|max:150',
         ];
     }
 

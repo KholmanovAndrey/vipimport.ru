@@ -13,6 +13,9 @@ class Article extends Model
         'name',
         'text',
 //        'image',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
     ];
 
     public static function rules()
@@ -21,11 +24,14 @@ class Article extends Model
         $tableCategory = (new Category())->getTable();
         return [
 //            'user_id' => "required|exists:{$tableUser},id",
-//            'category_id' => "required|exists:{$tableCategory},id",
+            'category_id' => "required|exists:{$tableCategory},id",
             'title' => 'required|min:5|max:150',
             'name' => 'required|string|min:3|max:150',
             'text' => 'required|string|min:10',
-//            'image' => 'mimes:jpeg,bmp,png|max:1000'
+//            'image' => 'mimes:jpeg,bmp,png|max:1000',
+            'meta_title' => 'nullable|string|max:150',
+            'meta_description' => 'nullable|string|max:150',
+            'meta_keywords' => 'nullable|string|max:150',
         ];
     }
 

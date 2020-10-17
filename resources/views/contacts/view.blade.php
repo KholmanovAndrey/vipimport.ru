@@ -1,6 +1,9 @@
+<?php
+$title = $article->meta_title ?? $article->title;
+?>
 @extends('layouts.app')
 
-@section('title', 'Контактная информация')
+@section('title', $title)
 
 @section('content')
     <div class="content w-100">

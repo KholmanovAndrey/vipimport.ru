@@ -247,7 +247,7 @@
                     <div class="footer__nav">
                         <h3 class="footer__title">О нас</h3>
                         <ul class="footer__menu">
-                            <li><a class="footer__link" href="#">О компании</a></li>
+                            <li><a class="footer__link" href="{{ route('article.view', \App\Article::find(2)) }}">О компании</a></li>
                             <li><a class="footer__link" href="{{ route('contact.view') }}">{{ __('Контакты') }}</a></li>
                         </ul>
                     </div>
@@ -286,7 +286,7 @@
                         <div class="widget widget-links widget-light">
                             <ul class="footer__menu list-inline mb-0">
                                 <li class="list-inline-item mr-20">
-                                    <a class="footer__link" title="Privacy" href="#">Конфиденциальность</a>
+                                    <a class="footer__link" title="Privacy" href="{{ route('article.view', \App\Article::find(3)) }}">Конфиденциальность</a>
                                 </li>
                                 <li class="list-inline-item mr-20">
                                     <a class="footer__link" title="Terms of use" href="#">Условия использования</a>
