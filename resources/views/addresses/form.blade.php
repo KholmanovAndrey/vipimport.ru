@@ -42,7 +42,9 @@ $breadcrumbs = [
                     @if ($address->id) @method('PUT') @endif
 
                     <div class="form-group row">
-                        <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Фамилия') }}</label>
+                        <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Фамилия') }}
+                            <span class="star">*</span>
+                        </label>
                         <div class="col-md-6">
                             <input id="lastname"
                                    type="text"
@@ -59,7 +61,8 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Имя') }}</label>
+                        <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Имя') }}
+                            <span class="star">*</span></label>
                         <div class="col-md-6">
                             <input id="firstname"
                                    type="text"
@@ -83,7 +86,7 @@ $breadcrumbs = [
                                    class="form-control @error('othername') is-invalid @enderror"
                                    name="othername"
                                    value="{{ $address->othername ?? old('othername') }}"
-                                   required>
+                                   >
                             @error('othername')
                             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -93,7 +96,9 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="country_id" class="col-md-4 col-form-label text-md-right">{{ __('Страна') }}</label>
+                        <label for="country_id" class="col-md-4 col-form-label text-md-right">{{ __('Страна') }}
+                            <span class="star">*</span>
+                        </label>
                         <div class="col-md-6">
                             <select name="country_id"
                                     id="country_id"
@@ -114,7 +119,10 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="postal_code" class="col-md-4 col-form-label text-md-right">{{ __('Почтовый индекс') }}</label>
+                        <label for="postal_code" class="col-md-4 col-form-label text-md-right">
+                            {{ __('Почтовый индекс') }}
+                            <span class="star">*</span>
+                        </label>
                         <div class="col-md-6">
                             <input id="postal_code"
                                    type="text"
@@ -131,7 +139,10 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="region" class="col-md-4 col-form-label text-md-right">{{ __('Область/край/республика') }}</label>
+                        <label for="region" class="col-md-4 col-form-label text-md-right">
+                            {{ __('Область/край/республика') }}
+                            <span class="star">*</span>
+                        </label>
                         <div class="col-md-6">
                             <input id="region"
                                    type="text"
@@ -148,7 +159,10 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('Город') }}</label>
+                        <label for="city" class="col-md-4 col-form-label text-md-right">
+                            {{ __('Город') }}
+                            <span class="star">*</span>
+                        </label>
                         <div class="col-md-6">
                             <input id="city"
                                    type="text"
@@ -165,7 +179,10 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="street" class="col-md-4 col-form-label text-md-right">{{ __('Улица') }}</label>
+                        <label for="street" class="col-md-4 col-form-label text-md-right">
+                            {{ __('Улица') }}
+                            <span class="star">*</span>
+                        </label>
                         <div class="col-md-6">
                             <input id="street"
                                    type="text"
@@ -182,7 +199,10 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="building" class="col-md-4 col-form-label text-md-right">{{ __('№ здания') }}</label>
+                        <label for="building" class="col-md-4 col-form-label text-md-right">
+                            {{ __('№ здания') }}
+                            <span class="star">*</span>
+                        </label>
                         <div class="col-md-6">
                             <input id="building"
                                    type="text"
@@ -233,14 +253,17 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Телефон') }}</label>
+                        <label for="phone" class="col-md-4 col-form-label text-md-right">
+                            {{ __('Телефон') }}
+                            <span class="star">*</span>
+                        </label>
                         <div class="col-md-6">
                             <input id="phone"
                                    type="text"
                                    class="form-control @error('phone') is-invalid @enderror"
                                    name="phone"
                                    value="{{ $address->phone ?? old('phone') }}"
-                                   required autofocus>
+                                   required>
                             @error('phone')
                             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

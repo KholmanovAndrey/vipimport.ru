@@ -19,7 +19,7 @@ class CreateAddressesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('firstname')->comment('Имя');
             $table->string('lastname')->comment('Фамилия');
-            $table->string('othername')->comment('Отчество');
+            $table->string('othername')->nullable(true)->comment('Отчество');
             $table->integer('country_id')->unsigned();
             $table->foreign('country_id')->references('id')->on('countries');
             $table->string('postal_code')->comment('Почтовый индекс');
