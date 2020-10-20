@@ -101,6 +101,7 @@ class ParcelController extends Controller
                 ['user_id', '=', Auth::user()->id],
                 ['parcel_id', '=', null],
                 ['isDeleted', '=', 0],
+                ['status_id', '=', 5]
             ])
             ->orderByDesc('id')
             ->get();

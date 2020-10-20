@@ -114,7 +114,7 @@ $breadcrumbs = [
                         @method('PUT')
                         <div class="form-group row">
                             <div class="col">
-                                <label for="order_id" class="col-form-label text-md-right">{{ __('Выберете заказы в посылку') }} <span class="star">*</span></label>
+                                <label for="order_id" class="col-form-label text-md-right">{{ __('Выберете заказы в посылку') }} (только заказы со статусом "На складе")</label>
                                 <select name="order_id[]"
                                         id="order_id"
                                         class="form-control @error('order_id') is-invalid @enderror"
@@ -123,7 +123,7 @@ $breadcrumbs = [
                                         required>
                                     @foreach ($orders as $order)
                                         <option {{ $order->id === $item->order_id ? 'selected="selected"' : '' }} value="{{ $order->id }}">
-                                            {{ $order->title }}
+                                            {{ $order->title }} (Статус: {{ $order->status->title }})
                                         </option>
                                     @endforeach
                                 </select>
