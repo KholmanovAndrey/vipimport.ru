@@ -1,9 +1,13 @@
 <?php
 $title = $article->meta_title ?? $article->title;
+$meta_description = $article->meta_description;
+$meta_keywords = $article->meta_keywords;
 ?>
 @extends('layouts.app')
 
 @section('title', $title)
+@section('description', $meta_description)
+@section('keywords', $meta_keywords)
 
 @section('content')
     <div class="content w-100">

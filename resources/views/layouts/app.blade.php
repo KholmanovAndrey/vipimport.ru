@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title') - VIP IMPORT</title>
+    <meta name="description" content="@yield('description')">
+    <meta name="keywords" content="@yield('keywords')">
 
     <!-- Scripts -->
     <script src="{{ asset('public/js/app.js') }}" defer></script>
