@@ -13,7 +13,7 @@ class ArticleController extends Controller
      */
     function __construct()
     {
-        $this->middleware('role:admin')->except(['show']);
+        $this->middleware('role:admin')->except(['show', 'view']);
     }
 
     public function view(Article $article)

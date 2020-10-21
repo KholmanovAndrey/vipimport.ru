@@ -82,3 +82,10 @@ Route::group([
 ], function() {
     Route::get('/', 'AdminController@index')->name('index');
 });
+
+Route::group([
+    'prefix' => 'superAdmin',
+    'as' => 'superAdmin.'
+], function() {
+    Route::get('/', 'SuperAdminController@index')->name('index');
+});
