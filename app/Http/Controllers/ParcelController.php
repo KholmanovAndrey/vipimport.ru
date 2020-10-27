@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Mail\ParcelShipped;
 use App\Message;
 use App\Order;
 use App\Parcel;
@@ -10,6 +11,7 @@ use App\Support;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class ParcelController extends Controller
 {
@@ -77,6 +79,7 @@ class ParcelController extends Controller
 //            echo '<pre>';print_r($parcel->toArray()); echo '</pre>';
 
             if ($parcel->save()) {
+                $this->ship($request, $parcel->id);
                 return redirect()->route('parcel.show', $parcel)
                     ->with('success', 'Данные успешно добавлены!');
             }
@@ -166,6 +169,7 @@ class ParcelController extends Controller
 //            echo '<pre>';print_r($parcel->toArray()); echo '</pre>';
 
             if ($parcel->save()) {
+                $this->ship($request, $parcel->id);
                 return redirect()->route('parcel.show', $parcel)
                     ->with('success', 'Данные успешно добавлены!');
             }
@@ -212,5 +216,21 @@ class ParcelController extends Controller
                     ->with('success', 'Данные успешно добавлены!');
             }
         }
+    }
+
+    /**
+     * Ship the given parcel.
+     *
+     * @param  Request  $request
+     * @param  int  $orderId
+     * @return Response
+     */
+    public function ship(Request $request, $parcelId)
+    {
+        $parcel = Parcel::findOrFail($parcelId);
+
+        // Ship parcel...
+
+        Mail::to($request->user())->send(new ParcelShipped($parcel));
     }
 }

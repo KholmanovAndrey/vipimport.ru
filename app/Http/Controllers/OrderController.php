@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderShipped;
 use App\Order;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -67,6 +69,7 @@ class OrderController extends Controller
                 $order->size = $request->size[$i];
                 $order->description = $request->description[$i];
                 $order->save();
+                $this->ship($request, $order->id);
             }
 
             return redirect()->route('order.index')
@@ -134,6 +137,7 @@ class OrderController extends Controller
             $order->fill($request->all());
 
             if ($order->save()) {
+                $this->ship($request, $order->id);
                 return redirect()->route('order.index')
                     ->with('success', 'Данные успешно изменены!');
             }
@@ -176,5 +180,21 @@ class OrderController extends Controller
             return redirect()->route('order.index')
                 ->with('success', 'Ошибка удаления данных!');
         }
+    }
+
+    /**
+     * Ship the given order.
+     *
+     * @param  Request  $request
+     * @param  int  $orderId
+     * @return Response
+     */
+    public function ship(Request $request, $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        // Ship order...
+
+        Mail::to($request->user())->send(new OrderShipped($order));
     }
 }
