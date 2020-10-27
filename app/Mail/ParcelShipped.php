@@ -38,8 +38,7 @@ class ParcelShipped extends Mailable
      */
     public function build()
     {
-//        $email = Auth::user()->email;
-        $email = 'andrekho@mail.ru';
+        $email = Auth::user()->email;
         return $this->to($email)
             ->from('order@vipimport.ru', 'Посылка № P' . $this->parcel->id . ' - vipimport.ru')
             ->markdown('emails.parcels.shipped', [
