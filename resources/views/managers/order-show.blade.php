@@ -34,11 +34,14 @@ $breadcrumbs = [
 @section('content')
     <div class="item col-lg-9">
         <x-user-title/>
-        <h2>Заказы:</h2>
+        <h2>Заказ</h2>
         <div class="item__body">
             <div>
                 @if($order->manager_id !== null)
                     <div>Менеджер: {{ $order->manager->name }}</div>
+                @endif
+                @if($order->user_id !== null)
+                    <div>Менеджер: {{ $order->user->name }}</div>
                 @endif
                 @if($order->parcel_id !== null)
                     <div>Посылка: {{ $order->parcel['title'] }}</div>
@@ -52,10 +55,10 @@ $breadcrumbs = [
                     <div>Ссылка: <a href="{{ $order->link }}">{{ $order->link }}</a></div>
                 @endif
                 @if($order->color)
-                    <div>Ссылка: {{ $order->color }}</div>
+                    <div>Цвет: {{ $order->color }}</div>
                 @endif
                 @if($order->size)
-                    <div>Ссылка: {{ $order->size }}</div>
+                    <div>Размер: {{ $order->size }}</div>
                 @endif
                 <p>{{ $order->description }}</p>
             </div>
@@ -90,7 +93,10 @@ $breadcrumbs = [
                     required>
                 @foreach ($managers as $manager)
                     <option {{ (int)$manager->id === (int)$order->manager_id ? 'selected="selected"' : '' }} value="{{ $manager->id }}">
-                        {{ $manager->profile['lastname'] }} ({{ $manager->name }})
+                        @if($manager->profile)
+                            {{ $manager->profile->lastname }}
+                        @endif
+                        ({{ $manager->name }})
                     </option>
                 @endforeach
             </select>

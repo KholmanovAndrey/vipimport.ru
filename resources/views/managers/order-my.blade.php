@@ -33,17 +33,21 @@ $breadcrumbs = [
         <h2>Заказы:</h2>
         <section>
             <div class="row item-font">
-                <div class="col-sm-2">№</div>
-                <div class="col-sm-4">Наименование</div>
+                <div class="col-sm-1">№</div>
+                <div class="col-sm-3">Наименование</div>
+                <div class="col-sm-2">Клиент</div>
                 <div class="col-sm-2">Статус</div>
                 <div class="col-sm-2">Кол-во</div>
                 <div class="col-sm-2"></div>
             </div>
             @foreach($orders as $order)
                 <div class="row item-font">
-                    <div class="col-sm-2">Z{{ $order->id }}</div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-1">Z{{ $order->id }}</div>
+                    <div class="col-sm-3">
                         <a href="{{ route('manager.order-show', $order) }}">{{ $order->title }}</a>
+                    </div>
+                    <div class="col-sm-2">
+                        {{ $order->user->name }}
                     </div>
                     <div class="col-sm-2">
                         <span class="badge badge-warning">{{ $order->status->title }}</span>
