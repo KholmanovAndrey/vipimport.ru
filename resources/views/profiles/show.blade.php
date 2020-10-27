@@ -53,7 +53,7 @@ $breadcrumbs = [
 {{--                    <a href="{{ route('password.email') }}" class="btn btn-primary">{{ __('Сменить пароль') }}</a>--}}
 
                     @if (Route::has('password.request'))
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                        <a class="btn btn-primary" href="{{ route('password.request') }}">
                             {{ __('Сменить пароль') }}
                         </a>
                     @endif
