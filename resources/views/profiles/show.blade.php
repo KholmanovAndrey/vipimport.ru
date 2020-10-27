@@ -50,10 +50,8 @@ $breadcrumbs = [
                 </div>
                 <div class="row px-4 mt-4 justify-content-end">
                     <a href="{{ route('profile.edit', $item) }}" class="btn btn-primary mr-2">{{ __('Редактировать') }}</a>
-{{--                    <a href="{{ route('password.email') }}" class="btn btn-primary">{{ __('Сменить пароль') }}</a>--}}
-
                     @if (Route::has('password.request'))
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                        <a class="btn btn-primary" href="{{ route('password.request') }}">
                             {{ __('Сменить пароль') }}
                         </a>
                     @endif

@@ -21,7 +21,7 @@ class Profile extends Model
         return [
             'firstname' => 'required|string|min:3|max:50',
             'lastname' => 'required|string|min:3|max:50',
-            'othername' => 'required|string|min:3|max:50',
+            'othername' => 'nullable|string|max:50',
             'country_id' => "required|exists:{$tableCountry},id",
             'email' => 'required|email',
             'phone' => 'required|string|min:3|max:50',

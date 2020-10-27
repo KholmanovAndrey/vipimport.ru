@@ -38,7 +38,7 @@ $breadcrumbs = [
                     @if ($profile->id) @method('PUT') @endif
 
                     <div class="form-group row">
-                        <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Фамилия') }}</label>
+                        <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Фамилия') }} <span class="star">*</span></label>
                         <div class="col-md-6">
                             <input id="lastname"
                                    type="text"
@@ -55,14 +55,14 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Имя') }}</label>
+                        <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Имя') }} <span class="star">*</span></label>
                         <div class="col-md-6">
                             <input id="firstname"
                                    type="text"
                                    class="form-control @error('firstname') is-invalid @enderror"
                                    name="firstname"
                                    value="{{ $profile->firstname ?? old('firstname') }}"
-                                   required autofocus>
+                                   required>
                             @error('firstname')
                             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -79,7 +79,7 @@ $breadcrumbs = [
                                    class="form-control @error('othername') is-invalid @enderror"
                                    name="othername"
                                    value="{{ $profile->othername ?? old('othername') }}"
-                                   required autofocus>
+                                   >
                             @error('othername')
                             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -89,7 +89,7 @@ $breadcrumbs = [
                     </div>
 
                     <div class="form-group row">
-                        <label for="country_id" class="col-md-4 col-form-label text-md-right">{{ __('Страна') }}</label>
+                        <label for="country_id" class="col-md-4 col-form-label text-md-right">{{ __('Страна') }} <span class="star">*</span></label>
                         <div class="col-md-6">
                             <select name="country_id"
                                     id="country_id"
@@ -103,38 +103,38 @@ $breadcrumbs = [
                             </select>
                             @error('country_id')
                             <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail') }}</label>
+                    <div class="form-group row d-none">
+                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail') }} <span class="star">*</span></label>
                         <div class="col-md-6">
                             <input id="email"
                                    type="email"
                                    class="form-control @error('email') is-invalid @enderror"
                                    name="email"
                                    value="{{ $profile->email ?? (old('email') ?? \Illuminate\Support\Facades\Auth::user()->email) }}"
-                                   required autofocus>
+                                   required>
                             @error('email')
                             <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Телефон') }}</label>
+                        <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Телефон') }} <span class="star">*</span></label>
                         <div class="col-md-6">
                             <input id="phone"
                                    type="text"
                                    class="form-control @error('phone') is-invalid @enderror"
                                    name="phone"
                                    value="{{ $profile->phone ?? old('phone') }}"
-                                   required autofocus>
+                                   >
                             @error('phone')
                             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
