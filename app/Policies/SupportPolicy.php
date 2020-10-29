@@ -30,7 +30,7 @@ class SupportPolicy
      */
     public function view(User $user, Support $support)
     {
-        return (int)$user->id === (int)$support->user_id || (int)$user->id === (int)$support->manager_id;
+        return (int)$user->id === (int)$support->client_id || (int)$user->id === (int)$support->manager_id;
     }
 
     /**

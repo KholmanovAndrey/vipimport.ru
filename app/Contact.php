@@ -21,7 +21,7 @@ class Contact extends Model
             'address' => 'required|string|min:3|max:150',
             'phone' => 'required|string|min:3|max:150',
             'email' => 'required|email|min:3|max:150',
-            'description' => 'required|string|min:10',
+            'description' => 'nullable|string|min:10',
         ];
     }
 }

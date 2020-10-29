@@ -19,7 +19,7 @@ class CreateContactsTable extends Migration
             $table->string('address')->comment('Адрес');
             $table->string('phone')->comment('Телефоны');
             $table->string('email')->comment('E-mail');
-            $table->string('description')->comment('Описание');
+            $table->string('description')->nullable(true)->comment('Описание');
             $table->boolean('isPrivate')->default(false)->comment('Доступ при авторизации');
             $table->timestamps();
         });

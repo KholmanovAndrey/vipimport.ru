@@ -64,7 +64,7 @@ $breadcrumbs = [
                                     <div class="row">
                                         <a class="btn btn-primary mr-2" href="{{ route('support.show', $item) }}">{{ __('Перейти') }}</a>
                                         @if(Auth::user()->hasRole('manager') && !$item->manager_id)
-                                            <form method="POST"
+                                            <form class="row" method="POST"
                                                   action="{{ route('manager.support-accept', $item) }}">
                                                 @csrf
                                                 @method('PUT')
