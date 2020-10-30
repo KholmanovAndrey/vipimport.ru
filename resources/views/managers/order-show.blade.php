@@ -34,7 +34,7 @@ $breadcrumbs = [
 @section('content')
     <div class="item col-lg-9">
         <x-user-title/>
-        <h2>Заказ</h2>
+        <h2>Заказ <span class="badge badge-warning">{{ $order->status->title }}</span></h2>
         <div class="item__body">
             <div>
                 @if($order->manager_id !== null)
