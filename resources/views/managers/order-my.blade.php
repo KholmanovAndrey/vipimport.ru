@@ -47,7 +47,7 @@ $breadcrumbs = [
                         <a href="{{ route('manager.order-show', $order) }}">{{ $order->title }}</a>
                     </div>
                     <div class="col-sm-2">
-                        {{ $order->user->name }}
+                        <a href="{{ route('manager.client-view', $order->user) }}">{{ $order->user->name }}</a>
                     </div>
                     <div class="col-sm-2">
                         <span class="badge badge-warning">{{ $order->status->title }}</span>

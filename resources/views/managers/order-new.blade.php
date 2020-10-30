@@ -44,7 +44,9 @@ $breadcrumbs = [
                 <div class="row item-font">
                     <div class="col-sm-1">Z{{ $order->id }}</div>
                     <div class="col-sm-3">{{ $order->title }}</div>
-                    <div class="col-sm-2">{{ $order->user->name }}</div>
+                    <div class="col-sm-2">
+                        <a href="{{ route('manager.client-view', $order->user) }}">{{ $order->user->name }}</a>
+                    </div>
                     <div class="col-sm-2">
                         <span class="badge badge-warning">{{ $order->status->title }}</span>
                     </div>

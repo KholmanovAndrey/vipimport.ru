@@ -41,7 +41,7 @@ $breadcrumbs = [
                     <div>Менеджер: {{ $order->manager->name }}</div>
                 @endif
                 @if($order->user_id !== null)
-                    <div>Менеджер: {{ $order->user->name }}</div>
+                    <div>Клиент: <a href="{{ route('manager.client-view', $order->user) }}">{{ $order->user->name }}</a></div>
                 @endif
                 @if($order->parcel_id !== null)
                     <div>Посылка: {{ $order->parcel['title'] }}</div>

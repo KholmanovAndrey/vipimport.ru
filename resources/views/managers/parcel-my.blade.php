@@ -33,17 +33,21 @@ $breadcrumbs = [
         <h2>Посылки:</h2>
         <section>
             <div class="row item-font">
-                <div class="col-sm-2">№</div>
-                <div class="col-sm-4">Наименование</div>
+                <div class="col-sm-1">№</div>
+                <div class="col-sm-3">Наименование</div>
+                <div class="col-sm-2">Клиент</div>
                 <div class="col-sm-2">Статус</div>
                 <div class="col-sm-2">Кол-во</div>
                 <div class="col-sm-2"></div>
             </div>
             @foreach($parcels as $parcel)
                 <div class="row item-font">
-                    <div class="col-sm-2">P{{ $parcel->id }}</div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-1">P{{ $parcel->id }}</div>
+                    <div class="col-sm-3">
                         <a href="{{ route('manager.parcel-show', $parcel) }}">{{ $parcel->title }}</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="{{ route('manager.client-view', $parcel->client) }}">{{ $parcel->client->name }}</a>
                     </div>
                     <div class="col-sm-2">
                         <span class="badge badge-warning">{{ $parcel->status->title }}</span>

@@ -282,4 +282,11 @@ class ManagerController extends Controller
         return redirect()->back();
     }
 
+    public function clientView(User $client)
+    {
+        return view('managers.client-view', [
+            'client' => $client
+        ]);
+    }
+
 }

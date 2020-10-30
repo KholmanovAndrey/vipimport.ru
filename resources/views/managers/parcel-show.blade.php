@@ -40,7 +40,7 @@ $breadcrumbs = [
                 </h1></header>
             <div class="item__text row">
                 <div class="col-md-6">
-                    <div class="item__client">Клиент: {{ $parcel->client->name }}</div>
+                    <div class="item__client">Клиент: <a href="{{ route('manager.client-view', $parcel->client) }}">{{ $parcel->client->name }}</a></div>
                     <div>Дата создания: {{ date('d.m.Y H:i', date_timestamp_get($parcel->created_at)) }}</div>
                     <div>Дата обновления: {{ date('d.m.Y H:i', date_timestamp_get($parcel->updated_at)) }}</div>
                     <div class="item__description">{{ $parcel->description }}</div>

@@ -57,6 +57,7 @@ Route::group([
     Route::get('/support-my', 'ManagerController@supportMy')->name('support-my');
     Route::get('/support-view/{support}', 'ManagerController@supportView')->name('support-view');
     Route::put('/support-accept/{support}', 'ManagerController@supportAccept')->name('support-accept');
+    Route::get('/client-view/{client}', 'ManagerController@clientView')->name('client-view');
 });
 
 Route::group([
