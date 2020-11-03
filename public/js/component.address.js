@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ajaxSend(formData)
             .then((response) => {
                 response = JSON.parse(response);
-                select[select.length]= new Option(response.data.city + ', ' + response.data.street, response.data.id, true);
+                select[select.length] = new Option(response.data.city + ', ' + response.data.street, response.data.id, true);
+                select[select.length-1].selected = true;
                 $('#address').modal('hide');
                 console.log(response);
                 form.reset(); // очищаем поля формы
