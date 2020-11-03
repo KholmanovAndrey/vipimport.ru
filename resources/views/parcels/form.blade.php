@@ -71,9 +71,13 @@ $breadcrumbs = [
                             </select>
                             @error('address_id')
                             <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#address">
+                                Добавить адрес
+                            </button>
                         </div>
                     </div>
 
@@ -104,4 +108,6 @@ $breadcrumbs = [
             </div>
         </div>
     </div>
+
+    <x-address/>
 @endsection

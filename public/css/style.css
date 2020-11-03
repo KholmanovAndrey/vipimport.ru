@@ -157,9 +157,7 @@
   padding-bottom: 6.375rem; }
 
 .page-title-overlap + * {
-  position: relative;
-  margin-top: -7.5rem;
-  z-index: 5; }
+  margin-top: -7.5rem; }
 
 .cz-sidebar-static {
   width: 100%;

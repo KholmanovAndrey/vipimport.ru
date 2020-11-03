@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     public $fillable = [
+        'user_id',
         'firstname',
         'lastname',
         'othername',
@@ -27,7 +28,7 @@ class Address extends Model
         return [
             'firstname' => 'required|string|min:3|max:50',
             'lastname' => 'required|string|min:3|max:50',
-            'othername' => 'required|string|min:3|max:50',
+            'othername' => 'nullable|string|max:50',
             'country_id' => "required|exists:{$tableCountry},id",
             'postal_code' => 'required|string|max:50',
             'region' => 'required|string|max:50',
@@ -37,6 +38,15 @@ class Address extends Model
             'body' => 'nullable|string|max:50',
             'apartment' => 'nullable|string|max:50',
             'phone' => 'required|string|min:3|max:50',
+        ];
+    }
+
+    static public function messages()
+    {
+        return [
+            'required' => 'Это поле обязательно для заполнения',
+            'string'  => 'Это поле должно быть строкой',
+            'max'  => 'Это поле должно не может быть больше ',
         ];
     }
 

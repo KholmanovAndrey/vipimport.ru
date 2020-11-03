@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Role
 {
@@ -16,8 +17,11 @@ class Role
      */
     public function handle($request, Closure $next, string $role)
     {
+        if (!$request->user()) {
+            throw new HttpException(401);
+        }
         if (!$request->user()->hasRole($role)) {
-            return redirect('/');
+            throw new HttpException(401);
         }
         return $next($request);
     }

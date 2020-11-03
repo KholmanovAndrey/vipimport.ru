@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Mail;
 
 class ParcelController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('role:client');
+    }
+
     /**
      * Display a addlisting of the resource.
      *

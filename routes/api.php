@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api')->apiResource('tasks', 'Api\TaskController');
+Route::middleware('auth:api')->apiResource('address', 'Api\AddressController')->only('store');
