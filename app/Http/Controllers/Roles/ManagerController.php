@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Roles;
 
+use App\Http\Controllers\Controller;
 use App\Order;
 use App\Parcel;
-use App\Policies\ManagerPolicy;
 use App\Status;
 use App\Support;
 use App\User;

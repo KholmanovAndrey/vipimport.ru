@@ -35,4 +35,14 @@ class Support extends Model
     {
         return $this->hasMany(Message::class, 'support_id', 'id');
     }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class,'manager_id','id');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

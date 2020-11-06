@@ -38,7 +38,8 @@ Route::resource('/subscribe', 'SubscribeController')->only('store');
 
 Route::group([
     'prefix' => 'manager',
-    'as' => 'manager.'
+    'as' => 'manager.',
+    'namespace' => 'Roles'
 ], function() {
     Route::get('/', 'ManagerController@index')->name('index');
     Route::get('/order-new', 'ManagerController@orderNew')->name('order-new');
@@ -62,7 +63,8 @@ Route::group([
 
 Route::group([
     'prefix' => 'client',
-    'as' => 'client.'
+    'as' => 'client.',
+    'namespace' => 'Roles'
 ], function() {
     Route::get('/', 'ClientController@index')->name('index');
     Route::put('/order-add-parcel-id/{parcel}', 'ClientController@orderAddParcelID')->name('order-add-parcel-id');
@@ -79,14 +81,22 @@ Route::group([
 
 Route::group([
     'prefix' => 'admin',
-    'as' => 'admin.'
+    'as' => 'admin.',
+    'namespace' => 'Roles'
 ], function() {
     Route::get('/', 'AdminController@index')->name('index');
 });
 
 Route::group([
     'prefix' => 'superAdmin',
-    'as' => 'superAdmin.'
+    'as' => 'superAdmin.',
+    'namespace' => 'Roles'
 ], function() {
     Route::get('/', 'SuperAdminController@index')->name('index');
+    Route::get('/user-view', 'SuperAdminController@userView')->name('user-view');
+    Route::get('/user-statistic/{user}', 'SuperAdminController@userStatistic')->name('user-statistic');
+//    Route::delete('/user-delete/{user}', 'SuperAdminController@userDelete')->name('user-delete');
+    Route::get('/user-role/{user}', 'SuperAdminController@userRole')->name('user-role');
+    Route::put('/user-role-update/{user}', 'SuperAdminController@userRoleUpdate')->name('user-role-update');
+    Route::get('/statistic', 'SuperAdminController@statistic')->name('statistic');
 });
