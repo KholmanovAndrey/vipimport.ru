@@ -57,7 +57,7 @@ $breadcrumbs = [
                             <th scope="col">Имя</th>
                             <th scope="col">E-mail</th>
                             <th scope="col">Роли</th>
-                            <th scope="col" class="align-middle text-center">Действия</th>
+                            <th scope="col" class="align-middle text-right">Действия</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -72,8 +72,8 @@ $breadcrumbs = [
                                     @endforeach
                                 </td>
                                 <td class="align-middle text-center">
-                                    <div class="d-flex justify-content-center">
-                                        <a href="{{ route('superAdmin.user-role', $item) }}" class="btn btn-primary mr-1" title="Назначение ролей пользователя">
+                                    <div class="d-flex justify-content-end">
+                                        <a href="{{ route('superAdmin.user-role', $item) }}" class="btn btn-primary" title="Назначение ролей пользователя">
                                             <i class="czi-edit align-middle"></i></a>
                                     </div>
                                 </td>

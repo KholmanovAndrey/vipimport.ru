@@ -33,32 +33,43 @@ $breadcrumbs = [
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <div class="items__btn">
-                    @auth
-                    <a href="{{ route('country.create') }}" class="btn btn-danger items__link">Добавить страну</a>
-                    @endauth
+                    <a href="{{ route('country.create') }}" class="btn btn-primary">
+                        <i class="czi-add align-middle"></i> Добавить страну</a>
                 </div>
-                <section class="items__section">
-                    @foreach ($countries as $item)
-                        <address class="items__item">
-                            <header><h2 class="items__title">{{ $item->title }}</h2></header>
-                            <footer class="items__footer">
-                                @auth
-                                <a href="{{ route('country.edit', $item) }}" class="btn btn-danger items__link">Редактировать</a>
-                                @if($item->category_id !== 1)
-                                    <form method="POST"
-                                          action="{{ route('country.destroy', $item) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger items__link">
-                                            {{ __('Удалить') }}
-                                        </button>
-                                    </form>
-                                @endif
-                                @endauth
-                            </footer>
-                        </address>
-                    @endforeach
-                </section>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="align-middle text-center">#</th>
+                            <th scope="col">Имя</th>
+                            <th scope="col" class="align-middle text-right">Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($countries as $item)
+                            <tr>
+                                <th scope="row" class="align-middle text-center">{{ $item->id }}</th>
+                                <td class="align-middle">{{ $item->title }}</td>
+                                <td class="align-middle text-center">
+                                    <div class="d-flex justify-content-end">
+                                        <a href="{{ route('country.edit', $item) }}" class="btn btn-primary mr-1" title="Редактировать">
+                                            <i class="czi-edit align-middle"></i>
+                                        </a>
+                                        <form method="POST"
+                                              action="{{ route('country.destroy', $item) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-primary" title="Удалить">
+                                                <i class="czi-trash align-middle"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
