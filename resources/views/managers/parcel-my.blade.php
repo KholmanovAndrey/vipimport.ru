@@ -30,34 +30,43 @@ $breadcrumbs = [
 @section('content')
     <div class="items col-lg-9">
         <x-user-title/>
-        <h2>Посылки:</h2>
-        <section>
-            <div class="row item-font">
-                <div class="col-sm-1">№</div>
-                <div class="col-sm-3">Наименование</div>
-                <div class="col-sm-2">Клиент</div>
-                <div class="col-sm-2">Статус</div>
-                <div class="col-sm-2">Кол-во</div>
-                <div class="col-sm-2"></div>
-            </div>
-            @foreach($parcels as $parcel)
-                <div class="row item-font">
-                    <div class="col-sm-1">P{{ $parcel->id }}</div>
-                    <div class="col-sm-3">
-                        <a href="{{ route('manager.parcel-show', $parcel) }}">{{ $parcel->title }}</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a href="{{ route('manager.client-view', $parcel->client) }}">{{ $parcel->client->name }}</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <span class="badge badge-warning">{{ $parcel->status->title }}</span>
-                    </div>
-                    <div class="col-sm-2">{{ $parcel->count }}</div>
-                    <div class="col-sm-2">
-                        <a class="btn btn-danger" href="{{ route('manager.parcel-show', $parcel) }}">{{ __('Перейти') }}</a>
-                    </div>
+        <div class="card py-4 mb-4">
+            <div class="card-body">
+                <h2>Мои посылки:</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="align-middle text-center">#</th>
+                            <th scope="col" class="align-middle">Наименование</th>
+                            <th scope="col" class="align-middle text-center d-none d-md-block">Клиент</th>
+                            <th scope="col" class="align-middle text-center">Статус</th>
+                            <th scope="col" class="align-middle text-center">Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($parcels as $item)
+                            <tr>
+                                <th scope="row" class="align-middle text-center">P{{ $item->id }}</th>
+                                <td class="align-middle">{{ $item->title }}</td>
+                                <td class="align-middle text-center d-none d-md-block">
+                                    <a href="{{ route('manager.client-view', $item->client) }}">{{ $item->client->name }}</a>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="badge badge-warning">{{ $item->status->title }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <div class="d-flex justify-content-center">
+                                        <a class="btn btn-primary" href="{{ route('manager.parcel-show', $item) }}" title="Перейти к посылке">
+                                            <i class="czi-document align-middle"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            @endforeach
-        </section>
+            </div>
+        </div>
     </div>
 @endsection

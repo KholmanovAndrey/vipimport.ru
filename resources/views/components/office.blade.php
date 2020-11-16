@@ -73,6 +73,11 @@
                     Менеджер
                 </div>
                 <li class="border-top mb-0">
+                    <a href="{{ route('manager.statistic') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
+                        <i class="czi-list align-middle opacity-60 mr-2"></i>Статистика
+                    </a>
+                </li>
+                <li class="border-top mb-0">
                     <a href="{{ route('manager.order-new') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
                         <i class="czi-bag align-middle opacity-60 mr-2"></i>Новые заказы
                         {{--<span class="font-size-sm text-muted ml-auto">0</span>--}}

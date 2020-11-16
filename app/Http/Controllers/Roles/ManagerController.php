@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Roles;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Parcel;
+use App\Role;
 use App\Status;
 use App\Support;
 use App\User;
@@ -287,6 +288,59 @@ class ManagerController extends Controller
         return view('managers.client-view', [
             'client' => $client
         ]);
+    }
+
+    public function statistic()
+    {
+        $role = Role::find(3);
+        $managers = $role->users;
+        foreach ($managers as $key => $manager) {
+            if ($manager->email === 'andrekho@mail.ru') {
+                unset($managers[$key]);
+            }
+        }
+        $role = Role::find(4);
+        $clients = $role->users;
+
+        $statusOrders = Status::query()->where('table_name', '=', 'orders')->get();
+        $statusParcels = Status::query()->where('table_name', '=', 'parcels')->get();
+
+        return view('managers.statistic', [
+            'managers' => $managers,
+            'clients' => $clients,
+            'statusOrders' => $statusOrders,
+            'statusParcels' => $statusParcels,
+        ]);
+    }
+
+    public function userStatistic(User $user)
+    {
+        if ($user->hasRole('manager')) {
+            $orders = Order::query()->where('manager_id', '=', $user->id)->get();
+            $parcels = Parcel::query()->where('manager_id', '=', $user->id)->get();
+            $supports = Support::query()->where('manager_id', '=', $user->id)->get();
+
+            return view('managers.users.statistic', [
+                'user' => $user,
+                'role' => 'manager',
+                'orders' => $orders,
+                'parcels' => $parcels,
+                'supports' => $supports,
+            ]);
+        }
+        if ($user->hasRole('client')) {
+            $orders = Order::query()->where('user_id', '=', $user->id)->get();
+            $parcels = Parcel::query()->where('user_id', '=', $user->id)->get();
+            $supports = Support::query()->where('client_id', '=', $user->id)->get();
+
+            return view('managers.users.statistic', [
+                'user' => $user,
+                'role' => 'client',
+                'orders' => $orders,
+                'parcels' => $parcels,
+                'supports' => $supports,
+            ]);
+        }
     }
 
 }

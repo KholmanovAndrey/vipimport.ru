@@ -59,6 +59,8 @@ Route::group([
     Route::get('/support-view/{support}', 'ManagerController@supportView')->name('support-view');
     Route::put('/support-accept/{support}', 'ManagerController@supportAccept')->name('support-accept');
     Route::get('/client-view/{client}', 'ManagerController@clientView')->name('client-view');
+    Route::get('/statistic', 'ManagerController@statistic')->name('statistic');
+    Route::get('/user-statistic/{user}', 'ManagerController@userStatistic')->name('user-statistic');
 });
 
 Route::group([
