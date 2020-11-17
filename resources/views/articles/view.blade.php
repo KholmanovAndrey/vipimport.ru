@@ -10,8 +10,8 @@ $meta_keywords = $item->meta_keywords;
 @section('keywords', $meta_keywords)
 
 @section('content')
-    <div class="item col-12">
-        <article class="item__article">
+    <div class="card w-100">
+        <article class="card-body">
             <header><h1 class="item__title">{{ $item->title }}</h1></header>
             <div class="item__text">{!! $item->text !!}</div>
         </article>

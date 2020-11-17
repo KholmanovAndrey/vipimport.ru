@@ -30,7 +30,7 @@
     <header class="header">
         <div class="topbar topbar-dark bg-dark">
             <div class="container-fluid py-2">
-                <a class="topbar__link" href="tel:+100331697720"><i class="topbar__icon czi-support mr-2"></i>(00) 33 169 7720</a>
+                <x-top-phone/>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div class="border-top navbar navbar-expand-md navbar-light bg-light shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand d-block d-md-none" href="{{ url('/') }}">
                     <img width="100" src="{{ asset('public/storage/images/logo.png') }}">
@@ -122,7 +122,7 @@
         @show
         @section('dashboard')
         @show
-        <div class="container-fluid py-5 mb-2 mb-md-4">
+        <div class="container-fluid pt-5">
             <div class="row">
                 @section('sidebar')
                 @show

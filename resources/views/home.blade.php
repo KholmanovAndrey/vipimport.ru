@@ -9,7 +9,7 @@
 @endsection
 
 @section('index')
-    <section class="index-advantages text-center mb-5" id="advantages">
+    <section class="index-advantages text-center my-5" id="advantages">
         <div class="container-fluid">
             <h2 class="index-advantages-title">Наши преимущества</h2>
             <div class="advantages row">
