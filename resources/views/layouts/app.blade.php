@@ -33,96 +33,31 @@
                 <a class="topbar__link" href="tel:+100331697720"><i class="topbar__icon czi-support mr-2"></i>(00) 33 169 7720</a>
             </div>
         </div>
-        <div class="container-fluid py-3">
+
+        <div class="container-fluid py-3 d-none d-md-block">
             <div class="row align-items-center">
-                <div class="header__col col-md-3 d-none d-md-block">
+                <div class="header__col col-md-3">
                     <a class="header__logo" href="{{ url('/') }}"><img width="80%" src="{{ asset('public/storage/images/logo.png') }}"></a>
                 </div>
                 <div class="header__col col-md-6">
-                    <form method="post" action="#">
-                        <div class="search row justify-content-start d-none">
-                            <div class="search__col1 col-10 px-0">
-                                <input class="search__text" type="text" name="text" placeholder="Поиск по сайту">
-                            </div>
-                            <div class="search__col2 col-2 px-0">
-                                <button class="search__submit" type="submit" name="submit">Поиск</button>
-                            </div>
-                        </div>
-                    </form>
+
                 </div>
                 <div class="header__col col-md-3">
-                    <div class="row align-items-center justify-content-end">
-                        <div class="header__account col-6 px-0">
-                            <!-- Right Side Of Navbar -->
-                            <ul class="navbar-nav ml-auto">
-                                <!-- Authentication Links -->
-                                @guest
-                                    <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="icon d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            <span class="icon__icon d-inline-flex align-items-center justify-content-center mr-1">
-                                                <i class="icon__i czi-user"></i>
-                                            </span>
-                                            <span class="icon__box d-none d-inline-block">
-                                                <span class="icon__text1 d-block">Мои</span>
-                                                <span class="icon__text2 d-block">Аккаунт</span>
-                                            </span>
-                                        </a>
-
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="{{ route('login') }}">{{ __('Вход') }}</a>
-                                            @if (Route::has('register'))
-                                                <a class="dropdown-item" href="{{ route('register') }}">{{ __('Регистрация') }}</a>
-                                            @endif
-                                        </div>
-                                    </li>
-                                @else
-                                    <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="icon d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="icon__icon d-inline-flex align-items-center justify-content-center mr-1">
-                                                <i class="icon__i czi-user"></i>
-                                            </span>
-                                            <span class="icon__box d-none d-inline-block">
-                                                <span class="icon__text1 d-block">Привет!</span>
-                                                <span class="icon__text2 d-block">{{ Auth::user()->name }}</span>
-                                            </span>
-                                        </a>
-
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                            <x-office/>
-                                        </div>
-                                    </li>
-                                    @endguest
-                            </ul>
-                        </div>
-                        {{--<div class="header__basket col-6 px-0">--}}
-                            {{--<!-- Right Side Of Navbar -->--}}
-                            {{--<ul class="navbar-nav ml-auto">--}}
-                                {{--<li class="nav-item dropdown">--}}
-                                    {{--<a id="navbarDropdown" class="icon d-flex align-items-center justify-content-center nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>--}}
-                                        {{--<span class="icon__icon d-inline-flex align-items-center justify-content-center mr-1">--}}
-                                            {{--<i class="icon__i czi-cart"></i>--}}
-                                        {{--</span>--}}
-                                        {{--<span class="icon__box d-none d-inline-block">--}}
-                                            {{--<span class="icon__text1 d-block">Корзина</span>--}}
-                                            {{--<span class="icon__text2 icon__price d-block">10 000 руб.</span>--}}
-                                        {{--</span>--}}
-                                    {{--</a>--}}
-
-                                    {{--<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">--}}
-                                        {{--Корзина пуста--}}
-                                    {{--</div>--}}
-                                {{--</li>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                    </div>
+                    <x-header-drop-controls/>
                 </div>
             </div>
         </div>
+
         <div class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand d-block d-md-none" href="{{ url('/') }}">
                     <img width="100" src="{{ asset('public/storage/images/logo.png') }}">
                 </a>
+
+                <div class="d-block d-md-none">
+                    <x-header-drop-controls/>
+                </div>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -179,7 +114,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </div>
     </header>
 
     <main>
