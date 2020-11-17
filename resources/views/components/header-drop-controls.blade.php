@@ -9,7 +9,7 @@
                         <span class="icon__icon d-inline-flex align-items-center justify-content-center">
                             <i class="icon__i czi-user"></i>
                         </span>
-                        <span class="icon__box d-none d-inline-block">
+                        <span class="icon__box d-none d-sm-inline-block">
                             <span class="icon__text1 d-block">Мои</span>
                             <span class="icon__text2 d-block">Аккаунт</span>
                         </span>
@@ -28,7 +28,7 @@
                         <span class="icon__icon d-inline-flex align-items-center justify-content-center">
                             <i class="icon__i czi-user"></i>
                         </span>
-                        <span class="icon__box d-none d-inline-block">
+                        <span class="icon__box d-none d-sm-inline-block">
                             <span class="icon__text1 d-block">Привет!</span>
                             <span class="icon__text2 d-block">{{ Auth::user()->name }}</span>
                         </span>
