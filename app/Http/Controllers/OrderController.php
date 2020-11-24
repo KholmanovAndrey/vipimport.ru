@@ -13,7 +13,7 @@ class OrderController extends Controller
 {
     function __construct()
     {
-        $this->middleware('role:client');
+//        $this->middleware('role:client');
     }
 
     /**
@@ -138,6 +138,12 @@ class OrderController extends Controller
 
             if ($order->save()) {
                 $this->ship($request, $order->id);
+
+                if (Auth::user()->hasRole('superAdmin')) {
+                    return redirect()->route('superAdmin.user-order', $order->user_id)
+                        ->with('success', 'Данные успешно изменены!');
+                }
+
                 return redirect()->route('order.index')
                     ->with('success', 'Данные успешно изменены!');
             }
@@ -156,10 +162,6 @@ class OrderController extends Controller
      */
     public function destroy(Request $request, Order $order)
     {
-        if (status((int)$order->status_id)) {
-            return redirect()->back();
-        }
-
         if ($request->isMethod('delete')) {
             $request->flash();
 

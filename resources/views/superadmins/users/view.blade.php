@@ -55,7 +55,7 @@ $breadcrumbs = [
                         <tr>
                             <th scope="col" class="align-middle text-center">#</th>
                             <th scope="col">Имя</th>
-                            <th scope="col">E-mail</th>
+                            <th scope="col">ФИО</th>
                             <th scope="col">Роли</th>
                             <th scope="col" class="align-middle text-right">Действия</th>
                         </tr>
@@ -65,7 +65,7 @@ $breadcrumbs = [
                             <tr>
                                 <th scope="row" class="align-middle text-center">{{ $item->id }}</th>
                                 <td class="align-middle">{{ $item->name }}</td>
-                                <td class="align-middle">{{ $item->email }}</td>
+                                <td class="align-middle">{{ $item->profile['lastname'] }} {{ $item->profile['firstname'] }} {{ $item->profile['othername'] }}</td>
                                 <td class="align-middle">
                                     @foreach($item->roles as $role)
                                         {{ $role->name }}<br/>
@@ -73,6 +73,10 @@ $breadcrumbs = [
                                 </td>
                                 <td class="align-middle text-center">
                                     <div class="d-flex justify-content-end">
+                                        <a href="{{ route('superAdmin.user-order', $item) }}" class="btn btn-primary mr-2" title="Заказы пользователя">
+                                            <i class="czi-bag align-middle"></i></a>
+                                        <a href="{{ route('superAdmin.user-parcel', $item) }}" class="btn btn-primary mr-2" title="Посылки пользователя">
+                                            <i class="czi-basket align-middle"></i></a>
                                         <a href="{{ route('superAdmin.user-role', $item) }}" class="btn btn-primary" title="Назначение ролей пользователя">
                                             <i class="czi-edit align-middle"></i></a>
                                     </div>

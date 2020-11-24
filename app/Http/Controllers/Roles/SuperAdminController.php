@@ -140,4 +140,26 @@ class SuperAdminController extends Controller
 
         return redirect()->back();
     }
+
+    public function userOrder(User $user)
+    {
+        $orders = Order::query()
+            ->where('user_id', '=', $user->id)
+            ->get();
+        return view('superadmins.users.order', [
+            'orders' => $orders,
+            'user' => $user
+        ]);
+    }
+
+    public function userParcel(User $user)
+    {
+        $parcels = Parcel::query()
+            ->where('user_id', '=', $user->id)
+            ->get();
+        return view('superadmins.users.parcel', [
+            'parcels' => $parcels,
+            'user' => $user
+        ]);
+    }
 }

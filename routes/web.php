@@ -30,8 +30,8 @@ Route::resource('/profile', 'ProfileController')->except('view');
 Route::resource('/address', 'AddressController')->except('show');
 Route::resource('/country', 'CountryController')->except('show');
 Route::resource('/city', 'CityController')->except('show');
-Route::resource('/order', 'OrderController');
-Route::resource('/parcel', 'ParcelController');
+Route::middleware('role:client')->resource('/order', 'OrderController');
+Route::middleware('role:client')->resource('/parcel', 'ParcelController');
 Route::resource('/support', 'SupportController');
 Route::resource('/message', 'MessageController');
 Route::resource('/subscribe', 'SubscribeController')->only('store');
@@ -92,7 +92,8 @@ Route::group([
 Route::group([
     'prefix' => 'superAdmin',
     'as' => 'superAdmin.',
-    'namespace' => 'Roles'
+    'namespace' => 'Roles',
+    'middleware' => 'role:superAdmin'
 ], function() {
     Route::get('/', 'SuperAdminController@index')->name('index');
     Route::get('/user-view', 'SuperAdminController@userView')->name('user-view');
@@ -101,4 +102,9 @@ Route::group([
     Route::get('/user-role/{user}', 'SuperAdminController@userRole')->name('user-role');
     Route::put('/user-role-update/{user}', 'SuperAdminController@userRoleUpdate')->name('user-role-update');
     Route::get('/statistic', 'SuperAdminController@statistic')->name('statistic');
+    Route::get('/user-order/{user}', 'SuperAdminController@userOrder')->name('user-order');
+    Route::get('/user-parcel/{user}', 'SuperAdminController@userParcel')->name('user-parcel');
+
+    Route::resource('/order', 'OrderController');
+    Route::resource('/parcel', 'ParcelController');
 });

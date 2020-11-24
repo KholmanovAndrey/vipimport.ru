@@ -36,7 +36,7 @@ $breadcrumbs = [
         <x-user-title/>
         <div class="card py-4 mb-4">
             <div class="card-body">
-                <h1>{{ $user->email }}</h1>
+                <h1>{{ $user->email }} ({{ $user->profile['lastname'] }} {{ $user->profile['firstname'] }} {{ $user->profile['othername'] }})</h1>
                 <form method="post" action="{{ route('superAdmin.user-role-update', $user) }}">
                     @csrf
                     @method('PUT')

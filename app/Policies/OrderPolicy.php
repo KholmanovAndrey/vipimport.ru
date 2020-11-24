@@ -53,7 +53,7 @@ class OrderPolicy
      */
     public function update(User $user, Order $order)
     {
-        return (int)$user->id === (int)$order->user_id;
+        return (int)$user->id === (int)$order->user_id || $user->hasRole('superAdmin');
     }
 
     /**
@@ -65,7 +65,7 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order)
     {
-        return (int)$user->id === (int)$order->user_id;
+        return (int)$user->id === (int)$order->user_id || $user->hasRole('superAdmin');
     }
 
     /**
@@ -99,10 +99,14 @@ class OrderPolicy
      */
     public function canEditByStatus(User $user, Order $order)
     {
+        if ($user->hasRole('superAdmin')) {
+            return true;
+        }
+
         $allowedStatuses = [1];
 
         foreach ($allowedStatuses as $item) {
-            if ((int)$order->status_id === (int)$item) {
+            if ((int)$order->status_id === (int)$item && ($user->hasRole('superAdmin') || $user->hasRole('client'))) {
                 return true;
             }
         }
@@ -118,6 +122,10 @@ class OrderPolicy
      */
     public function canDelete(User $user, Order $order)
     {
+        if ($user->hasRole('superAdmin')) {
+            return true;
+        }
+
         return !$order->isDeleted;
     }
 }

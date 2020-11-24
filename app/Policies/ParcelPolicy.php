@@ -30,7 +30,7 @@ class ParcelPolicy
      */
     public function view(User $user, Parcel $parcel)
     {
-        return (int)$user->id === (int)$parcel->user_id;
+        return (int)$user->id === (int)$parcel->user_id  || $user->hasRole('superAdmin');
     }
 
     /**
@@ -53,7 +53,7 @@ class ParcelPolicy
      */
     public function update(User $user, Parcel $parcel)
     {
-        return (int)$user->id === (int)$parcel->user_id;
+        return (int)$user->id === (int)$parcel->user_id  || $user->hasRole('superAdmin');
     }
 
     /**
@@ -65,7 +65,7 @@ class ParcelPolicy
      */
     public function delete(User $user, Parcel $parcel)
     {
-        return (int)$user->id === (int)$parcel->user_id;
+        return (int)$user->id === (int)$parcel->user_id  || $user->hasRole('superAdmin');
     }
 
     /**

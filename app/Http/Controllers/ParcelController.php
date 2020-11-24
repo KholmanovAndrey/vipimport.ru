@@ -103,10 +103,9 @@ class ParcelController extends Controller
     public function show(Parcel $parcel)
     {
         $this->authorize('view', $parcel);
-
         $orders = Order::query()
             ->where([
-                ['user_id', '=', Auth::user()->id],
+                ['user_id', '=', $parcel->user_id],
                 ['parcel_id', '=', null],
                 ['isDeleted', '=', 0],
                 ['status_id', '=', 5]
@@ -157,7 +156,6 @@ class ParcelController extends Controller
             $parcel->address_id = (int)$request->address_id;
             $parcel->title = $request->title;
             $parcel->description = $request->description;
-            $parcel->user_id = Auth::user()->id;
             $address = Address::query()->where('id', '=', (int)$request->address_id)->first();
             $fio = "{$address->lastname} {$address->firstname} {$address->othername}";
             $parcel->fio = trim($fio);
