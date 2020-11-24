@@ -112,35 +112,6 @@ class SuperAdminController extends Controller
 //        return redirect()->back();
 //    }
 
-    public function userRole(User $user)
-    {
-        $roles = Role::all();
-        return view('superadmins.users.role', [
-            'user' => $user,
-            'roles' => $roles
-        ]);
-    }
-
-    public function userRoleUpdate(Request $request, User $user)
-    {
-        if ($request->isMethod('put')) {
-            if($request->role) {
-                DB::table('user_roles')->where('user_id', '=', $user->id)->delete();
-
-                $data = array();
-                foreach($request->role as $role){
-                    $data[] = [
-                        'user_id' => (int)$user->id,
-                        'role_id' => (int)$role,
-                    ];
-                }
-                DB::table('user_roles')->insert($data);
-            }
-        }
-
-        return redirect()->back();
-    }
-
     public function userOrder(User $user)
     {
         $orders = Order::query()

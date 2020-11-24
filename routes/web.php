@@ -92,15 +92,18 @@ Route::group([
 Route::group([
     'prefix' => 'superAdmin',
     'as' => 'superAdmin.',
-    'namespace' => 'Roles',
     'middleware' => 'role:superAdmin'
 ], function() {
-    Route::get('/', 'SuperAdminController@index')->name('index');
+    Route::resource('/user', 'UserController');
+    Route::get('/user/{user}/role', 'UserController@role')->name('user.role');
+    Route::put('/user/{user}/role/update', 'UserController@roleUpdate')->name('user.role.update');
+
+
+
+    Route::get('/', 'Roles\SuperAdminController@index')->name('index');
     Route::get('/user-view', 'SuperAdminController@userView')->name('user-view');
     Route::get('/user-statistic/{user}', 'SuperAdminController@userStatistic')->name('user-statistic');
 //    Route::delete('/user-delete/{user}', 'SuperAdminController@userDelete')->name('user-delete');
-    Route::get('/user-role/{user}', 'SuperAdminController@userRole')->name('user-role');
-    Route::put('/user-role-update/{user}', 'SuperAdminController@userRoleUpdate')->name('user-role-update');
     Route::get('/statistic', 'SuperAdminController@statistic')->name('statistic');
     Route::get('/user-order/{user}', 'SuperAdminController@userOrder')->name('user-order');
     Route::get('/user-parcel/{user}', 'SuperAdminController@userParcel')->name('user-parcel');
