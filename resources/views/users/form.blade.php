@@ -59,29 +59,31 @@ $breadcrumbs = [
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col">
-                            <label for="email" class="col-form-label text-md-right">{{ __('E-mail') }} <span class="star">*</span></label>
-                            <input id="email"
-                                   type="text"
-                                   class="form-control @error('email') is-invalid @enderror"
-                                   name="email"
-                                   value="{{ $user->email ?? old('email') }}"
-                                   placeholder="E-mail"
-                                   required>
-                            @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                    @if (!$user->id)
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="email" class="col-form-label text-md-right">{{ __('E-mail') }} <span class="star">*</span></label>
+                                <input id="email"
+                                       type="text"
+                                       class="form-control @error('email') is-invalid @enderror"
+                                       name="email"
+                                       value="{{ $user->email ?? old('email') }}"
+                                       placeholder="E-mail"
+                                       required>
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <div class="form-group row">
                         <div class="col">
                             <label for="password" class="col-form-label text-md-right">{{ __('Пароль') }} <span class="star">*</span></label>
                             <input id="password"
-                                   type="text"
+                                   type="password"
                                    class="form-control @error('password') is-invalid @enderror"
                                    name="password"
                                    value=""
@@ -97,15 +99,15 @@ $breadcrumbs = [
 
                     <div class="form-group row">
                         <div class="col">
-                            <label for="confirm" class="col-form-label text-md-right">{{ __('Повторите пароль') }} <span class="star">*</span></label>
-                            <input id="confirm"
-                                   type="text"
-                                   class="form-control @error('confirm') is-invalid @enderror"
-                                   name="confirm"
+                            <label for="password_confirmation" class="col-form-label text-md-right">{{ __('Повторите пароль') }} <span class="star">*</span></label>
+                            <input id="password_confirmation"
+                                   type="password"
+                                   class="form-control @error('password_confirmation') is-invalid @enderror"
+                                   name="password_confirmation"
                                    value=""
                                    placeholder="Повторите пароль"
                                    required>
-                            @error('confirm')
+                            @error('password_confirmation')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

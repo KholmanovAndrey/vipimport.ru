@@ -33,13 +33,8 @@
                     <div id="collapse1" class="collapse mt-0 pt-0" aria-labelledby="heading1" data-parent="#accordionExample">
                         <ul class="list-unstyled mb-0">
                             <li class="border-top mb-0">
-                                <a href="{{ route('superAdmin.user-view') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
-                                    <i class="czi-user align-middle opacity-60 mr-2"></i>Пользователи
-                                </a>
-                            </li>
-                            <li class="border-top mb-0">
                                 <a href="{{ route('superAdmin.user.index') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
-                                    <i class="czi-user align-middle opacity-60 mr-2"></i>Пользователи New
+                                    <i class="czi-user align-middle opacity-60 mr-2"></i>Пользователи
                                 </a>
                             </li>
                             <li class="border-top mb-0">

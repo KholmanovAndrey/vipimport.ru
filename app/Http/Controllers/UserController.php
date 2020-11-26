@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -57,7 +59,26 @@ class UserController extends Controller
         $this->authorize('create', User::class);
 
         if ($request->isMethod('post')) {
+            $request->flash();
 
+            $this->validate($request, User::rulesCreate());
+
+            $user = User::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                'api_token' => Str::random(60)
+            ]);
+
+            if ($user) {
+                DB::table('user_roles')->insert([
+                    'user_id' => $user->id,
+                    'role_id' => 4
+                ]);
+            }
+
+            return redirect()->route('superAdmin.user.index', $user)
+                ->with('success', 'Данные успешно добавлены!');
         }
     }
 
@@ -102,7 +123,16 @@ class UserController extends Controller
         $this->authorize('update', $user);
 
         if ($request->isMethod('put')) {
+            $request->flash();
 
+            $this->validate($request, User::rulesUpdate());
+
+            $user->fill($request->all());
+            $user->password = Hash::make($request['password']);
+            $user->save();
+
+            return redirect()->route('superAdmin.user.index', $user)
+                ->with('success', 'Данные успешно добавлены!');
         }
     }
 

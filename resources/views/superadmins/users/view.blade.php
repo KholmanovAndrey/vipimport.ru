@@ -77,8 +77,6 @@ $breadcrumbs = [
                                             <i class="czi-bag align-middle"></i></a>
                                         <a href="{{ route('superAdmin.user-parcel', $item) }}" class="btn btn-primary mr-2" title="Посылки пользователя">
                                             <i class="czi-basket align-middle"></i></a>
-                                        <a href="{{ route('superAdmin.user-role', $item) }}" class="btn btn-primary" title="Назначение ролей пользователя">
-                                            <i class="czi-edit align-middle"></i></a>
                                     </div>
                                 </td>
                             </tr>

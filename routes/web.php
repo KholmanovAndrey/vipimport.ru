@@ -101,12 +101,12 @@ Route::group([
 
 
     Route::get('/', 'Roles\SuperAdminController@index')->name('index');
-    Route::get('/user-view', 'SuperAdminController@userView')->name('user-view');
-    Route::get('/user-statistic/{user}', 'SuperAdminController@userStatistic')->name('user-statistic');
+    Route::get('/user-view', 'Roles\SuperAdminController@userView')->name('user-view');
+    Route::get('/user-statistic/{user}', 'Roles\SuperAdminController@userStatistic')->name('user-statistic');
 //    Route::delete('/user-delete/{user}', 'SuperAdminController@userDelete')->name('user-delete');
-    Route::get('/statistic', 'SuperAdminController@statistic')->name('statistic');
-    Route::get('/user-order/{user}', 'SuperAdminController@userOrder')->name('user-order');
-    Route::get('/user-parcel/{user}', 'SuperAdminController@userParcel')->name('user-parcel');
+    Route::get('/statistic', 'Roles\SuperAdminController@statistic')->name('statistic');
+    Route::get('/user-order/{user}', 'Roles\SuperAdminController@userOrder')->name('user-order');
+    Route::get('/user-parcel/{user}', 'Roles\SuperAdminController@userParcel')->name('user-parcel');
 
     Route::resource('/order', 'OrderController');
     Route::resource('/parcel', 'ParcelController');
