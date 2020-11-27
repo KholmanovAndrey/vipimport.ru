@@ -33,26 +33,90 @@
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <div class="items__btn">
-                    <a href="{{ route('address.create') }}" class="btn btn-primary items__link">Добавить адрес доставки</a>
+                    <a href="@if(Auth::user()->hasRole('superAdmin'))
+                        {{ route('superAdmin.address.create') }}
+                    @elseif(Auth::user()->hasRole('client'))
+                        {{ route('address.create') }}
+                    @endif" class="btn btn-primary items__link">
+                        <i class="czi-add align-middle"></i> Добавить адрес доставки</a>
                 </div>
-                <section class="items__section">
-                    @foreach ($addresses as $item)
-                        <address class="items__item">
-                            <header><h2 class="items__title">{{ $item->city }}{{ $item->street }}{{ $item->building }}</h2></header>
-                            <footer class="items__footer">
-                                <a href="{{ route('address.edit', $item) }}" class="btn btn-primary items__link">Редактировать</a>
-                                <form method="POST"
-                                      action="{{ route('address.destroy', $item) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-primary items__link">
-                                        {{ __('Удалить') }}
-                                    </button>
-                                </form>
-                            </footer>
-                        </address>
-                    @endforeach
-                </section>
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="align-middle text-center">#</th>
+                            <th scope="col">Клиент</th>
+                            <th scope="col">Адрес</th>
+                            <th scope="col" class="align-middle text-right">Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($addresses as $item)
+                            <tr>
+                                <th scope="row" class="align-middle text-center">{{ $item->id }}</th>
+                                <td class="align-middle">
+                                    @if($item->client)
+                                        {{ $item->client->name }}
+                                    @endif
+                                </td>
+                                <td class="align-middle">
+                                    {{ $item->postal_code }},
+                                    {{ $item->region }},
+                                    {{ $item->city }},
+                                    {{ $item->street }},
+                                    {{ $item->building }}
+                                    @if($item->body), кор. {{ $item->body }}@endif
+                                    @if($item->apartment), кв. {{ $item->apartment }}@endif
+                                </td>
+                                <td class="align-middle text-center">
+                                    <div class="d-flex justify-content-end">
+                                        <a href="@if(Auth::user()->hasRole('superAdmin'))
+                                            {{ route('superAdmin.address.show', $item) }}
+                                        @elseif(Auth::user()->hasRole('client'))
+                                            {{ route('address.show', $item) }}
+                                        @endif" class="btn btn-primary mr-2">
+                                            <i class="czi-view-list align-middle"></i></a>
+                                        <a href="@if(Auth::user()->hasRole('superAdmin'))
+                                            {{ route('superAdmin.address.edit', $item) }}
+                                        @elseif(Auth::user()->hasRole('client'))
+                                            {{ route('address.edit', $item) }}
+                                        @endif" class="btn btn-primary mr-2">
+                                            <i class="czi-edit align-middle"></i></a>
+                                        <form method="POST"
+                                              action="@if(Auth::user()->hasRole('superAdmin'))
+                                                {{ route('superAdmin.address.destroy', $item) }}
+                                              @elseif(Auth::user()->hasRole('client'))
+                                                {{ route('address.destroy', $item) }}
+                                              @endif">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="czi-trash align-middle"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

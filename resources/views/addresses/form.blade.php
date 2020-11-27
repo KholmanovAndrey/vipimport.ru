@@ -36,10 +36,65 @@ $breadcrumbs = [
         <x-user-title/>
         <div class="card py-4 mb-4">
             <div class="card-body">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <form method="POST"
-                      action="@if (!$address->id){{ route('address.store') }}@else{{ route('address.update', $address) }}@endif">
+                      action="@if (!$address->id)
+                          @if(Auth::user()->hasRole('superAdmin'))
+                            {{ route('superAdmin.address.store') }}
+                          @elseif(Auth::user()->hasRole('client'))
+                            {{ route('address.store') }}
+                          @endif
+                      @else
+                          @if(Auth::user()->hasRole('superAdmin'))
+                            {{ route('superAdmin.address.update', $address) }}
+                          @elseif(Auth::user()->hasRole('client'))
+                            {{ route('address.update', $address) }}
+                          @endif
+                      @endif">
                     @csrf
                     @if ($address->id) @method('PUT') @endif
+
+                    <div class="form-group row @if(Auth::user()->hasRole('superAdmin'))
+                            row
+                    @elseif(Auth::user()->hasRole('client'))
+                        d-none
+                    @endif">
+                        <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Клиент') }}
+                            <span class="star">*</span>
+                        </label>
+                        <div class="col-md-6">
+                            <select name="user_id"
+                                    id="user_id"
+                                    class="form-control @error('user_id') is-invalid @enderror"
+                                    required>
+                                @foreach ($clients as $client)
+                                    <option {{ $client->id === $address->user_id ? 'selected="selected"' : '' }} value="{{ $client->id }}">
+                                        {{ $client->email }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('user_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Фамилия') }}
@@ -54,8 +109,8 @@ $breadcrumbs = [
                                    required autofocus>
                             @error('lastname')
                             <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>

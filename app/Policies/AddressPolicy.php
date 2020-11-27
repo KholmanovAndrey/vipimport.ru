@@ -18,7 +18,8 @@ class AddressPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('client');
     }
 
     /**
@@ -30,7 +31,9 @@ class AddressPolicy
      */
     public function view(User $user, Address $address)
     {
-        return (int)$user->id === (int)$address->user_id;
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('manager') ||
+            (int)$user->id === (int)$address->user_id;
     }
 
     /**
@@ -41,7 +44,8 @@ class AddressPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('client');
     }
 
     /**
@@ -53,7 +57,8 @@ class AddressPolicy
      */
     public function update(User $user, Address $address)
     {
-        return (int)$user->id === (int)$address->user_id;
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$address->user_id;
     }
 
     /**
@@ -65,7 +70,8 @@ class AddressPolicy
      */
     public function delete(User $user, Address $address)
     {
-        return (int)$user->id === (int)$address->user_id;
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$address->user_id;
     }
 
     /**
@@ -77,7 +83,8 @@ class AddressPolicy
      */
     public function restore(User $user, Address $address)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$address->user_id;
     }
 
     /**
@@ -89,6 +96,7 @@ class AddressPolicy
      */
     public function forceDelete(User $user, Address $address)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$address->user_id;
     }
 }

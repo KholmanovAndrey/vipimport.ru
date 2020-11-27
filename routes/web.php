@@ -27,7 +27,7 @@ Route::get('/article/view/{article}', 'ArticleController@view')->name('article.v
 Route::resource('/article', 'ArticleController');
 
 Route::resource('/profile', 'ProfileController')->except('view');
-Route::resource('/address', 'AddressController')->except('show');
+Route::middleware('role:client')->resource('/address', 'AddressController');
 Route::resource('/country', 'CountryController')->except('show');
 Route::resource('/city', 'CityController')->except('show');
 Route::middleware('role:client')->resource('/order', 'OrderController');
@@ -94,9 +94,12 @@ Route::group([
     'as' => 'superAdmin.',
     'middleware' => 'role:superAdmin'
 ], function() {
+    // пользователи
     Route::resource('/user', 'UserController');
     Route::get('/user/{user}/role', 'UserController@role')->name('user.role');
     Route::put('/user/{user}/role/update', 'UserController@roleUpdate')->name('user.role.update');
+    // адреса клиентов
+    Route::resource('/address', 'AddressController');
 
 
 
