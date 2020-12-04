@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderShipped;
 use App\Order;
+use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,14 +22,40 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::query()
-            ->where('user_id', '=', Auth::user()->id)
-            ->orderByDesc('id')
-            ->get();
+        $this->authorize('viewAny', Order::class);
+
+        $where = [];
+        $orWhere = [];
+        if ($request->search) {
+            $clients = User::query()->where('name', 'like', "%{$request->search}%")->get();
+            foreach ($clients as $client) {
+                $where[0] = ['user_id', '=', $client->id];
+            }
+            $clients = User::query()->where('email', 'like', "%{$request->search}%")->get();
+            foreach ($clients as $client) {
+                $orWhere[0] = ['user_id', '=', $client->id];
+            }
+        }
+
+        $orders = new Order();
+        if (Auth::user()->hasRole('superAdmin')) {
+            $orders = Order::query()
+                ->orderByDesc('id')
+                ->where($where)
+                ->orWhere($orWhere)
+                ->get();
+        }elseif (Auth::user()->hasRole('client')) {
+            $orders = Order::query()
+                ->where('user_id', '=', Auth::user()->id)
+                ->orderByDesc('id')
+                ->get();
+        }
+
         return view('orders.index', [
-            'orders' => $orders
+            'orders' => $orders,
+            'search' => $request->search
         ]);
     }
 

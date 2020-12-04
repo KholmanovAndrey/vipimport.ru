@@ -44,7 +44,12 @@
                             </li>
                             <li class="border-top mb-0">
                                 <a href="{{ route('superAdmin.address.index') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
-                                    <i class="czi-list align-middle opacity-60 mr-2"></i>Адреса клиентов
+                                    <i class="czi-location align-middle opacity-60 mr-2"></i>Адреса клиентов
+                                </a>
+                            </li>
+                            <li class="border-top mb-0">
+                                <a href="{{ route('superAdmin.order.index') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
+                                    <i class="czi-bag align-middle opacity-60 mr-2"></i>Заказы клиентов
                                 </a>
                             </li>
                         </ul>

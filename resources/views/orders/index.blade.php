@@ -32,67 +32,123 @@ $breadcrumbs = [
         <x-user-title/>
         <div class="card py-4 mb-4">
             <div class="card-body">
-                <div class="items__btn">
+                <div class="mb-2">
                     @auth
-                    <a href="{{ route('order.create') }}" class="btn btn-primary items__link">Добавить заказ</a>
+                    <a href="@if(Auth::user()->hasRole('superAdmin'))
+                        {{ route('superAdmin.order.create') }}
+                    @elseif(Auth::user()->hasRole('client'))
+                        {{ route('order.create') }}
+                    @endif" class="btn btn-primary"><i class="czi-add align-middle"></i> Добавить заказ</a>
                     @endauth
                 </div>
-                <section class="items__section">
-                    @foreach ($orders as $item)
-                        <article class="items__item item-border-bottom">
-                            <header>
-                                <h3 class="items__title">{{ $item->title }}
+                @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
+                    <div class="search mb-2 position-relative">
+                        <form method="get" action="@if(Auth::user()->hasRole('superAdmin'))
+                        {{ route('superAdmin.order.index') }}
+                        @elseif(Auth::user()->hasRole('client'))
+                        {{ route('order.index') }}
+                        @endif" class="search__form">
+                            <button type="submit" class="btn btn-primary position-absolute">
+                                <i class="czi-search align-middle"></i>
+                            </button>
+                            <input type="text"
+                                   name="search"
+                                   class="form-control pl-5"
+                                   value="{{ $search ?? '' }}"
+                                   placeholder="Введите логин или E-mail клиента">
+                        </form>
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="align-middle text-center">#</th>
+                            <th scope="col">Наименование</th>
+                            @if(!Auth::user()->hasRole('client'))
+                                <th scope="col">Клиент</th>
+                            @endif
+                            <th scope="col">Менеджер</th>
+                            <th scope="col">Статус</th>
+                            <th scope="col" class="align-middle text-right">Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($orders as $item)
+                            <tr>
+                                <th scope="row" class="align-middle text-center">{{ $item->id }}</th>
+                                <td class="align-middle">{{ $item->title }}</td>
+                                @if(!Auth::user()->hasRole('client'))
+                                    <td class="align-middle">
+                                        @if($item->user)
+                                            {{ $item->user->name }}
+                                        @endif
+                                    </td>
+                                @endif
+                                <td class="align-middle">
+                                    @if($item->manager)
+                                        {{ $item->manager->name }}
+                                    @endif
+                                </td>
+                                <td class="align-middle">
                                     <span class="badge badge-warning">{{ $item->status->title }}</span>
                                     @if($item->isDeleted)
                                         <span class="badge badge-danger">На удалении</span>
                                     @endif
-                                </h3>
-                            </header>
-                            <div class="items__body">
-                                <div>
-                                    @if($item->manager_id !== null)
-                                        <div>Ваш менеджер: {{ $item->manager->name }}</div>
-                                    @endif
-                                    @if($item->parcel_id !== null)
-                                        <div>Посылка: {{ $item->parcel['title'] }}</div>
-                                    @endif
-                                    <div>Дата создания заказа: {{ date('d.m.Y H:i', date_timestamp_get($item->created_at)) }}</div>
-                                    <div>Дата обновления заказа: {{ date('d.m.Y H:i', date_timestamp_get($item->updated_at)) }}</div>
-                                </div>
-                                <div>
-                                    <div>Количество: {{ $item->count }}</div>
-                                    @if($item->link)
-                                        <div>Ссылка: <a href="{{ $item->link }}">{{ $item->link }}</a></div>
-                                    @endif
-                                    @if($item->color)
-                                        <div>Ссылка: {{ $item->color }}</div>
-                                    @endif
-                                    @if($item->size)
-                                        <div>Ссылка: {{ $item->size }}</div>
-                                    @endif
-                                    <p>{{ $item->description }}</p>
-                                </div>
-                            </div>
-                            <footer class="items__footer">
-                                @auth
-                                @can('canEditByStatus', $item)
-                                    @can('canDelete', $item)
-                                        <a href="{{ route('order.edit', $item) }}" class="btn btn-primary items__link">Редактировать</a>
-                                        <form method="POST"
-                                              action="{{ route('order.destroy', $item) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-primary items__link">
-                                                {{ __('Удалить') }}
-                                            </button>
-                                        </form>
-                                    @endcan
-                                @endcan
-                                @endauth
-                            </footer>
-                        </article>
-                    @endforeach
-                </section>
+                                </td>
+                                <td class="align-middle text-right">
+                                    <div class="d-flex justify-content-end">
+                                        <a href="@if(Auth::user()->hasRole('superAdmin'))
+                                            {{ route('superAdmin.order.show', $item) }}
+                                        @elseif(Auth::user()->hasRole('client'))
+                                            {{ route('order.show', $item) }}
+                                        @endif" class="btn btn-primary mr-2">
+                                            <i class="czi-view-list align-middle"></i></a>
+                                        @can('canEditByStatus', $item)
+                                            @can('canDelete', $item)
+                                                <a href="@if(Auth::user()->hasRole('superAdmin'))
+                                                {{ route('superAdmin.order.edit', $item) }}
+                                                @elseif(Auth::user()->hasRole('client'))
+                                                {{ route('order.edit', $item) }}
+                                                @endif" class="btn btn-primary mr-2">
+                                                    <i class="czi-edit align-middle"></i></a>
+                                                <form method="POST"
+                                                      action="@if(Auth::user()->hasRole('superAdmin'))
+                                                      {{ route('superAdmin.order.destroy', $item) }}
+                                                      @elseif(Auth::user()->hasRole('client'))
+                                                      {{ route('order.destroy', $item) }}
+                                                      @endif">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="czi-trash align-middle"></i>
+                                                    </button>
+                                                </form>
+                                            @endcan
+                                        @endcan
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

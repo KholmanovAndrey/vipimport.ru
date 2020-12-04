@@ -100,6 +100,8 @@ Route::group([
     Route::put('/user/{user}/role/update', 'UserController@roleUpdate')->name('user.role.update');
     // адреса клиентов
     Route::resource('/address', 'AddressController');
+    // заказы клиентов
+    Route::resource('/order', 'OrderController');
 
 
 

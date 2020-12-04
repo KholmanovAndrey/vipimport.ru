@@ -18,7 +18,8 @@ class OrderPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('client');
     }
 
     /**
