@@ -20,7 +20,8 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -66,8 +67,23 @@ class OrderController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Order::class);
+
+        $clients = new User();
+        if (Auth::user()->hasRole('superAdmin')) {
+            $clients = User::query()
+                ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                ->where('user_roles.role_id', '=', 4)
+                ->get();
+        }elseif (Auth::user()->hasRole('client')) {
+            $clients = User::query()
+                ->where('id', '=', Auth::user()->id)
+                ->get();
+        }
+
         return view('orders.form', [
-            'order' => new Order()
+            'order' => new Order(),
+            'clients' => $clients
         ]);
     }
 
@@ -79,51 +95,61 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Order::class);
+
         if ($request->isMethod('post')) {
             $request->flash();
 
-            $this->validate($request, Order::rulesArray());
+            $this->validate($request, Order::rules());
 
-            for ($i = 0; $i < count($request->title); $i++) {
-                $order = new Order();
-                $order->user_id = Auth::user()->id;
-                $order->status_id = 1;
-                $order->title = $request->title[$i];
-                $order->count = $request->count[$i];
-                $order->link = $request->link[$i];
-                $order->price = $request->price[$i] ?? 0;
-                $order->color = $request->color[$i];
-                $order->size = $request->size[$i];
-                $order->description = $request->description[$i];
-                $order->save();
-                $this->ship($request, $order->id);
+//            for ($i = 0; $i < count($request->title); $i++) {
+//                $order = new Order();
+//                $order->user_id = Auth::user()->id;
+//                $order->status_id = 1;
+//                $order->title = $request->title[$i];
+//                $order->count = $request->count[$i];
+//                $order->link = $request->link[$i];
+//                $order->price = $request->price[$i] ?? 0;
+//                $order->color = $request->color[$i];
+//                $order->size = $request->size[$i];
+//                $order->description = $request->description[$i];
+//                $order->save();
+//                $this->ship($request, $order->id);
+//            }
+            $order = new Order();
+            $order->fill($request->all());
+            $order->status_id = 1;
+            $order->price = $request->price ?? 0;
+
+            $route = '';
+            if (Auth::user()->hasRole('superAdmin')) {
+                $route = 'superAdmin.';
             }
 
-            return redirect()->route('order.index')
+            if ($order->save()) {
+                $this->ship($request, $order->id);
+                return redirect()->route($route.'order.index')
                     ->with('success', 'Данные успешно добавлены!');
+            }
 
-//            $this->validate($request, Order::rules());
-//            $order->fill($request->all());
-
-//            if ($order->save()) {
-//                return redirect()->route('order.index')
-//                    ->with('success', 'Данные успешно добавлены!');
-//            }
-//
-//            return redirect()->route('order.create')
-//                ->with('success', 'Ошибка добавления данных!');
+            return redirect()->route($route.'order.create')
+                ->with('error', 'Ошибка добавления данных!');
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Order $order
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        //
+        $this->authorize('view', $order);
+
+        return view('orders.show', [
+            'item' => $order
+        ]);
     }
 
     /**
@@ -141,8 +167,21 @@ class OrderController extends Controller
             return redirect()->back();
         }
 
-        return view('orders.form-update', [
+        $clients = new User();
+        if (Auth::user()->hasRole('superAdmin')) {
+            $clients = User::query()
+                ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                ->where('user_roles.role_id', '=', 4)
+                ->get();
+        }elseif (Auth::user()->hasRole('client')) {
+            $clients = User::query()
+                ->where('id', '=', Auth::user()->id)
+                ->get();
+        }
+
+        return view('orders.form', [
             'order' => $order,
+            'clients' => $clients
         ]);
     }
 
@@ -155,6 +194,8 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $this->authorize('update', $order);
+
         if ($request->isMethod('put')) {
 
             $request->flash();
@@ -163,51 +204,58 @@ class OrderController extends Controller
 
             $order->fill($request->all());
 
-            if ($order->save()) {
-                $this->ship($request, $order->id);
-
-                if (Auth::user()->hasRole('superAdmin')) {
-                    return redirect()->route('superAdmin.user-order', $order->user_id)
-                        ->with('success', 'Данные успешно изменены!');
-                }
-
-                return redirect()->route('order.index')
-                    ->with('success', 'Данные успешно изменены!');
+            $route = '';
+            if (Auth::user()->hasRole('superAdmin')) {
+                $route = 'superAdmin.';
             }
 
-            return redirect()->route('order.edit', $order)
-                ->with('success', 'Ошибка изменения данных!');
+            if ($order->save()) {
+                $this->ship($request, $order->id);
+                return redirect()->route($route.'order.index')
+                    ->with('success', 'Данные успешно обновленны!');
+            }
 
+            return redirect()->route($route.'order.edit', $order)
+                ->with('error', 'Ошибка обновления данных!');
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Order $order
+     * @return $this
      */
     public function destroy(Request $request, Order $order)
     {
+        $this->authorize('delete', $order);
+
         if ($request->isMethod('delete')) {
             $request->flash();
 
             //$this->validate($request, Order::rules());
 
-            $order->isDeleted = 1;
-
-            if ($order->save()) {
-                return redirect()->route('order.index')
-                    ->with('success', 'Данные успешно изменены!');
+            $route = '';
+            if (Auth::user()->hasRole('superAdmin')) {
+                $route = 'superAdmin.';
+                if ($order->delete()) {
+                    return redirect()->route('superAdmin.order.index')
+                        ->with('success', 'Данные успешно удаленны!');
+                }
             }
 
-//            if ($order->delete()) {
-//                return redirect()->route('order.index')
-//                    ->with('success', 'Данные успешно удаленны!');
-//            }
+            if (Auth::user()->hasRole('client')) {
+                $order->isDeleted = 1;
 
-            return redirect()->route('order.index')
-                ->with('success', 'Ошибка удаления данных!');
+                if ($order->save()) {
+                    return redirect()->route('order.index')
+                        ->with('success', 'Данные успешно изменены!');
+                }
+            }
+
+            return redirect()->route($route.'order.index')
+                ->with('error', 'Ошибка удаления данных!');
         }
     }
 

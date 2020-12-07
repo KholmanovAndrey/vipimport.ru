@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     public $fillable = [
+        'user_id',
         'title',
         'count',
         'link',
@@ -19,7 +20,9 @@ class Order extends Model
 
     public static function rules()
     {
+        $tableUser = (new User())->getTable();
         return [
+            'user_id' => "required|exists:{$tableUser},id",
             'title' => 'required|string|min:3|max:50',
             'count' => 'required|integer',
             'description' => 'required|string|min:3|max:250',

@@ -41,9 +41,48 @@ $breadcrumbs = [
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <form method="POST"
-                      action="@if (!$order->id){{ route('order.store') }}@else{{ route('order.update', $order) }}@endif">
+                      action="@if (!$order->id)
+                          @if(Auth::user()->hasRole('superAdmin'))
+                            {{ route('superAdmin.order.store') }}
+                          @elseif(Auth::user()->hasRole('client'))
+                            {{ route('order.store') }}
+                          @endif
+                      @else
+                          @if(Auth::user()->hasRole('superAdmin'))
+                            {{ route('superAdmin.order.update', $order) }}
+                          @elseif(Auth::user()->hasRole('client'))
+                            {{ route('order.update', $order) }}
+                          @endif
+                      @endif">
                     @csrf
                     @if ($order->id) @method('PUT') @endif
+
+                    <div class="form-group row @if(Auth::user()->hasRole('superAdmin'))
+                            row
+                    @elseif(Auth::user()->hasRole('client'))
+                            d-none
+                    @endif">
+                        <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Клиент') }}
+                            <span class="star">*</span>
+                        </label>
+                        <div class="col-md-6">
+                            <select name="user_id"
+                                    id="user_id"
+                                    class="form-control @error('user_id') is-invalid @enderror"
+                                    required>
+                                @foreach ($clients as $client)
+                                    <option {{ $client->id === $order->user_id ? 'selected="selected"' : '' }} value="{{ $client->id }}">
+                                        {{ $client->email }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('user_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
 
                     <div class="div-order">
                         <div class="form-group row">
@@ -52,7 +91,7 @@ $breadcrumbs = [
                                 <input id="title"
                                        type="text"
                                        class="form-control @error('title') is-invalid @enderror"
-                                       name="title[]"
+                                       name="title"
                                        placeholder="Наименование заказа"
                                        minlength="3"
                                        maxlength="50"
@@ -78,7 +117,7 @@ $breadcrumbs = [
                                 <input id="link"
                                        type="url"
                                        class="form-control @error('link') is-invalid @enderror"
-                                       name="link[]"
+                                       name="link"
                                        placeholder="http://"
                                        value="{{ $order->link ?? old('link') }}">
                                 @error('link')
@@ -95,7 +134,7 @@ $breadcrumbs = [
                                 <input id="count"
                                        type="number"
                                        class="form-control @error('count') is-invalid @enderror"
-                                       name="count[]"
+                                       name="count"
                                        value="{{ $order->count ?? (old('count') ?? 1) }}"
                                        required>
                                 @error('count')
@@ -109,7 +148,7 @@ $breadcrumbs = [
                                 <input id="price"
                                        type="text"
                                        class="form-control @error('price') is-invalid @enderror"
-                                       name="price[]"
+                                       name="price"
                                        placeholder="Цена"
                                        value="{{ $order->price ?? old('price') }}">
                                 @error('price')
@@ -123,7 +162,7 @@ $breadcrumbs = [
                                 <input id="color"
                                        type="text"
                                        class="form-control @error('color') is-invalid @enderror"
-                                       name="color[]"
+                                       name="color"
                                        placeholder="Цвет"
                                        value="{{ $order->color ?? old('color') }}">
                                 @error('color')
@@ -137,7 +176,7 @@ $breadcrumbs = [
                                 <input id="size"
                                        type="text"
                                        class="form-control @error('size') is-invalid @enderror"
-                                       name="size[]"
+                                       name="size"
                                        placeholder="Размер"
                                        value="{{ $order->size ?? old('size') }}">
                                 @error('size')
@@ -151,7 +190,7 @@ $breadcrumbs = [
                         <div class="form-group row">
                             <div class="col">
                                 <label for="description" class="col-form-label text-md-right">{{ __('Описание') }} <span class="star">*</span></label>
-                                <textarea name="description[]"
+                                <textarea name="description"
                                           id="description"
                                           class="form-control @error('description') is-invalid @enderror"
                                           placeholder="Описание заказа"

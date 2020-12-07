@@ -79,7 +79,6 @@ class AddressController extends Controller
             $this->validate($request, Address::rulesCreate());
 
             $address = new Address();
-            $address->user_id = Auth::user()->id;
             $address->fill($request->all());
 
             $route = '';

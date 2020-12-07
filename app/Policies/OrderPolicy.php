@@ -31,7 +31,9 @@ class OrderPolicy
      */
     public function view(User $user, Order $order)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('manager') ||
+            (int)$user->id === (int)$order->user_id;
     }
 
     /**
@@ -42,7 +44,8 @@ class OrderPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('client');
     }
 
     /**
@@ -54,7 +57,8 @@ class OrderPolicy
      */
     public function update(User $user, Order $order)
     {
-        return (int)$user->id === (int)$order->user_id || $user->hasRole('superAdmin');
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$order->user_id;
     }
 
     /**
@@ -66,7 +70,8 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order)
     {
-        return (int)$user->id === (int)$order->user_id || $user->hasRole('superAdmin');
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$order->user_id;
     }
 
     /**
@@ -78,7 +83,8 @@ class OrderPolicy
      */
     public function restore(User $user, Order $order)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$order->user_id;
     }
 
     /**
@@ -90,7 +96,8 @@ class OrderPolicy
      */
     public function forceDelete(User $user, Order $order)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$order->user_id;
     }
 
     /**
