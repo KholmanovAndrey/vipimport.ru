@@ -33,13 +33,13 @@ $breadcrumbs = [
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <div class="mb-2">
-                    @auth
+                    @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('client'))
                     <a href="@if(Auth::user()->hasRole('superAdmin'))
                         {{ route('superAdmin.order.create') }}
                     @elseif(Auth::user()->hasRole('client'))
                         {{ route('order.create') }}
                     @endif" class="btn btn-primary"><i class="czi-add align-middle"></i> Добавить заказ</a>
-                    @endauth
+                    @endif
                 </div>
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
                     <div class="search mb-2 position-relative">
@@ -114,12 +114,26 @@ $breadcrumbs = [
                                 </td>
                                 <td class="align-middle text-right">
                                     <div class="d-flex justify-content-end">
-                                        <a href="@if(Auth::user()->hasRole('superAdmin'))
+                                        @if(Auth::user()->hasRole('manager') && $item->manager_id === null)
+                                            <form method="POST"
+                                                  action="{{ route('manager.order.accept', $item) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-primary mr-2" title="Принять заказ">
+                                                    <i class="czi-add align-middle"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+
+                                        <a href="@if(Auth::user()->hasRole('superAdmin') && !Auth::user()->hasRole('manager'))
                                             {{ route('superAdmin.order.show', $item) }}
+                                        @elseif(Auth::user()->hasRole('manager'))
+                                            {{ route('manager.order.show', $item) }}
                                         @elseif(Auth::user()->hasRole('client'))
                                             {{ route('order.show', $item) }}
                                         @endif" class="btn btn-primary mr-2">
                                             <i class="czi-view-list align-middle"></i></a>
+
                                         @can('canEditByStatus', $item)
                                             @can('canDelete', $item)
                                                 <a href="@if(Auth::user()->hasRole('superAdmin'))

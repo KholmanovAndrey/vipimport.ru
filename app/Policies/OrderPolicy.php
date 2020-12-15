@@ -22,6 +22,16 @@ class OrderPolicy
             $user->hasRole('client');
     }
 
+    public function viewNew(User $user)
+    {
+        return $user->hasRole('manager');
+    }
+
+    public function viewMy(User $user)
+    {
+        return $user->hasRole('manager');
+    }
+
     /**
      * Determine whether the user can view the model.
      *
@@ -32,7 +42,7 @@ class OrderPolicy
     public function view(User $user, Order $order)
     {
         return $user->hasRole('superAdmin') ||
-            $user->hasRole('manager') ||
+            ($user->hasRole('manager') && ((int)$user->id === (int)$order->manager_id || null === $order->manager_id)) ||
             (int)$user->id === (int)$order->user_id;
     }
 
@@ -59,6 +69,21 @@ class OrderPolicy
     {
         return $user->hasRole('superAdmin') ||
             (int)$user->id === (int)$order->user_id;
+    }
+
+    public function accept(User $user)
+    {
+        return $user->hasRole('manager');
+    }
+
+    public function status(User $user)
+    {
+        return $user->hasRole('manager');
+    }
+
+    public function transfer(User $user)
+    {
+        return $user->hasRole('manager');
     }
 
     /**

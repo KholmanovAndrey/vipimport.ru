@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderShipped;
 use App\Order;
+use App\Status;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -12,9 +13,28 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
+    public $whereName;
+    public $whereEmail;
+
     function __construct()
     {
 //        $this->middleware('role:client');
+    }
+
+    /**
+     * Поиск клиента по name or email
+     * @param $search
+     */
+    private function search($search)
+    {
+        $clients = User::query()->where('name', 'like', "%{$search}%")->get();
+        foreach ($clients as $client) {
+            $this->whereName[0] = ['user_id', '=', $client->id];
+        }
+        $clients = User::query()->where('email', 'like', "%{$search}%")->get();
+        foreach ($clients as $client) {
+            $this->whereEmail[0] = ['user_id', '=', $client->id];
+        }
     }
 
     /**
@@ -27,25 +47,16 @@ class OrderController extends Controller
     {
         $this->authorize('viewAny', Order::class);
 
-        $where = [];
-        $orWhere = [];
-        if ($request->search) {
-            $clients = User::query()->where('name', 'like', "%{$request->search}%")->get();
-            foreach ($clients as $client) {
-                $where[0] = ['user_id', '=', $client->id];
-            }
-            $clients = User::query()->where('email', 'like', "%{$request->search}%")->get();
-            foreach ($clients as $client) {
-                $orWhere[0] = ['user_id', '=', $client->id];
-            }
-        }
-
         $orders = new Order();
         if (Auth::user()->hasRole('superAdmin')) {
+            if ($request->search) {
+                $this->search($request->search);
+            }
+
             $orders = Order::query()
                 ->orderByDesc('id')
-                ->where($where)
-                ->orWhere($orWhere)
+                ->where($this->whereName)
+                ->orWhere($this->whereEmail)
                 ->get();
         }elseif (Auth::user()->hasRole('client')) {
             $orders = Order::query()
@@ -53,6 +64,52 @@ class OrderController extends Controller
                 ->orderByDesc('id')
                 ->get();
         }
+
+        return view('orders.index', [
+            'orders' => $orders,
+            'search' => $request->search
+        ]);
+    }
+
+    public function new(Request $request)
+    {
+        $this->authorize('viewNew', Order::class);
+
+        if ($request->search) {
+            $this->search($request->search);
+        }
+
+        $orders = Order::query()
+            ->orderByDesc('id')
+            ->where('manager_id', '=', null)
+            ->where(function ($query) {
+                $query->where($this->whereName)
+                    ->orWhere($this->whereEmail);
+            })
+            ->get();
+
+        return view('orders.index', [
+            'orders' => $orders,
+            'search' => $request->search
+        ]);
+    }
+
+    public function my(Request $request)
+    {
+        $this->authorize('viewMy', Order::class);
+
+        if ($request->search) {
+            $this->search($request->search);
+        }
+
+        $orders = Order::query()
+            ->orderByDesc('id')
+            ->where('manager_id', '=',  Auth::user()->id)
+            ->where(function ($query) {
+                $query->where($this->whereName)
+                    ->orWhere($this->whereEmail);
+            })
+            ->get();
 
         return view('orders.index', [
             'orders' => $orders,
@@ -147,8 +204,26 @@ class OrderController extends Controller
     {
         $this->authorize('view', $order);
 
+        $statuses = Status::query()
+            ->where([
+                ['table_name', '=', 'orders'],
+                ['id', '!=', 1]
+            ])
+            ->get();
+        $managers = User::query()
+            ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+            ->where('user_roles.role_id', '=', 3)
+            ->get();
+        foreach ($managers as $key => $manager) {
+            if ($manager->hasRole('superAdmin')) {
+                unset($managers[$key]);
+            }
+        }
+
         return view('orders.show', [
-            'item' => $order
+            'item' => $order,
+            'statuses' => $statuses,
+            'managers' => $managers
         ]);
     }
 
@@ -218,6 +293,60 @@ class OrderController extends Controller
             return redirect()->route($route.'order.edit', $order)
                 ->with('error', 'Ошибка обновления данных!');
         }
+    }
+
+    /**
+     * Функция для принятия заказа клиента
+     * @param Request $request
+     * @param Order $order
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function accept(Request $request, Order $order)
+    {
+        $this->authorize('accept', $order);
+
+        if ($request->isMethod('put')) {
+            $order->manager_id = Auth::user()->id;
+            $order->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Функция для изменения статуса заказа
+     * @param Request $request
+     * @param Order $order
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function status(Request $request, Order $order)
+    {
+        $this->authorize('status', $order);
+
+        if ($request->isMethod('put')) {
+            $order->status_id = (int)$request->status_id;
+            $order->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Передача заказа клиента другому менеджеру
+     * @param Request $request
+     * @param Order $order
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function transfer(Request $request, Order $order)
+    {
+        $this->authorize('transfer', $order);
+
+        if ($request->isMethod('put')) {
+            $order->manager_id = (int)$request->manager_id;
+            $order->save();
+        }
+
+        return redirect()->route('manager.order.my');
     }
 
     /**

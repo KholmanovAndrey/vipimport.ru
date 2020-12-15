@@ -89,6 +89,49 @@ $breadcrumbs = [
                         </tbody>
                     </table>
                 </div>
+
+                @if(Auth::user()->hasRole('manager') && $item->manager !== null)
+                    <form method="POST"
+                          action="{{ route('manager.order.status', $item) }}">
+                        @csrf
+                        @method('PUT')
+                        <select name="status_id"
+                                id="status_id"
+                                class="form-control"
+                                required>
+                            @foreach ($statuses as $status)
+                                <option {{ (int)$status->id === (int)$item->status_id ? 'selected="selected"' : '' }} value="{{ $status->id }}">
+                                    {{ $status->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-danger item__link">
+                            {{ __('Изменить статус') }}
+                        </button>
+                    </form>
+
+                    <form method="POST"
+                          action="{{ route('manager.order.transfer', $item) }}">
+                        @csrf
+                        @method('PUT')
+                        <select name="manager_id"
+                                id="manager_id"
+                                class="form-control"
+                                required>
+                            @foreach ($managers as $manager)
+                                <option {{ (int)$manager->id === (int)$item->manager_id ? 'selected="selected"' : '' }} value="{{ $manager->id }}">
+                                    @if($manager->profile)
+                                        {{ $manager->profile->lastname }}
+                                    @endif
+                                    ({{ $manager->name }})
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-danger item__link">
+                            {{ __('Передать заказ') }}
+                        </button>
+                    </form>
+                @endif
             </div>
         </div>
     </div>

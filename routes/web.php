@@ -39,28 +39,31 @@ Route::resource('/subscribe', 'SubscribeController')->only('store');
 Route::group([
     'prefix' => 'manager',
     'as' => 'manager.',
-    'namespace' => 'Roles'
+    'middleware' => 'role:manager'
 ], function() {
-    Route::get('/', 'ManagerController@index')->name('index');
-    Route::get('/order-new', 'ManagerController@orderNew')->name('order-new');
-    Route::get('/order-my', 'ManagerController@orderMy')->name('order-my');
-    Route::put('/order-accept/{order}', 'ManagerController@orderAccept')->name('order-accept');
-    Route::get('/order-show/{order}', 'ManagerController@orderShow')->name('order-show');
-    Route::put('/order-status/{order}', 'ManagerController@orderStatus')->name('order-status');
-    Route::put('/order-transfer/{order}', 'ManagerController@orderTransfer')->name('order-transfer');
-    Route::get('/parcel-new', 'ManagerController@parcelNew')->name('parcel-new');
-    Route::get('/parcel-my', 'ManagerController@parcelMy')->name('parcel-my');
-    Route::put('/parcel-accept/{parcel}', 'ManagerController@parcelAccept')->name('parcel-accept');
-    Route::get('/parcel-show/{parcel}', 'ManagerController@parcelShow')->name('parcel-show');
-    Route::put('/parcel-status/{parcel}', 'ManagerController@parcelStatus')->name('parcel-status');
-    Route::put('/parcel-transfer/{parcel}', 'ManagerController@parcelTransfer')->name('parcel-transfer');
-    Route::get('/support-new', 'ManagerController@supportNew')->name('support-new');
-    Route::get('/support-my', 'ManagerController@supportMy')->name('support-my');
-    Route::get('/support-view/{support}', 'ManagerController@supportView')->name('support-view');
-    Route::put('/support-accept/{support}', 'ManagerController@supportAccept')->name('support-accept');
-    Route::get('/client-view/{client}', 'ManagerController@clientView')->name('client-view');
-    Route::get('/statistic', 'ManagerController@statistic')->name('statistic');
-    Route::get('/user-statistic/{user}', 'ManagerController@userStatistic')->name('user-statistic');
+    // заказы клиентов
+    Route::get('/order/new', 'OrderController@new')->name('order.new');
+    Route::get('/order/my', 'OrderController@my')->name('order.my');
+    Route::get('/order/{order}/show', 'OrderController@show')->name('order.show');
+    Route::put('/order/{order}/accept', 'OrderController@accept')->name('order.accept');
+    Route::put('/order/{order}/status', 'OrderController@status')->name('order.status');
+    Route::put('/order/{order}/transfer', 'OrderController@transfer')->name('order.transfer');
+
+
+    Route::get('/', 'Roles\ManagerController@index')->name('index');
+    Route::get('/parcel-new', 'Roles\ManagerController@parcelNew')->name('parcel-new');
+    Route::get('/parcel-my', 'Roles\ManagerController@parcelMy')->name('parcel-my');
+    Route::put('/parcel-accept/{parcel}', 'Roles\ManagerController@parcelAccept')->name('parcel-accept');
+    Route::get('/parcel-show/{parcel}', 'Roles\ManagerController@parcelShow')->name('parcel-show');
+    Route::put('/parcel-status/{parcel}', 'Roles\ManagerController@parcelStatus')->name('parcel-status');
+    Route::put('/parcel-transfer/{parcel}', 'Roles\ManagerController@parcelTransfer')->name('parcel-transfer');
+    Route::get('/support-new', 'Roles\ManagerController@supportNew')->name('support-new');
+    Route::get('/support-my', 'Roles\ManagerController@supportMy')->name('support-my');
+    Route::get('/support-view/{support}', 'Roles\ManagerController@supportView')->name('support-view');
+    Route::put('/support-accept/{support}', 'Roles\ManagerController@supportAccept')->name('support-accept');
+    Route::get('/client-view/{client}', 'Roles\ManagerController@clientView')->name('client-view');
+    Route::get('/statistic', 'Roles\ManagerController@statistic')->name('statistic');
+    Route::get('/user-statistic/{user}', 'Roles\ManagerController@userStatistic')->name('user-statistic');
 });
 
 Route::group([
@@ -102,6 +105,8 @@ Route::group([
     Route::resource('/address', 'AddressController');
     // заказы клиентов
     Route::resource('/order', 'OrderController');
+    // посылки клиентов
+    Route::resource('/parcel', 'ParcelController');
 
 
 
@@ -110,9 +115,5 @@ Route::group([
     Route::get('/user-statistic/{user}', 'Roles\SuperAdminController@userStatistic')->name('user-statistic');
 //    Route::delete('/user-delete/{user}', 'SuperAdminController@userDelete')->name('user-delete');
     Route::get('/statistic', 'Roles\SuperAdminController@statistic')->name('statistic');
-    Route::get('/user-order/{user}', 'Roles\SuperAdminController@userOrder')->name('user-order');
     Route::get('/user-parcel/{user}', 'Roles\SuperAdminController@userParcel')->name('user-parcel');
-
-    Route::resource('/order', 'OrderController');
-    Route::resource('/parcel', 'ParcelController');
 });
