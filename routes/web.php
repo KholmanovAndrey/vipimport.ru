@@ -41,10 +41,12 @@ Route::group([
     'as' => 'manager.',
     'middleware' => 'role:manager'
 ], function() {
+    // пользователи
+    Route::resource('/user', 'UserController')->only(['show']);
     // заказы клиентов
     Route::get('/order/new', 'OrderController@new')->name('order.new');
     Route::get('/order/my', 'OrderController@my')->name('order.my');
-    Route::get('/order/{order}/show', 'OrderController@show')->name('order.show');
+    Route::get('/order/{order}', 'OrderController@show')->name('order.show');
     Route::put('/order/{order}/accept', 'OrderController@accept')->name('order.accept');
     Route::put('/order/{order}/status', 'OrderController@status')->name('order.status');
     Route::put('/order/{order}/transfer', 'OrderController@transfer')->name('order.transfer');

@@ -32,15 +32,15 @@ $breadcrumbs = [
         <x-user-title/>
         <div class="card py-4 mb-4">
             <div class="card-body">
-                <div class="mb-2">
-                    @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('client'))
-                    <a href="@if(Auth::user()->hasRole('superAdmin'))
-                        {{ route('superAdmin.order.create') }}
-                    @elseif(Auth::user()->hasRole('client'))
-                        {{ route('order.create') }}
-                    @endif" class="btn btn-primary"><i class="czi-add align-middle"></i> Добавить заказ</a>
-                    @endif
-                </div>
+                @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('client'))
+                    <div class="mb-2">
+                        <a href="@if(Auth::user()->hasRole('superAdmin'))
+                            {{ route('superAdmin.order.create') }}
+                        @elseif(Auth::user()->hasRole('client'))
+                            {{ route('order.create') }}
+                        @endif" class="btn btn-primary"><i class="czi-add align-middle"></i> Добавить заказ</a>
+                    </div>
+                @endif
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
                     <div class="search mb-2 position-relative">
                         <form method="get" action="@if(Auth::user()->hasRole('superAdmin'))
@@ -97,7 +97,9 @@ $breadcrumbs = [
                                 @if(!Auth::user()->hasRole('client'))
                                     <td class="align-middle">
                                         @if($item->user)
-                                            {{ $item->user->name }}
+                                            <a href="@if(Auth::user()->hasRole('manager'))
+                                                {{ route('manager.user.show', $item->user) }}
+                                            @endif">{{ $item->user->name }}</a>
                                         @endif
                                     </td>
                                 @endif

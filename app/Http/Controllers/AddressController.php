@@ -10,19 +10,67 @@ use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
+    /**
+     * Поиск клиента по name or email
+     *
+     * @param $search
+     * @return string
+     */
+    private function search($search)
+    {
+        $where = '';
+
+        if ($search) {
+            $clients = User::query()->where('name', 'like', "%{$search}%")->get();
+            if (count($clients)) {
+                $i = 0;
+                foreach($clients as $client) {
+                    if ($i !== (count($clients) - 1)) {
+                        $where .= "user_id={$client->id} OR ";
+                    } else {
+                        $where .= "user_id={$client->id}";
+                    }
+                    $i++;
+                }
+            }
+
+            $clientsEmail = User::query()->where('email', 'like', "%{$search}%")->get();
+            if (count($clientsEmail)) {
+                if ($where) {
+                    $where .= ' OR ';
+                }
+
+                $i = 0;
+                foreach($clientsEmail as $client) {
+                    if ($i !== (count($clientsEmail) - 1)) {
+                        $where .= "user_id={$client->id} OR ";
+                    } else {
+                        $where .= "user_id={$client->id}";
+                    }
+                    $i++;
+                }
+            }
+        }
+
+        return $where ? $where : "user_id != ''";
+    }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Address::class);
 
         $addresses = new Address();
         if (Auth::user()->hasRole('superAdmin')) {
+            $where = $this->search($request->search);
+
             $addresses = Address::query()
+                ->whereRaw($where)
                 ->get();
         }elseif (Auth::user()->hasRole('client')) {
             $addresses = Address::query()
@@ -31,7 +79,8 @@ class AddressController extends Controller
         }
 
         return view('addresses.index', [
-            'addresses' => $addresses
+            'addresses' => $addresses,
+            'search' => $request->search
         ]);
     }
 

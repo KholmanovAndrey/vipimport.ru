@@ -66,6 +66,8 @@ $breadcrumbs = [
                                 </td>
                                 <td class="align-middle text-center">
                                     <div class="d-flex justify-content-end">
+                                        <a href="{{ route('superAdmin.user.show', $item) }}" class="btn btn-primary mr-2">
+                                            <i class="czi-view-list align-middle"></i></a>
                                         <a href="{{ route('superAdmin.user.edit', $item) }}" class="btn btn-primary mr-2" title="Редактирование пользователя">
                                             <i class="czi-edit align-middle"></i></a>
                                         <a href="{{ route('superAdmin.user.role', $item) }}" class="btn btn-primary mr-2" title="Назначение ролей пользователя">

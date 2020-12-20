@@ -32,14 +32,28 @@
         <x-user-title/>
         <div class="card py-4 mb-4">
             <div class="card-body">
-                <div class="items__btn">
+                <div class="mb-2">
                     <a href="@if(Auth::user()->hasRole('superAdmin'))
                         {{ route('superAdmin.address.create') }}
                     @elseif(Auth::user()->hasRole('client'))
                         {{ route('address.create') }}
-                    @endif" class="btn btn-primary items__link">
+                    @endif" class="btn btn-primary">
                         <i class="czi-add align-middle"></i> Добавить адрес доставки</a>
                 </div>
+                @if(Auth::user()->hasRole('superAdmin'))
+                    <div class="search mb-2 position-relative">
+                        <form method="get" action="{{ route('superAdmin.address.index') }}" class="search__form">
+                            <button type="submit" class="btn btn-primary position-absolute">
+                                <i class="czi-search align-middle"></i>
+                            </button>
+                            <input type="text"
+                                   name="search"
+                                   class="form-control pl-5"
+                                   value="{{ $search ?? '' }}"
+                                   placeholder="Введите логин или E-mail клиента">
+                        </form>
+                    </div>
+                @endif
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
