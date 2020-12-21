@@ -184,7 +184,7 @@ class OrderController extends Controller
             }
 
             if ($order->save()) {
-                $this->ship($request, $order->id);
+                $this->ship($request, $order->id, 'create');
                 return redirect()->route($route.'order.index')
                     ->with('success', 'Данные успешно добавлены!');
             }
@@ -285,7 +285,7 @@ class OrderController extends Controller
             }
 
             if ($order->save()) {
-                $this->ship($request, $order->id, 'create');
+                $this->ship($request, $order->id);
                 return redirect()->route($route.'order.index')
                     ->with('success', 'Данные успешно обновленны!');
             }

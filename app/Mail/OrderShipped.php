@@ -26,8 +26,9 @@ class OrderShipped extends Mailable
      *
      * OrderShipped constructor.
      * @param Order $order
+     * @param $status
      */
-    public function __construct(Order $order, String $status)
+    public function __construct(Order $order, $status)
     {
         $this->order = $order;
         $this->status = $status;
@@ -41,7 +42,7 @@ class OrderShipped extends Mailable
     public function build()
     {
         $email = Auth::user()->email;
-        if ($this->status === 'create') {
+        if ($this->status === 'create') {echo '11';
             $this->to('new@vipimport.ru')
                 ->from('order@vipimport.ru', 'Заказ № Z' . $this->order->id . ' - vipimport.ru')
                 ->markdown('emails.orders.shipped', [
