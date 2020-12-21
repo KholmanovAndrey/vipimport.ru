@@ -42,7 +42,7 @@ class OrderShipped extends Mailable
     public function build()
     {
         $email = Auth::user()->email;
-        if ($this->status === 'create') {echo '11';
+        if ($this->status === 'create') {
             $this->to('new@vipimport.ru')
                 ->from('order@vipimport.ru', 'Заказ № Z' . $this->order->id . ' - vipimport.ru')
                 ->markdown('emails.orders.shipped', [
