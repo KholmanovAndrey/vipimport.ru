@@ -285,7 +285,7 @@ class OrderController extends Controller
             }
 
             if ($order->save()) {
-                $this->ship($request, $order->id);
+                $this->ship($request, $order->id, 'create');
                 return redirect()->route($route.'order.index')
                     ->with('success', 'Данные успешно обновленны!');
             }
@@ -395,12 +395,12 @@ class OrderController extends Controller
      * @param  int  $orderId
      * @return Response
      */
-    public function ship(Request $request, $orderId)
+    public function ship(Request $request, $orderId, $status = '')
     {
         $order = Order::findOrFail($orderId);
 
         // Ship order...
 
-        Mail::to($request->user())->send(new OrderShipped($order));
+        Mail::to($request->user())->send(new OrderShipped($order, $status));
     }
 }
