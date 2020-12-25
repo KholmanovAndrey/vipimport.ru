@@ -50,6 +50,13 @@ Route::group([
     Route::put('/order/{order}/accept', 'OrderController@accept')->name('order.accept');
     Route::put('/order/{order}/status', 'OrderController@status')->name('order.status');
     Route::put('/order/{order}/transfer', 'OrderController@transfer')->name('order.transfer');
+    // посылки клиентов
+    Route::get('/parcel/new', 'ParcelController@new')->name('parcel.new');
+    Route::get('/parcel/my', 'ParcelController@my')->name('parcel.my');
+    Route::get('/parcel/{parcel}', 'ParcelController@show')->name('parcel.show');
+    Route::put('/parcel/{parcel}/accept', 'ParcelController@accept')->name('parcel.accept');
+    Route::put('/parcel/{parcel}/status', 'ParcelController@status')->name('parcel.status');
+    Route::put('/parcel/{parcel}/transfer', 'ParcelController@transfer')->name('parcel.transfer');
 
 
     Route::get('/', 'Roles\ManagerController@index')->name('index');

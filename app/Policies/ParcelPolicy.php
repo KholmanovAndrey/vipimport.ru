@@ -18,7 +18,18 @@ class ParcelPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('client');
+    }
+
+    public function viewNew(User $user)
+    {
+        return $user->hasRole('manager');
+    }
+
+    public function viewMy(User $user)
+    {
+        return $user->hasRole('manager');
     }
 
     /**
@@ -30,7 +41,9 @@ class ParcelPolicy
      */
     public function view(User $user, Parcel $parcel)
     {
-        return (int)$user->id === (int)$parcel->user_id  || $user->hasRole('superAdmin');
+        return $user->hasRole('superAdmin') ||
+            ($user->hasRole('manager') && ((int)$user->id === (int)$parcel->manager_id || null === $parcel->manager_id)) ||
+            (int)$user->id === (int)$parcel->user_id;
     }
 
     /**
@@ -41,7 +54,8 @@ class ParcelPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('client');
     }
 
     /**
@@ -53,7 +67,23 @@ class ParcelPolicy
      */
     public function update(User $user, Parcel $parcel)
     {
-        return (int)$user->id === (int)$parcel->user_id  || $user->hasRole('superAdmin');
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$parcel->user_id;
+    }
+
+    public function accept(User $user)
+    {
+        return $user->hasRole('manager');
+    }
+
+    public function status(User $user)
+    {
+        return $user->hasRole('manager');
+    }
+
+    public function transfer(User $user)
+    {
+        return $user->hasRole('manager');
     }
 
     /**
@@ -65,7 +95,8 @@ class ParcelPolicy
      */
     public function delete(User $user, Parcel $parcel)
     {
-        return (int)$user->id === (int)$parcel->user_id  || $user->hasRole('superAdmin');
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$parcel->user_id;
     }
 
     /**
@@ -77,7 +108,8 @@ class ParcelPolicy
      */
     public function restore(User $user, Parcel $parcel)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$parcel->user_id;
     }
 
     /**
@@ -89,7 +121,8 @@ class ParcelPolicy
      */
     public function forceDelete(User $user, Parcel $parcel)
     {
-        //
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$parcel->user_id;
     }
 
     /**
