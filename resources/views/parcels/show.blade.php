@@ -65,7 +65,11 @@ $breadcrumbs = [
                                     {{ __('Отправить на упаковку') }}
                                 </button>
                             </form>
-                            <a href="{{ route('parcel.edit', $item) }}" class="btn btn-primary item__link">Редактировать</a>
+                            <a href="@if(Auth::user()->hasRole('superAdmin'))
+                                {{ route('superAdmin.parcel.edit', $item) }}
+                            @elseif(Auth::user()->hasRole('client'))
+                                {{ route('parcel.edit', $item) }}
+                            @endif" class="btn btn-primary item__link">Редактировать</a>
                             <form method="POST"
                                   action="{{ route('parcel.destroy', $item) }}">
                                 @csrf
@@ -78,6 +82,48 @@ $breadcrumbs = [
                         @endauth
                     </footer>
                 </article>
+
+                @if(Auth::user()->hasRole('manager') && $item->manager !== null && $item->status_id != 6)
+                <div class="manager">
+                    <form method="POST"
+                          action="{{ route('manager.parcel.status', $item) }}">
+                        @csrf
+                        @method('PUT')
+                        <select name="status_id"
+                                id="status_id"
+                                class="form-control"
+                                required>
+                            @foreach ($statuses as $status)
+                                <option {{ (int)$status->id === (int)$item->status_id ? 'selected="selected"' : '' }} value="{{ $status->id }}">
+                                    {{ $status->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-danger item__link">
+                            {{ __('Изменить статус') }}
+                        </button>
+                    </form>
+
+                    <form method="POST"
+                          action="{{ route('manager.parcel.transfer', $item) }}">
+                        @csrf
+                        @method('PUT')
+                        <select name="manager_id"
+                                id="manager_id"
+                                class="form-control"
+                                required>
+                            @foreach ($managers as $manager)
+                                <option {{ (int)$manager->id === (int)$item->manager_id ? 'selected="selected"' : '' }} value="{{ $manager->id }}">
+                                    {{ $manager->profile['lastname'] }} ({{ $manager->name }})
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-danger item__link">
+                            {{ __('Передать заказ') }}
+                        </button>
+                    </form>
+                </div>
+                @endif
 
                 <h2>Заказы:</h2>
                 <section>

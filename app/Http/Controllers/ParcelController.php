@@ -7,7 +7,9 @@ use App\Mail\ParcelShipped;
 use App\Message;
 use App\Order;
 use App\Parcel;
+use App\Status;
 use App\Support;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -15,24 +17,110 @@ use Illuminate\Support\Facades\Mail;
 
 class ParcelController extends Controller
 {
+    public $whereName;
+    public $whereEmail;
+
     function __construct()
     {
-        $this->middleware('role:client');
+        $this->middleware('auth');
     }
 
     /**
-     * Display a addlisting of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Поиск клиента по name or email
+     * @param $search
      */
-    public function index()
+    private function search($search)
     {
-        $parcels = Parcel::query()
-            ->where('user_id', '=', Auth::user()->id)
-            ->orderByDesc('id')
-            ->get();
+        $clients = User::query()->where('name', 'like', "%{$search}%")->get();
+        foreach ($clients as $client) {
+            $this->whereName[0] = ['user_id', '=', $client->id];
+        }
+        $clients = User::query()->where('email', 'like', "%{$search}%")->get();
+        foreach ($clients as $client) {
+            $this->whereEmail[0] = ['user_id', '=', $client->id];
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Request $request)
+    {
+        $this->authorize('viewAny', Parcel::class);
+
+        $parcels = new Parcel();
+        if (Auth::user()->hasRole('superAdmin')) {
+            if ($request->search) {
+                $this->search($request->search);
+            }
+
+            $parcels = Parcel::query()
+                ->orderByDesc('id')
+                ->where($this->whereName)
+                ->orWhere($this->whereEmail)
+                ->get();
+        }elseif (Auth::user()->hasRole('client')) {
+            $parcels = Parcel::query()
+                ->where('user_id', '=', Auth::user()->id)
+                ->orderByDesc('id')
+                ->get();
+        }
+
         return view('parcels.index', [
             'parcels' => $parcels,
+            'search' => $request->search
+        ]);
+    }
+
+    public function new(Request $request)
+    {
+        $this->authorize('viewNew', Parcel::class);
+
+        if ($request->search) {
+            $this->search($request->search);
+        }
+
+        $parcels = Parcel::query()
+            ->orderByDesc('id')
+            ->where([
+                ['manager_id', '=', null],
+                ['status_id', '=', 7]
+            ])
+            ->where(function ($query) {
+                $query->where($this->whereName)
+                    ->orWhere($this->whereEmail);
+            })
+            ->get();
+
+        return view('parcels.index', [
+            'parcels' => $parcels,
+            'search' => $request->search
+        ]);
+    }
+
+    public function my(Request $request)
+    {
+        $this->authorize('viewMy', Parcel::class);
+
+        if ($request->search) {
+            $this->search($request->search);
+        }
+
+        $parcels = Parcel::query()
+            ->orderByDesc('id')
+            ->where('manager_id', '=',  Auth::user()->id)
+            ->where(function ($query) {
+                $query->where($this->whereName)
+                    ->orWhere($this->whereEmail);
+            })
+            ->get();
+
+        return view('parcels.index', [
+            'parcels' => $parcels,
+            'search' => $request->search
         ]);
     }
 
@@ -43,10 +131,27 @@ class ParcelController extends Controller
      */
     public function create()
     {
-        $addresses = Address::query()->where('user_id', '=', Auth::user()->id)->get();
+        $this->authorize('create', Order::class);
+
+        $clients = new User();
+        $addresses = new Address();
+        if (Auth::user()->hasRole('superAdmin')) {
+            $clients = User::query()
+                ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                ->where('user_roles.role_id', '=', 4)
+                ->get();
+            $addresses = Address::query()->where('user_id', '=', Auth::user()->id)->get();
+        }elseif (Auth::user()->hasRole('client')) {
+            $clients = User::query()
+                ->where('id', '=', Auth::user()->id)
+                ->get();
+            $addresses = Address::query()->where('user_id', '=', Auth::user()->id)->get();
+        }
+
         return view('parcels.form', [
             'parcel' => new Parcel(),
-            'addresses' => $addresses
+            'addresses' => $addresses,
+            'clients' => $clients
         ]);
     }
 
@@ -64,32 +169,41 @@ class ParcelController extends Controller
             $this->validate($request, Parcel::rules());
 
             $parcel = new Parcel();
-            $parcel->address_id = (int)$request->address_id;
+            $parcel->address_id = $request->address_id ? (int)$request->address_id : null;
             $parcel->title = $request->title;
             $parcel->description = $request->description;
-            $parcel->user_id = Auth::user()->id;
+            $parcel->user_id = $request->user_id;
             $address = Address::query()->where('id', '=', (int)$request->address_id)->first();
-            $fio = "{$address->lastname} {$address->firstname} {$address->othername}";
-            $parcel->fio = trim($fio);
-            $addressStr = "{$address->postal_code}, {$address->country->title}, {$address->region}, {$address->city}, {$address->street}, дом {$address->building}";
-            if ($address->body) {
-                $addressStr .= ", кор. {$address->body}";
-            }
-            if ($address->apartment) {
-                $addressStr .= ", кв. {$address->apartment}";
-            }
-            $parcel->address = trim($addressStr);
-            $parcel->phone = $address->phone;
 
-//            echo '<pre>';print_r($parcel->toArray()); echo '</pre>';
+            $fio = '';
+            $addressStr = '';
+            if ($address) {
+                $fio = "{$address->lastname} {$address->firstname} {$address->othername}";
+                $addressStr = "{$address->postal_code}, {$address->country->title}, {$address->region}, {$address->city}, {$address->street}, дом {$address->building}";
+                if ($address->body) {
+                    $addressStr .= ", кор. {$address->body}";
+                }
+                if ($address->apartment) {
+                    $addressStr .= ", кв. {$address->apartment}";
+                }
+            }
+
+            $parcel->fio = trim($fio);
+            $parcel->address = trim($addressStr);
+            $parcel->phone = $address->phone ?? '';
+
+            $route = '';
+            if (Auth::user()->hasRole('superAdmin')) {
+                $route = 'superAdmin.';
+            }
 
             if ($parcel->save()) {
                 $this->ship($request, $parcel->id);
-                return redirect()->route('parcel.show', $parcel)
+                return redirect()->route($route.'parcel.show', $parcel)
                     ->with('success', 'Данные успешно добавлены!');
             }
 
-            return redirect()->route('parcel.create')
+            return redirect()->route($route.'parcel.create')
                 ->with('success', 'Ошибка добавления данных!');
         }
     }
@@ -103,6 +217,23 @@ class ParcelController extends Controller
     public function show(Parcel $parcel)
     {
         $this->authorize('view', $parcel);
+
+        $statuses = Status::query()
+            ->where([
+                ['table_name', '=', 'parcels'],
+                ['id', '!=', 6]
+            ])
+            ->get();
+        $managers = User::query()
+            ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+            ->where('user_roles.role_id', '=', 3)
+            ->get();
+        foreach ($managers as $key => $manager) {
+            if ($manager->hasRole('superAdmin')) {
+                unset($managers[$key]);
+            }
+        }
+
         $orders = Order::query()
             ->where([
                 ['user_id', '=', $parcel->user_id],
@@ -114,7 +245,9 @@ class ParcelController extends Controller
             ->get();
         return view('parcels.show', [
             'item' => $parcel,
-            'orders' => $orders
+            'orders' => $orders,
+            'statuses' => $statuses,
+            'managers' => $managers
         ]);
     }
 
@@ -132,10 +265,25 @@ class ParcelController extends Controller
             return redirect()->back();
         }
 
-        $addresses = Address::query()->where('user_id', '=', Auth::user()->id)->get();
+        $clients = new User();
+        $addresses = new Address();
+        if (Auth::user()->hasRole('superAdmin')) {
+            $clients = User::query()
+                ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                ->where('user_roles.role_id', '=', 4)
+                ->get();
+            $addresses = Address::query()->where('user_id', '=', $parcel->user_id)->get();
+        }elseif (Auth::user()->hasRole('client')) {
+            $clients = User::query()
+                ->where('id', '=', Auth::user()->id)
+                ->get();
+            $addresses = Address::query()->where('user_id', '=', Auth::user()->id)->get();
+        }
+
         return view('parcels.form', [
             'parcel' => $parcel,
-            'addresses' => $addresses
+            'addresses' => $addresses,
+            'clients' => $clients
         ]);
     }
 
@@ -148,6 +296,12 @@ class ParcelController extends Controller
      */
     public function update(Request $request, Parcel $parcel)
     {
+        $this->authorize('update', $parcel);
+
+        if (!Gate::allows('canEditByStatus', $parcel)) {
+            return redirect()->back();
+        }
+
         if ($request->isMethod('put')) {
             $request->flash();
 
@@ -156,6 +310,7 @@ class ParcelController extends Controller
             $parcel->address_id = (int)$request->address_id;
             $parcel->title = $request->title;
             $parcel->description = $request->description;
+            $parcel->user_id = $request->user_id;
             $address = Address::query()->where('id', '=', (int)$request->address_id)->first();
             $fio = "{$address->lastname} {$address->firstname} {$address->othername}";
             $parcel->fio = trim($fio);
@@ -169,17 +324,74 @@ class ParcelController extends Controller
             $parcel->address = trim($addressStr);
             $parcel->phone = $address->phone;
 
-//            echo '<pre>';print_r($parcel->toArray()); echo '</pre>';
+            $route = '';
+            if (Auth::user()->hasRole('superAdmin')) {
+                $route = 'superAdmin.';
+            }
 
             if ($parcel->save()) {
                 $this->ship($request, $parcel->id);
-                return redirect()->route('parcel.show', $parcel)
+                return redirect()->route($route.'parcel.show', $parcel)
                     ->with('success', 'Данные успешно добавлены!');
             }
 
-            return redirect()->route('parcel.create')
+            return redirect()->route($route.'parcel.create')
                 ->with('success', 'Ошибка добавления данных!');
         }
+    }
+
+    /**
+     * Функция для принятия посылки клиента
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function accept(Request $request, Parcel $parcel)
+    {
+        $this->authorize('accept', $parcel);
+
+        if ($request->isMethod('put')) {
+            $parcel->manager_id = Auth::user()->id;
+            $parcel->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Функция для изменения статуса заказа
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function status(Request $request, Parcel $parcel)
+    {
+        $this->authorize('status', $parcel);
+
+        if ($request->isMethod('put')) {
+            $parcel->status_id = (int)$request->status_id;
+            $parcel->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Передача заказа клиента другому менеджеру
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function transfer(Request $request, Parcel $parcel)
+    {
+        $this->authorize('transfer', $parcel);
+
+        if ($request->isMethod('put')) {
+            $parcel->manager_id = (int)$request->manager_id;
+            $parcel->save();
+        }
+
+        return redirect()->route('manager.parcel.my');
     }
 
     /**

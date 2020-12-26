@@ -7,6 +7,7 @@ use App\Parcel;
 use App\Support;
 use App\User;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class Office extends Component
@@ -28,27 +29,40 @@ class Office extends Component
      */
     public function render()
     {
-        $orders = Order::query()
+        $orders_new = Order::query()
             ->where('manager_id', '=', null)
             ->get()
             ->count();
-        $parcels = Parcel::query()
+        $parcels_new = Parcel::query()
             ->where('manager_id', '=', null)
             ->get()
             ->count();
-        $supports = Support::query()
+        $supports_new = Support::query()
             ->where('manager_id', '=', null)
             ->get()
             ->count();
-        $clients = User::query()
+        $clients_new = User::query()
             ->where('created_at', '>=', Carbon::now()->subDays(2)->toDateTimeString())
             ->get()
             ->count();
+
+        // клиент
+        $client_orders_all = Order::query()
+            ->where('user_id', '=', Auth::user()->id)
+            ->get()
+            ->count();
+        $client_parcels_all = Parcel::query()
+            ->where('user_id', '=', Auth::user()->id)
+            ->get()
+            ->count();
+
         return view('components.office', [
-            'orders' => $orders,
-            'parcels' => $parcels,
-            'supports' => $supports,
-            'clients' => $clients,
+            'orders_new' => $orders_new,
+            'parcels_new' => $parcels_new,
+            'supports_new' => $supports_new,
+            'clients_new' => $clients_new,
+            'client_orders_all' => $client_orders_all,
+            'client_parcels_all' => $client_parcels_all
         ]);
     }
 }

@@ -30,7 +30,7 @@ class AddressController extends BaseController
     public function store(Request $request)
     {
         $input = $request->all();
-        $validator = Validator::make($input, Address::rules(), Address::messages());
+        $validator = Validator::make($input, Address::rulesCreate(), Address::messages());
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());
         }

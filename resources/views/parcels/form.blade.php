@@ -37,9 +37,48 @@ $breadcrumbs = [
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <form method="POST"
-                      action="@if (!$parcel->id){{ route('parcel.store') }}@else{{ route('parcel.update', $parcel) }}@endif">
+                      action="@if (!$parcel->id)
+                          @if(Auth::user()->hasRole('superAdmin'))
+                            {{ route('superAdmin.parcel.store') }}
+                          @elseif(Auth::user()->hasRole('client'))
+                            {{ route('parcel.store') }}
+                          @endif
+                      @else
+                          @if(Auth::user()->hasRole('superAdmin'))
+                            {{ route('superAdmin.parcel.update', $parcel) }}
+                          @elseif(Auth::user()->hasRole('client'))
+                            {{ route('parcel.update', $parcel) }}
+                          @endif
+                      @endif">
                     @csrf
                     @if ($parcel->id) @method('PUT') @endif
+
+                    <div class="form-group row @if(Auth::user()->hasRole('superAdmin'))
+                            row
+                    @elseif(Auth::user()->hasRole('client'))
+                            d-none
+                    @endif">
+                        <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Клиент') }}
+                            <span class="star">*</span>
+                        </label>
+                        <div class="col-md-6">
+                            <select name="user_id"
+                                    id="user_id"
+                                    class="form-control @error('user_id') is-invalid @enderror"
+                                    required>
+                                @foreach ($clients as $client)
+                                    <option {{ $client->id === $parcel->user_id ? 'selected="selected"' : '' }} value="{{ $client->id }}">
+                                        {{ $client->email }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('user_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <div class="col-md-6">
@@ -57,12 +96,12 @@ $breadcrumbs = [
                     </span>
                             @enderror
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 @if(Auth::user()->hasRole('superAdmin') && !$parcel->id) d-none @endif">
                             <label for="address_id" class="col-form-label text-md-right">{{ __('Адрес') }} <span class="star">*</span></label>
                             <select name="address_id"
                                     id="address_id"
                                     class="form-control @error('address_id') is-invalid @enderror"
-                                    required>
+                                    @if(Auth::user()->hasRole('client'))required @endif>
                                 @foreach ($addresses as $address)
                                     <option {{ $address->id === $parcel->address_id ? 'selected="selected"' : '' }} value="{{ $address->id }}">
                                         {{ $address->city }} {{ $address->street }} {{ $address->building }}
@@ -75,7 +114,7 @@ $breadcrumbs = [
                             </span>
                             @enderror
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#address">
+                            <button type="button" class="btn btn-primary mt-2 @if(Auth::user()->hasRole('superAdmin')) d-none @endif" data-toggle="modal" data-target="#address">
                                 Добавить адрес
                             </button>
                         </div>

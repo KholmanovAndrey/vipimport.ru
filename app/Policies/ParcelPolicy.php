@@ -132,6 +132,10 @@ class ParcelPolicy
      */
     public function canEditByStatus(User $user, Parcel $parcel)
     {
+        if ($user->hasRole('superAdmin')) {
+            return true;
+        }
+
         $allowedStatuses = [6];
 
         foreach ($allowedStatuses as $item) {

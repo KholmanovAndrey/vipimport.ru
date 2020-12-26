@@ -14,24 +14,24 @@
         <div class="accordion" id="accordionExample">
             @if(Auth::user()->hasRole('manager'))
                 <div class="is-active border-top py-2">
-                    @if($clients)
+                    @if($clients_new)
                         <a href="#" class="nav-link-style d-flex flex-wrap align-items-center px-4 mb-2">
-                            <span class="new ml-2 badge bg-danger rounded-pill">Новые клиенты - {{ $clients }}</span>
+                            <span class="new ml-2 badge bg-danger rounded-pill">Новые клиенты - {{ $clients_new }}</span>
                         </a>
                     @endif
-                    @if($orders)
+                    @if($orders_new)
                         <a href="{{ route('manager.order.new') }}" class="nav-link-style d-flex flex-wrap align-items-center px-4 mb-2">
-                            <span class="new ml-2 badge bg-danger rounded-pill">Новые заказы - {{ $orders }}</span>
+                            <span class="new ml-2 badge bg-danger rounded-pill">Новые заказы - {{ $orders_new }}</span>
                         </a>
                     @endif
-                    @if($parcels)
-                        <a href="#" class="nav-link-style d-flex flex-wrap align-items-center px-4 mb-2">
-                            <span class="new ml-2 badge bg-danger rounded-pill">Новые посылки - {{ $parcels }}</span>
+                    @if($parcels_new)
+                        <a href="{{ route('manager.parcel.new') }}" class="nav-link-style d-flex flex-wrap align-items-center px-4 mb-2">
+                            <span class="new ml-2 badge bg-danger rounded-pill">Новые посылки - {{ $parcels_new }}</span>
                         </a>
                     @endif
-                    @if($supports)
+                    @if($supports_new)
                         <a href="#" class="nav-link-style d-flex flex-wrap align-items-center px-4">
-                            <span class="new ml-2 badge bg-danger rounded-pill">Новые запросы - {{ $supports }}</span>
+                            <span class="new ml-2 badge bg-danger rounded-pill">Новые запросы - {{ $supports_new }}</span>
                         </a>
                     @endif
                 </div>
@@ -74,7 +74,13 @@
                             <li class="border-top mb-0">
                                 <a href="{{ route('superAdmin.order.index') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
                                     <i class="czi-bag align-middle opacity-60 mr-2"></i>Заказы клиентов
-                                    <span class="new ml-2 badge bg-danger rounded-pill">{{ $orders }}</span>
+                                    <span class="new ml-2 badge bg-danger rounded-pill">{{ $orders_new }}</span>
+                                </a>
+                            </li>
+                            <li class="border-top mb-0">
+                                <a href="{{ route('superAdmin.parcel.index') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
+                                    <i class="czi-basket align-middle opacity-60 mr-2"></i>Посылки клиентов
+                                    <span class="new ml-2 badge bg-danger rounded-pill">{{ $parcels_new }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -127,7 +133,7 @@
                             <div>
                                 <div id="heading4" class="btn border-top nav-link-style d-flex align-items-center px-4 py-3" data-target="#collapse4" data-toggle="collapse" aria-expanded="true" aria-controls="collapse4">
                                     <i class="czi-bag align-middle opacity-60 mr-2"></i>Заказы
-                                    <span class="new ml-2 badge bg-danger rounded-pill">{{ $orders }}</span>
+                                    <span class="new ml-2 badge bg-danger rounded-pill">{{ $orders_new }}</span>
                                 </div>
                                 <div id="collapse4" class="collapse mt-0 pt-0" aria-labelledby="heading4" data-parent="#accordionExample2">
                                     <ul class="list-unstyled mb-0">
@@ -149,18 +155,18 @@
                             <div>
                                 <div id="heading5" class="btn border-top nav-link-style d-flex align-items-center px-4 py-3" data-target="#collapse5" data-toggle="collapse" aria-expanded="true" aria-controls="collapse5">
                                     <i class="czi-basket align-middle opacity-60 mr-2"></i>Посылки
-                                    <span class="new ml-2 badge bg-danger rounded-pill">{{ $parcels }}</span>
+                                    <span class="new ml-2 badge bg-danger rounded-pill">{{ $parcels_new }}</span>
                                 </div>
                                 <div id="collapse5" class="collapse mt-0 pt-0" aria-labelledby="heading5" data-parent="#accordionExample2">
                                     <ul class="list-unstyled mb-0">
                                         <li class="border-top mb-0">
-                                            <a href="{{ route('manager.parcel-new') }}" class="nav-link-style d-flex align-items-center pr-4 pl-5 py-3">
+                                            <a href="{{ route('manager.parcel.new') }}" class="nav-link-style d-flex align-items-center pr-4 pl-5 py-3">
                                                 Посылки в работу
                                                 {{--<span class="font-size-sm text-muted ml-auto">0</span>--}}
                                             </a>
                                         </li>
                                         <li class="border-top mb-0">
-                                            <a href="{{ route('manager.parcel-my') }}" class="nav-link-style d-flex align-items-center pr-4 pl-5 py-3">
+                                            <a href="{{ route('manager.parcel.my') }}" class="nav-link-style d-flex align-items-center pr-4 pl-5 py-3">
                                                 Мои посылки
                                                 {{--<span class="font-size-sm text-muted ml-auto">0</span>--}}
                                             </a>
@@ -171,7 +177,7 @@
                             <div>
                                 <div id="heading6" class="btn border-top nav-link-style d-flex align-items-center px-4 py-3" data-target="#collapse6" data-toggle="collapse" aria-expanded="true" aria-controls="collapse6">
                                     <i class="czi-support align-middle opacity-60 mr-2"></i>Поддержка
-                                    <span class="new ml-2 badge bg-danger rounded-pill">{{ $supports }}</span>
+                                    <span class="new ml-2 badge bg-danger rounded-pill">{{ $supports_new }}</span>
                                 </div>
                                 <div id="collapse6" class="collapse mt-0 pt-0" aria-labelledby="heading6" data-parent="#accordionExample2">
                                     <ul class="list-unstyled mb-0">
@@ -206,13 +212,13 @@
                             <li class="border-top mb-0">
                                 <a href="{{ route('order.index') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
                                     <i class="czi-bag align-middle opacity-60 mr-2"></i>Заказы
-                                    <span class="font-size-sm text-muted ml-auto">0</span>
+                                    <span class="font-size-sm text-muted ml-auto">{{ $client_orders_all }}</span>
                                 </a>
                             </li>
                             <li class="border-top mb-0">
                                 <a href="{{ route('parcel.index') }}" class="nav-link-style d-flex align-items-center px-4 py-3">
                                     <i class="czi-basket align-middle opacity-60 mr-2"></i>Посылки
-                                    <span class="font-size-sm text-muted ml-auto">0</span>
+                                    <span class="font-size-sm text-muted ml-auto">{{ $client_parcels_all }}</span>
                                 </a>
                             </li>
                             <li class="border-top mb-0">
