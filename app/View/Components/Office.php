@@ -12,14 +12,15 @@ use Illuminate\View\Component;
 
 class Office extends Component
 {
+    public $css;
+
     /**
-     * Create a new component instance.
-     *
-     * @return void
+     * Office constructor.
+     * @param $css
      */
-    public function __construct()
+    public function __construct($css)
     {
-        //
+        $this->css = $css;
     }
 
     /**

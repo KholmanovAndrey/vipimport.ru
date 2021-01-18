@@ -4,9 +4,13 @@
     flex-direction: column;
 }
 
+.bg-appp {
+    background: url(../storage/images/bg-appp.jpg) center center no-repeat;
+    background-size: cover;
+}
+
 .top {
     position: relative;
-    height: 100px
 }
 
 .middle {
@@ -15,12 +19,20 @@
 
 .sidebar {
     padding: 1rem;
-    background-color: rgba(11,31,53,.95);
-    color: rgba(255,255,255,.8);
 }
 
 .content {
     padding: 1rem;
+}
+
+.background-color-default {
+    background-color: rgba(11,31,53,.95);
+    color: rgba(255,255,255,.8);
+}
+
+.background-color-default-opacity {
+    background-color: rgba(11,31,53,.9);
+    color: rgba(255,255,255,.8);
 }
 
 .logo {
@@ -49,11 +61,42 @@
     color: rgba(11,31,53,1);
 }
 
+ul.menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+}
+
+ul.menu:last-child {
+    border-bottom: 0;
+}
+
+.menu__list {
+    border-bottom: 1px solid rgba(255,255,255,.3);
+}
+
+.menu__list:last-child {
+    border-bottom: 0;
+}
+
+.menu__link {
+    display: block;
+    padding: 1rem 1rem;
+
+    color: rgba(255,255,255,.8);
+    text-decoration: none;
+}
+
+.menu__link:hover {
+    color: rgba(255,255,255,1);
+}
+
 .popup {
     position: fixed;
     top: 0;
     left: 0;
-    padding: 1rem;
+    padding: 4rem 2rem 1rem 2rem;
     background-color: rgba(11,31,53,1);
     color: #ffffff;
 }
@@ -90,11 +133,15 @@
     border: 1px solid rgba(255,255,255,1);
 }
 
-.popup-menu {
-    margin-top: 40px;
-    padding: 1rem 0 0 0;
-
+ul.popup-menu {
+    margin: 0;
+    padding: 0;
     list-style: none;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+}
+
+ul.popup-menu:last-child {
+    border-bottom: 0;
 }
 
 .popup-menu__list {

@@ -23,22 +23,13 @@ $breadcrumbs = [
     <x-dashboard :title="$title" :breadcrumbs="$breadcrumbs"/>
 @endsection
 
-@section('sidebar')
-    @parent
-
-    <div class="sidebar col-lg-3">
-        <x-office/>
-    </div>
-@endsection
-
 @section('content')
-    <div class="items col-lg-9">
-        <x-user-title/>
+    <div class="items">
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover">
-                        <thead class="thead-dark">
+                        <thead class="background-color-default">
                         <tr>
                             <th scope="col" class="align-middle text-center"></th>
                             <th scope="col">Данные заказа</th>

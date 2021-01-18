@@ -19,17 +19,8 @@ $breadcrumbs = [
     <x-dashboard :title="$title" :breadcrumbs="$breadcrumbs"/>
 @endsection
 
-@section('sidebar')
-    @parent
-
-    <div class="sidebar col-lg-3">
-        <x-office/>
-    </div>
-@endsection
-
 @section('content')
-    <div class="items col-lg-9">
-        <x-user-title/>
+    <div class="items">
         <div class="card py-4 mb-4">
             <div class="card-body">
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('client'))
@@ -38,7 +29,7 @@ $breadcrumbs = [
                             {{ route('superAdmin.parcel.create') }}
                         @elseif(Auth::user()->hasRole('client'))
                             {{ route('parcel.create') }}
-                        @endif" class="btn btn-primary"><i class="czi-add align-middle"></i> Добавить посылку</a>
+                        @endif" class="btn btn-primary"><i class="fas fa-plus"></i> Добавить посылку</a>
                     </div>
                 @endif
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
@@ -49,7 +40,7 @@ $breadcrumbs = [
                             {{ route('parcel.index') }}
                         @endif" class="search__form">
                             <button type="submit" class="btn btn-primary position-absolute">
-                                <i class="czi-search align-middle"></i>
+                                <i class="fas fa-search"></i>
                             </button>
                             <input type="text"
                                    name="search"
@@ -77,7 +68,7 @@ $breadcrumbs = [
                 @endif
                 <div class="table-responsive">
                     <table class="table table-hover">
-                        <thead class="thead-dark">
+                        <thead class="background-color-default">
                         <tr>
                             <th scope="col" class="align-middle text-center">#</th>
                             <th scope="col">Наименование</th>
@@ -124,7 +115,7 @@ $breadcrumbs = [
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-primary mr-2" title="Принять заказ">
-                                                    <i class="czi-add align-middle"></i>
+                                                    <i class="fas fa-plus"></i>
                                                 </button>
                                             </form>
                                         @endif
@@ -136,7 +127,7 @@ $breadcrumbs = [
                                         @elseif(Auth::user()->hasRole('client'))
                                             {{ route('parcel.show', $item) }}
                                         @endif" class="btn btn-primary mr-2">
-                                            <i class="czi-view-list align-middle"></i></a>
+                                            <i class="fas fa-eye"></i></a>
 
                                         @can('canEditByStatus', $item)
                                             <a href="@if(Auth::user()->hasRole('superAdmin'))
@@ -144,7 +135,7 @@ $breadcrumbs = [
                                             @elseif(Auth::user()->hasRole('client'))
                                                 {{ route('parcel.edit', $item) }}
                                             @endif" class="btn btn-primary mr-2">
-                                                <i class="czi-edit align-middle"></i></a>
+                                                <i class="far fa-edit"></i></a>
                                             <form method="POST"
                                                   action="@if(Auth::user()->hasRole('superAdmin'))
                                                     {{ route('superAdmin.parcel.destroy', $item) }}
@@ -154,7 +145,7 @@ $breadcrumbs = [
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i class="czi-trash align-middle"></i>
+                                                    <i class="far fa-trash-alt"></i>
                                                 </button>
                                             </form>
                                         @endcan

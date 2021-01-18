@@ -31,7 +31,7 @@
 <div id="app">
     <div class="wrapper">
         <div class="top d-lg-flex">
-            <div class="sidebar col-lg-2 d-flex">
+            <div class="sidebar background-color-default col-lg-2 d-flex">
                 <div class="logo">
                     <a class="logo__link" href="{{ url('/') }}">
                         <img class="logo__img" src="{{ asset('public/storage/images/logo.png') }}">
@@ -49,16 +49,9 @@
             </div>
         </div>
         <div class="middle d-lg-flex t-0 l-0">
-            <div class="sidebar d-none d-lg-block col-lg-2">
-                @section('sidebar')
-                @show
-                <ul class="menu">
-                    <li class="menu__list"><a href="#" class="menu__link">Главная</a></li>
-                    <li class="menu__list"><a href="#" class="menu__link">Новый заказ</a></li>
-                    <li class="menu__list"><a href="#" class="menu__link">Мой заказы</a></li>
-                    <li class="menu__list"><a href="#" class="menu__link">Новая посылка</a></li>
-                    <li class="menu__list"><a href="#" class="menu__link">Мой посылки</a></li>
-                </ul>
+            <div class="sidebar background-color-default d-none d-lg-block col-lg-2">
+                <?php $css = 'menu' ?>
+                <x-office :css="$css"/>
             </div>
             <div class="content col-lg-10">
                 @yield('content')
@@ -67,13 +60,8 @@
     </div>
     <div id="popup" class="popup invisible w-100 min-vh-100 position-absolute top-0 start-0">
         <div id="popup-close" class="popup-close">X</div>
-        <ul class="popup-menu">
-            <li class="popup-menu__list"><a href="#" class="popup-menu__link">Главная</a></li>
-            <li class="popup-menu__list"><a href="#" class="popup-menu__link">Новый заказ</a></li>
-            <li class="popup-menu__list"><a href="#" class="popup-menu__link">Мой заказы</a></li>
-            <li class="popup-menu__list"><a href="#" class="popup-menu__link">Новая посылка</a></li>
-            <li class="popup-menu__list"><a href="#" class="popup-menu__link">Мой посылки</a></li>
-        </ul>
+        <?php $css = 'popup-menu' ?>
+        <x-office :css="$css"/>
     </div>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
