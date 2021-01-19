@@ -11,6 +11,14 @@ class Status extends Model
         'table_name'
     ];
 
+    public static function rules()
+    {
+        return [
+            'title' => "required|string|min:3|max:50",
+            'table_name' => 'required|string|min:3|max:50',
+        ];
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);

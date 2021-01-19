@@ -1,9 +1,9 @@
 <?php
-$title = 'Все страны';
+$title = 'Все статусы';
 $breadcrumbs = [
     [
-        'name' => 'Мои аккаунт',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'name' => 'Личный кабинет',
+        'route' => route('home'),
     ],
     [
         'name' => $title,
@@ -24,8 +24,8 @@ $breadcrumbs = [
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <div class="mb-2">
-                    <a href="{{ route('country.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus mr-1"></i>Добавить страну</a>
+                    <a href="{{ route('status.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus mr-1"></i>Добавить статус</a>
                 </div>
                 @if (session('success'))
                     <div class="alert alert-success">
@@ -48,25 +48,28 @@ $breadcrumbs = [
                         <thead class="background-color-default">
                         <tr>
                             <th scope="col" class="align-middle text-center">#</th>
-                            <th scope="col">Имя</th>
+                            <th scope="col">Наименование</th>
+                            <th scope="col">Чей статус</th>
                             <th scope="col" class="align-middle text-right">Действия</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($countries as $item)
+                        @foreach($statuses as $item)
                             <tr>
                                 <th scope="row" class="align-middle text-center">{{ $item->id }}</th>
                                 <td class="align-middle">{{ $item->title }}</td>
-                                <td class="align-middle text-center">
+                                <td class="align-middle">{{ $item->table_name }}</td>
+                                <td class="align-middle text-right">
                                     <div class="d-flex justify-content-end">
-                                        <a href="{{ route('country.edit', $item) }}" class="btn btn-primary mr-1" title="Редактировать">
-                                            <i class="far fa-edit"></i>
-                                        </a>
+                                        {{--<a href="{{ route('status.show', $item) }}" class="btn btn-primary mr-2">--}}
+                                            {{--<i class="fas fa-eye"></i></a>--}}
+                                        <a href="{{ route('status.edit', $item) }}" class="btn btn-primary mr-2">
+                                            <i class="far fa-edit"></i></a>
                                         <form method="POST"
-                                              action="{{ route('country.destroy', $item) }}">
+                                              action="{{ route('status.destroy', $item) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-primary" title="Удалить">
+                                            <button type="submit" class="btn btn-primary">
                                                 <i class="far fa-trash-alt"></i>
                                             </button>
                                         </form>

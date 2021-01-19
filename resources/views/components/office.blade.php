@@ -8,7 +8,8 @@
 @endif
 @if(Auth::user()->hasRole('admin'))
     <ul class="{{ $css }}">
-        <li class="{{ $css }}__list"><a href="{{ url('/') }}" class="{{ $css }}__link">admin</a></li>
+        <li class="{{ $css }}__list"><a href="{{ route('status.index') }}" class="{{ $css }}__link">Статусы</a></li>
+        <li class="{{ $css }}__list"><a href="{{ route('country.index') }}" class="{{ $css }}__link">Страны</a></li>
     </ul>
 @endif
 @if(Auth::user()->hasRole('manager'))
