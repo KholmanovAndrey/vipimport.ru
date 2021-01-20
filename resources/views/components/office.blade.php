@@ -3,7 +3,21 @@
 </ul>
 @if(Auth::user()->hasRole('superAdmin'))
     <ul class="{{ $css }}">
-        <li class="{{ $css }}__list"><a href="{{ url('/') }}" class="{{ $css }}__link">super</a></li>
+        <li class="{{ $css }}__list">
+            <a href="{{ route('superAdmin.user.index') }}" class="{{ $css }}__link">Пользователи</a>
+        </li>
+        <li class="{{ $css }}__list">
+            <a href="{{ route('superAdmin.statistic') }}" class="{{ $css }}__link">Статистика</a>
+        </li>
+        <li class="{{ $css }}__list">
+            <a href="{{ route('superAdmin.address.index') }}" class="{{ $css }}__link">Адреса клиентов</a>
+        </li>
+        <li class="{{ $css }}__list">
+            <a href="{{ route('superAdmin.order.index') }}" class="{{ $css }}__link">Заказы клиентов</a>
+        </li>
+        <li class="{{ $css }}__list">
+            <a href="{{ route('superAdmin.parcel.index') }}" class="{{ $css }}__link">Посылки клиентов</a>
+        </li>
     </ul>
 @endif
 @if(Auth::user()->hasRole('admin'))

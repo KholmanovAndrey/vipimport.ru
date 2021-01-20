@@ -19,22 +19,13 @@ $breadcrumbs = [
     <x-dashboard :title="$title" :breadcrumbs="$breadcrumbs"/>
 @endsection
 
-@section('sidebar')
-    @parent
-
-    <div class="sidebar col-lg-3">
-        <x-office/>
-    </div>
-@endsection
-
 @section('content')
-    <div class="items col-lg-9">
-        <x-user-title/>
+    <div class="items">
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <div class="button-panel mb-4">
                     <a href="{{ route('superAdmin.user.create') }}" class="btn btn-primary" title="Добавить пользователя">
-                        <i class="czi-add-user align-middle"></i> Добавить пользователя</a>
+                        <i class="fas fa-plus mr-1"></i>Добавить пользователя</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -67,15 +58,15 @@ $breadcrumbs = [
                                 <td class="align-middle text-center">
                                     <div class="d-flex justify-content-end">
                                         <a href="{{ route('superAdmin.user.show', $item) }}" class="btn btn-primary mr-2">
-                                            <i class="czi-view-list align-middle"></i></a>
+                                            <i class="fas fa-eye"></i></a>
                                         <a href="{{ route('superAdmin.user.edit', $item) }}" class="btn btn-primary mr-2" title="Редактирование пользователя">
-                                            <i class="czi-edit align-middle"></i></a>
+                                            <i class="far fa-edit"></i></a>
                                         <a href="{{ route('superAdmin.user.role', $item) }}" class="btn btn-primary mr-2" title="Назначение ролей пользователя">
-                                            <i class="czi-user-circle align-middle"></i></a>
+                                            <i class="fas fa-user-tag"></i></a>
                                         <a href="{{ route('superAdmin.order.index', ['search' => $item->email]) }}" class="btn btn-primary mr-2" title="Заказы пользователя">
-                                            <i class="czi-bag align-middle"></i></a>
+                                            <i class="fas fa-shopping-cart"></i></a>
                                         <a href="{{ route('superAdmin.user-parcel', $item) }}" class="btn btn-primary" title="Посылки пользователя">
-                                            <i class="czi-basket align-middle"></i></a>
+                                            <i class="fas fa-shopping-basket"></i></a>
                                     </div>
                                 </td>
                             </tr>
