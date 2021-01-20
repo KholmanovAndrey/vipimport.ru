@@ -1,11 +1,11 @@
 @extends('layouts.appp')
 
 @section('content')
-<div class="container py-2">
+<div class="py-2 px-4 mx-4">
     <div class="row justify-content-end">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">{{ __('Регистрация') }}</div>
+        <div style="width: 350px;"">
+            <div class="card background-color-default-opacity">
+                <div class="card-header background-color-default">{{ __('Регистрация') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
