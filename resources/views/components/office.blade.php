@@ -1,8 +1,33 @@
+<div>
+    @if($clients_new)
+        <a href="#" class="nav-link-style d-flex flex-wrap align-items-center px-4 mb-2">
+            <span class="new py-1 px-2 bg-light text-dark rounded-pill">Новые клиенты - {{ $clients_new }}</span>
+        </a>
+    @endif
+    @if($orders_new)
+        <a href="{{ route('manager.order.new') }}" class="nav-link-style d-flex flex-wrap align-items-center px-4 mb-2">
+            <span class="new py-1 px-2 bg-light text-dark rounded-pill">Новые заказы - {{ $orders_new }}</span>
+        </a>
+    @endif
+    @if($parcels_new)
+        <a href="{{ route('manager.parcel.new') }}" class="nav-link-style d-flex flex-wrap align-items-center px-4 mb-2">
+            <span class="new py-1 px-2 bg-light text-dark rounded-pill">Новые посылки - {{ $parcels_new }}</span>
+        </a>
+    @endif
+    @if($supports_new)
+        <a href="#" class="nav-link-style d-flex flex-wrap align-items-center px-4">
+            <span class="new py-1 px-2 bg-light text-dark rounded-pill">Новые запросы - {{ $supports_new }}</span>
+        </a>
+    @endif
+</div>
 <ul class="{{ $css }}">
     <li class="{{ $css }}__list"><a href="{{ url('/') }}" class="{{ $css }}__link">Главная</a></li>
 </ul>
 @if(Auth::user()->hasRole('superAdmin'))
     <ul class="{{ $css }}">
+        <li class="{{ $css }}__list">
+            <a class="{{ $css }}__link bg-light text-dark">СуперАдмин</a>
+        </li>
         <li class="{{ $css }}__list">
             <a href="{{ route('superAdmin.user.index') }}" class="{{ $css }}__link">Пользователи</a>
         </li>
@@ -22,12 +47,18 @@
 @endif
 @if(Auth::user()->hasRole('admin'))
     <ul class="{{ $css }}">
+        <li class="{{ $css }}__list">
+            <a class="{{ $css }}__link bg-light text-dark">Админ</a>
+        </li>
         <li class="{{ $css }}__list"><a href="{{ route('status.index') }}" class="{{ $css }}__link">Статусы</a></li>
         <li class="{{ $css }}__list"><a href="{{ route('country.index') }}" class="{{ $css }}__link">Страны</a></li>
     </ul>
 @endif
 @if(Auth::user()->hasRole('manager'))
     <ul class="{{ $css }}">
+        <li class="{{ $css }}__list">
+            <a class="{{ $css }}__link bg-light text-dark">Менеджер</a>
+        </li>
         <li class="{{ $css }}__list"><a href="{{ route('manager.order.new') }}" class="{{ $css }}__link">Новые заказы</a></li>
         <li class="{{ $css }}__list"><a href="{{ route('manager.order.my') }}" class="{{ $css }}__link">Мой заказы</a></li>
         <li class="{{ $css }}__list"><a href="{{ route('manager.parcel.new') }}" class="{{ $css }}__link">Новые посылки</a></li>
