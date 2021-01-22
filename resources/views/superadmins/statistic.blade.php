@@ -19,17 +19,8 @@ $breadcrumbs = [
     <x-dashboard :title="$title" :breadcrumbs="$breadcrumbs"/>
 @endsection
 
-@section('sidebar')
-    @parent
-
-    <div class="sidebar col-lg-3">
-        <x-office/>
-    </div>
-@endsection
-
 @section('content')
-    <div class="items col-lg-9">
-        <x-user-title/>
+    <div class="items">
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -50,7 +41,7 @@ $breadcrumbs = [
                     <div class="tab-pane fade show active" id="pills-common" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="table-responsive">
                             <table class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="background-color-default">
                                 <tr>
                                     <th scope="col" class="align-middle">Пользователи</th>
                                     <th scope="col" class="align-middle text-right">Количество</th>
@@ -74,7 +65,7 @@ $breadcrumbs = [
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="background-color-default">
                                 <tr>
                                     <th scope="col" class="align-middle">Заказы</th>
                                     <th scope="col" class="align-middle text-right">Количество</th>
@@ -94,7 +85,7 @@ $breadcrumbs = [
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="background-color-default">
                                 <tr>
                                     <th scope="col" class="align-middle">Посылки</th>
                                     <th scope="col" class="align-middle text-right">Количество</th>
@@ -116,7 +107,7 @@ $breadcrumbs = [
                     <div class="tab-pane fade" id="pills-managers" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="table-responsive">
                             <table class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="background-color-default">
                                 <tr>
                                     <th scope="col" class="align-middle text-center">#</th>
                                     <th scope="col">Имя</th>
@@ -133,7 +124,7 @@ $breadcrumbs = [
                                         <td class="align-middle text-center">
                                             <div class="d-flex justify-content-center">
                                                 <a href="{{ route('superAdmin.user-statistic', $item) }}" class="btn btn-primary mr-1" title="Статистика пользователя">
-                                                    <i class="czi-document align-middle"></i></a>
+                                                    <i class="fas fa-file-alt"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -145,7 +136,7 @@ $breadcrumbs = [
                     <div class="tab-pane fade" id="pills-clients" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="table-responsive">
                             <table class="table table-hover">
-                                <thead class="thead-dark">
+                                <thead class="background-color-default">
                                 <tr>
                                     <th scope="col" class="align-middle text-center">#</th>
                                     <th scope="col">Имя</th>
@@ -162,7 +153,7 @@ $breadcrumbs = [
                                         <td class="align-middle text-center">
                                             <div class="d-flex justify-content-center">
                                                 <a href="{{ route('superAdmin.user-statistic', $item) }}" class="btn btn-primary mr-1" title="Статистика пользователя">
-                                                    <i class="czi-document align-middle"></i></a>
+                                                    <i class="fas fa-file-alt"></i></a>
                                             </div>
                                         </td>
                                     </tr>

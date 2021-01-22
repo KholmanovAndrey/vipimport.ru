@@ -23,17 +23,8 @@ $breadcrumbs = [
     <x-dashboard :title="$title" :breadcrumbs="$breadcrumbs"/>
 @endsection
 
-@section('sidebar')
-    @parent
-
-    <div class="sidebar col-lg-3">
-        <x-office/>
-    </div>
-@endsection
-
 @section('content')
-    <div class="items col-lg-9">
-        <x-user-title/>
+    <div class="items">
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <h1>{{ $user->email }}</h1>
@@ -54,7 +45,7 @@ $breadcrumbs = [
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-order" role="tabpanel" aria-labelledby="pills-home-tab">
                         <table class="table table-hover">
-                            <thead class="thead-dark">
+                            <thead class="background-color-default">
                             <tr>
                                 <th scope="col">Заказы</th>
                                 <th scope="col" class="align-middle text-center">
@@ -90,7 +81,7 @@ $breadcrumbs = [
                     </div>
                     <div class="tab-pane fade" id="pills-parcel" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <table class="table table-hover">
-                            <thead class="thead-dark">
+                            <thead class="background-color-default">
                             <tr>
                                 <th scope="col">Посылки</th>
                                 <th scope="col" class="align-middle text-center">
@@ -126,7 +117,7 @@ $breadcrumbs = [
                     </div>
                     <div class="tab-pane fade" id="pills-support" role="tabpanel" aria-labelledby="pills-contact-tab">
                         <table class="table table-hover">
-                            <thead class="thead-dark">
+                            <thead class="background-color-default">
                             <tr>
                                 <th scope="col">Поддержка</th>
                                 <th scope="col" class="align-middle text-center">
