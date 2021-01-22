@@ -1,11 +1,11 @@
 @extends('layouts.appp')
 
 @section('content')
-<div class="container py-2">
+<div class="py-2 px-4 mx-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+        <div style="width: 350px;">
+            <div class="card background-color-default-opacity">
+                <div class="card-header background-color-default">{{ __('Confirm Password') }}</div>
 
                 <div class="card-body">
                     {{ __('Please confirm your password before continuing.') }}

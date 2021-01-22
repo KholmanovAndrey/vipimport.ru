@@ -3,7 +3,7 @@
 @section('content')
 <div class="py-2 px-4 mx-4">
     <div class="row justify-content-end">
-        <div class="col-md-4">
+        <div style="width: 350px;">
             <div class="card background-color-default-opacity">
                 <div class="card-header background-color-default">{{ __('Вход в личный кабинет') }}</div>
 
