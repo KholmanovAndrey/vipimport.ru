@@ -60,7 +60,7 @@
             <a href="{{ route('superAdmin.address.index') }}" class="{{ $css }}__link d-flex justify-content-between">Адреса клиентов</a>
         </li>
         <li class="{{ $css }}__list">
-            <a href="{{ route('superAdmin.order.index') }}" class="{{ $css }}__link d-flex justify-content-between">
+            <a href="{{ route('order.index') }}" class="{{ $css }}__link d-flex justify-content-between">
                 Заказы клиентов
                 @if($orders_new)
                     <span class="bg-white text-dark px-1 rounded-top rounded-bottom">{{ $orders_new }}</span>
@@ -92,14 +92,14 @@
             <a class="{{ $css }}__link bg-light text-dark">Менеджер</a>
         </li>
         <li class="{{ $css }}__list">
-            <a href="{{ route('manager.order.new') }}" class="{{ $css }}__link d-flex justify-content-between">
+            <a href="{{ route('order.new') }}" class="{{ $css }}__link d-flex justify-content-between">
                 Новые заказы
                 @if($orders_new)
                     <span class="bg-white text-dark px-1 rounded-top rounded-bottom">{{ $orders_new }}</span>
                 @endif
             </a>
         </li>
-        <li class="{{ $css }}__list"><a href="{{ route('manager.order.my') }}" class="{{ $css }}__link d-flex justify-content-between">Мой заказы</a></li>
+        <li class="{{ $css }}__list"><a href="{{ route('order.my') }}" class="{{ $css }}__link d-flex justify-content-between">Мой заказы</a></li>
         <li class="{{ $css }}__list">
             <a href="{{ route('manager.parcel.new') }}" class="{{ $css }}__link d-flex justify-content-between">
                 Новые посылки
@@ -124,7 +124,7 @@
 <ul class="{{ $css }}">
     <li class="{{ $css }}__list"><a href="{{ route('address.index') }}" class="{{ $css }}__link d-flex justify-content-between">Адреса доставки</a></li>
     <li class="{{ $css }}__list"><a href="{{ route('order.create') }}" class="{{ $css }}__link d-flex justify-content-between">Новый заказ</a></li>
-    <li class="{{ $css }}__list"><a href="{{ route('order.index') }}" class="{{ $css }}__link d-flex justify-content-between">Мой заказы</a></li>
+    <li class="{{ $css }}__list"><a href="{{ route('order.my') }}" class="{{ $css }}__link d-flex justify-content-between">Мой заказы</a></li>
     <li class="{{ $css }}__list"><a href="{{ route('parcel.create') }}" class="{{ $css }}__link d-flex justify-content-between">Новая посылка</a></li>
     <li class="{{ $css }}__list"><a href="{{ route('parcel.index') }}" class="{{ $css }}__link d-flex justify-content-between">Мой посылки</a></li>
     <li class="{{ $css }}__list"><a href="{{ route('client.support-all') }}" class="{{ $css }}__link d-flex justify-content-between">Поддержка</a></li>

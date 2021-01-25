@@ -16,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::resource('/status', 'StatusController');
-
+Route::middleware('auth')->resource('/status', 'StatusController');
+// Order
+Route::middleware('auth')->get('/order/new', 'OrderController@new')->name('order.new');
+Route::middleware('auth')->get('/order/my', 'OrderController@my')->name('order.my');
+Route::middleware('auth')->resource('/order', 'OrderController');
+// Parcel
 
 
 Route::get('/contacts', 'ContactController@view')->name('contact.view');
@@ -33,7 +37,7 @@ Route::resource('/profile', 'ProfileController')->except('view');
 Route::middleware('role:client')->resource('/address', 'AddressController');
 Route::resource('/country', 'CountryController')->except('show');
 Route::resource('/city', 'CityController')->except('show');
-Route::middleware('role:client')->resource('/order', 'OrderController');
+//Route::middleware('role:client')->resource('/order', 'OrderController');
 Route::middleware('role:client')->resource('/parcel', 'ParcelController');
 Route::resource('/support', 'SupportController');
 Route::resource('/message', 'MessageController');

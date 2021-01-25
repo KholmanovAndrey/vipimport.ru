@@ -18,7 +18,7 @@ class OrderController extends Controller
 
     function __construct()
     {
-//        $this->middleware('role:client');
+        $this->middleware('auth');
     }
 
     /**
@@ -47,23 +47,11 @@ class OrderController extends Controller
     {
         $this->authorize('viewAny', Order::class);
 
-        $orders = new Order();
-        if (Auth::user()->hasRole('superAdmin')) {
-            if ($request->search) {
-                $this->search($request->search);
-            }
-
-            $orders = Order::query()
-                ->orderByDesc('id')
-                ->where($this->whereName)
-                ->orWhere($this->whereEmail)
-                ->get();
-        }elseif (Auth::user()->hasRole('client')) {
-            $orders = Order::query()
-                ->where('user_id', '=', Auth::user()->id)
-                ->orderByDesc('id')
-                ->get();
-        }
+        $orders = Order::query()
+            ->orderByDesc('id')
+            ->where($this->whereName)
+            ->orWhere($this->whereEmail)
+            ->get();
 
         return view('orders.index', [
             'orders' => $orders,
@@ -102,9 +90,17 @@ class OrderController extends Controller
             $this->search($request->search);
         }
 
+
+        $whereUser = [];
+        if (Auth::user()->hasRole('manager')) {
+            $whereUser = ['manager_id', '=', Auth::user()->id];
+        } elseif (Auth::user()->hasRole('client')) {
+            $whereUser = ['user_id', '=', Auth::user()->id];
+        }
+
         $orders = Order::query()
             ->orderByDesc('id')
-            ->where('manager_id', '=',  Auth::user()->id)
+            ->where($whereUser[0], $whereUser[1], $whereUser[2])
             ->where(function ($query) {
                 $query->where($this->whereName)
                     ->orWhere($this->whereEmail);

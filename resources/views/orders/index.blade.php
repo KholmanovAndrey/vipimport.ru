@@ -50,6 +50,17 @@ $breadcrumbs = [
                         </form>
                     </div>
                 @endif
+                <div class="mb-2">
+                    @if(Auth::user()->hasRole('superAdmin'))
+                        <a href="{{ route('order.index') }}">Все</a>
+                    @endif
+                    @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
+                        <a href="{{ route('order.new') }}">Новые</a>
+                    @endif
+                    @if(Auth::user()->hasRole('manager') || Auth::user()->hasRole('client'))
+                        <a href="{{ route('order.my') }}">Мои</a>
+                    @endif
+                </div>
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
