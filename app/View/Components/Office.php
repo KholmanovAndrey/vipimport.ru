@@ -8,7 +8,9 @@ use App\Support;
 use App\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\Component;
+use phpDocumentor\Reflection\Types\Null_;
 
 class Office extends Component
 {
@@ -35,7 +37,10 @@ class Office extends Component
             ->get()
             ->count();
         $parcels_new = Parcel::query()
-            ->where('manager_id', '=', null)
+            ->where([
+                ['manager_id', '=', null],
+                ['status_id', '=', 7]
+            ])
             ->get()
             ->count();
         $supports_new = Support::query()
@@ -46,6 +51,43 @@ class Office extends Component
             ->where('created_at', '>=', Carbon::now()->subDays(2)->toDateTimeString())
             ->get()
             ->count();
+
+
+        $messages_new = Support::query()
+            ->get();
+        $messages = [];
+        foreach ($messages_new as $key => $message) {
+            if ($message->client_add_at > $message->manager_add_at) {
+                $messages[] = $message;
+            }
+        }
+        $messages_new = count($messages);
+
+        $messages_new_for_manager = Support::query()
+            ->where([
+                ['manager_id', '=', Auth::user()->id]
+            ])
+            ->get();
+        $messages = [];
+        foreach ($messages_new_for_manager as $key => $message) {
+            if ($message->client_add_at > $message->manager_add_at) {
+                $messages[] = $message;
+            }
+        }
+        $messages_new_for_manager = count($messages);
+
+        $messages_new_for_client = Support::query()
+            ->where([
+                ['client_id', '=', Auth::user()->id],
+            ])
+            ->get();
+        $messages = [];
+        foreach ($messages_new_for_client as $key => $message) {
+            if ($message->client_add_at < $message->manager_add_at) {
+                $messages[] = $message;
+            }
+        }
+        $messages_new_for_client = count($messages);
 
         // клиент
         $client_orders_all = Order::query()
@@ -62,6 +104,9 @@ class Office extends Component
             'parcels_new' => $parcels_new,
             'supports_new' => $supports_new,
             'clients_new' => $clients_new,
+            'messages_new' => $messages_new,
+            'messages_new_for_manager' => $messages_new_for_manager,
+            'messages_new_for_client' => $messages_new_for_client,
             'client_orders_all' => $client_orders_all,
             'client_parcels_all' => $client_parcels_all
         ]);

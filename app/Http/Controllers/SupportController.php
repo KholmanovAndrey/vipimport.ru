@@ -25,7 +25,10 @@ class SupportController extends Controller
      */
     public function index()
     {
-        //
+        $supports = Support::query()->get();
+        return view('supports.index', [
+            'supports' => $supports
+        ]);
     }
 
     /**
@@ -35,8 +38,12 @@ class SupportController extends Controller
      */
     public function create()
     {
-        $orders = Order::query()->get();
-        $parcels = Parcel::query()->get();
+        $orders = Order::query()
+            ->where('user_id', '=', Auth::user()->id)
+            ->get();
+        $parcels = Parcel::query()
+            ->where('user_id', '=', Auth::user()->id)
+            ->get();
         return view('supports.form', [
             'support' => new Support(),
             'orders' => $orders,

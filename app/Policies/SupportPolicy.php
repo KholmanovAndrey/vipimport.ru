@@ -30,7 +30,9 @@ class SupportPolicy
      */
     public function view(User $user, Support $support)
     {
-        return (int)$user->id === (int)$support->client_id || (int)$user->id === (int)$support->manager_id;
+        return $user->hasRole('superAdmin') ||
+            (int)$user->id === (int)$support->client_id ||
+            (int)$user->id === (int)$support->manager_id;
     }
 
     /**

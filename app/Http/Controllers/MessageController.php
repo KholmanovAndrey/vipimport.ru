@@ -55,6 +55,15 @@ class MessageController extends Controller
             $message->fill($request->all());
 
             if ($message->save()) {
+
+                $support = Support::find($message->support_id);
+                if (Auth::user()->hasRole('client')) {
+                    $support->client_add_at = date('Y-m-d H:i:s');
+                } else {
+                    $support->manager_add_at = date('Y-m-d H:i:s');
+                }
+                $support->save();
+
                 return redirect()->route('support.show', $message->support_id)
                     ->with('success', 'Данные успешно добавлены!');
             }

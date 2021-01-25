@@ -27,17 +27,8 @@ $breadcrumbs = [
     <script src="{{ asset('js/support.theme.js') }}" defer></script>
 @endsection
 
-@section('sidebar')
-    @parent
-
-    <div class="sidebar col-lg-3">
-        <x-office/>
-    </div>
-@endsection
-
 @section('content')
-    <div class="col-lg-9">
-        <x-user-title/>
+    <div>
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <form method="POST"
@@ -54,9 +45,9 @@ $breadcrumbs = [
                                placeholder="Наименование запроса в тех. поддержку"
                                required autofocus>
                         @error('title')
-                        <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
 
@@ -70,9 +61,9 @@ $breadcrumbs = [
                             <option value="parcel">Вопрос по посылке</option>
                         </select>
                         @error('support_id')
-                        <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
 
@@ -87,9 +78,9 @@ $breadcrumbs = [
                             @endforeach
                         </select>
                         @error('order_id')
-                        <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
 
@@ -104,9 +95,9 @@ $breadcrumbs = [
                             @endforeach
                         </select>
                         @error('parcel_id')
-                        <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
 

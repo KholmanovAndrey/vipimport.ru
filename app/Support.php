@@ -12,6 +12,8 @@ class Support extends Model
         'manager_id',
         'order_id',
         'parcel_id',
+        'client_add_at',
+        'manager_add_at'
     ];
 
     public static function rules()

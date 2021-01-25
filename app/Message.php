@@ -9,7 +9,7 @@ class Message extends Model
     public $fillable = [
         'message',
         'user_id',
-        'support_id',
+        'support_id'
     ];
 
     public static function rules()
