@@ -1,4 +1,4 @@
-{{--<div>--}}
+<div>
     {{--@if(Auth::user()->hasRole('manager'))--}}
         {{--@if($clients_new)--}}
             {{--<a href="#" class="nav-link-style d-flex flex-wrap align-items-center mb-2">--}}
@@ -21,22 +21,31 @@
             {{--</a>--}}
         {{--@endif--}}
     {{--@endif--}}
-    {{--@if($messages_new && Auth::user()->hasRole('superAdmin'))--}}
-        {{--<a href="{{ route('support.index') }}" class="nav-link-style d-flex flex-wrap align-items-center mb-2">--}}
-            {{--<span class="new py-1 px-4 bg-light text-dark rounded-pill">Все непрочитанные сообщения - {{ $messages_new }}</span>--}}
-        {{--</a>--}}
-    {{--@endif--}}
-    {{--@if($messages_new_for_manager && Auth::user()->hasRole('manager'))--}}
-        {{--<a href="{{ route('manager.support-my') }}" class="nav-link-style d-flex flex-wrap align-items-center mb-2">--}}
-            {{--<span class="new py-1 px-4 bg-light text-dark rounded-pill">Непрочитанные сообщения - {{ $messages_new_for_manager }}</span>--}}
-        {{--</a>--}}
-    {{--@endif--}}
-    {{--@if($messages_new_for_client && Auth::user()->hasRole('client'))--}}
-        {{--<a href="{{ route('client.support-all') }}" class="nav-link-style d-flex flex-wrap align-items-center mb-2">--}}
-            {{--<span class="new py-1 px-4 bg-light text-dark rounded-pill">Непрочитанные сообщения - {{ $messages_new_for_client }}</span>--}}
-        {{--</a>--}}
-    {{--@endif--}}
-{{--</div>--}}
+    @if($messages_new && Auth::user()->hasRole('superAdmin'))
+        <a href="{{ route('support.index') }}" class="nav-link-style d-flex flex-wrap align-items-center mb-2">
+            <span class="new py-1 px-4 bg-light text-dark rounded-pill">
+                <i class="fas fa-exclamation-triangle"></i>
+                Все непрочитанные сообщения - {{ $messages_new }}
+            </span>
+        </a>
+    @endif
+    @if($messages_new_for_manager && Auth::user()->hasRole('manager'))
+        <a href="{{ route('manager.support-my') }}" class="nav-link-style d-flex flex-wrap align-items-center mb-2">
+            <span class="new py-1 px-4 bg-light text-dark rounded-pill">
+                <i class="fas fa-exclamation-triangle"></i>
+                Непрочитанные сообщения - {{ $messages_new_for_manager }}
+            </span>
+        </a>
+    @endif
+    @if($messages_new_for_client && Auth::user()->hasRole('client'))
+        <a href="{{ route('client.support-all') }}" class="nav-link-style d-flex flex-wrap align-items-center mb-2">
+            <span class="new py-1 px-4 bg-light text-dark rounded-pill">
+                <i class="fas fa-exclamation-triangle"></i>
+                Непрочитанные сообщения - {{ $messages_new_for_client }}
+            </span>
+        </a>
+    @endif
+</div>
 <ul class="{{ $css }}">
     <li class="{{ $css }}__list"><a href="{{ url('/') }}" class="{{ $css }}__link">Главная</a></li>
 </ul>
