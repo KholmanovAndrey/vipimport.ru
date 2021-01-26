@@ -3,7 +3,7 @@ $title = 'Все заказы';
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => $title,
@@ -25,20 +25,12 @@ $breadcrumbs = [
             <div class="card-body">
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('client'))
                     <div class="mb-2">
-                        <a href="@if(Auth::user()->hasRole('superAdmin'))
-                            {{ route('superAdmin.order.create') }}
-                        @elseif(Auth::user()->hasRole('client'))
-                            {{ route('order.create') }}
-                        @endif" class="btn btn-primary"><i class="fas fa-plus"></i> Добавить заказ</a>
+                        <a href="{{ route('order.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Добавить заказ</a>
                     </div>
                 @endif
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
                     <div class="search mb-2 position-relative">
-                        <form method="get" action="@if(Auth::user()->hasRole('superAdmin'))
-                        {{ route('superAdmin.order.index') }}
-                        @elseif(Auth::user()->hasRole('client'))
-                        {{ route('order.index') }}
-                        @endif" class="search__form">
+                        <form method="get" action="{{ route('order.index') }}" class="search__form">
                             <button type="submit" class="btn btn-primary position-absolute">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -52,13 +44,13 @@ $breadcrumbs = [
                 @endif
                 <div class="mb-2">
                     @if(Auth::user()->hasRole('superAdmin'))
-                        <a href="{{ route('order.index') }}">Все</a>
+                        <a href="{{ route('order.index', ['search' => $search]) }}">Все</a>
                     @endif
                     @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
-                        <a href="{{ route('order.new') }}">Новые</a>
+                        <a href="{{ route('order.new', ['search' => $search]) }}">Новые</a>
                     @endif
                     @if(Auth::user()->hasRole('manager') || Auth::user()->hasRole('client'))
-                        <a href="{{ route('order.my') }}">Мои</a>
+                        <a href="{{ route('order.my', ['search' => $search]) }}">Мои</a>
                     @endif
                 </div>
                 @if (session('success'))
@@ -100,7 +92,7 @@ $breadcrumbs = [
                                     <td class="align-middle">
                                         @if($item->user)
                                             <a href="@if(Auth::user()->hasRole('manager'))
-                                                {{ route('manager.user.show', $item->user) }}
+                                                {{ route('user.show', $item->user) }}
                                             @endif">{{ $item->user->name }}</a>
                                         @endif
                                     </td>
@@ -120,7 +112,7 @@ $breadcrumbs = [
                                     <div class="d-flex justify-content-end">
                                         @if(Auth::user()->hasRole('manager') && $item->manager_id === null)
                                             <form method="POST"
-                                                  action="{{ route('manager.order.accept', $item) }}">
+                                                  action="{{ route('order.accept', $item) }}">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-primary mr-2" title="Принять заказ">
@@ -129,29 +121,15 @@ $breadcrumbs = [
                                             </form>
                                         @endif
 
-                                        <a href="@if(Auth::user()->hasRole('superAdmin') && !Auth::user()->hasRole('manager'))
-                                            {{ route('superAdmin.order.show', $item) }}
-                                        @elseif(Auth::user()->hasRole('manager'))
-                                            {{ route('manager.order.show', $item) }}
-                                        @elseif(Auth::user()->hasRole('client'))
-                                            {{ route('order.show', $item) }}
-                                        @endif" class="btn btn-primary mr-2">
+                                        <a href="{{ route('order.show', $item) }}" class="btn btn-primary">
                                             <i class="fas fa-eye"></i></a>
 
                                         @can('canEditByStatus', $item)
                                             @can('canDelete', $item)
-                                                <a href="@if(Auth::user()->hasRole('superAdmin'))
-                                                {{ route('superAdmin.order.edit', $item) }}
-                                                @elseif(Auth::user()->hasRole('client'))
-                                                {{ route('order.edit', $item) }}
-                                                @endif" class="btn btn-primary mr-2">
+                                                <a href="{{ route('order.edit', $item) }}" class="btn btn-primary mx-2">
                                                     <i class="far fa-edit"></i></a>
                                                 <form method="POST"
-                                                      action="@if(Auth::user()->hasRole('superAdmin'))
-                                                      {{ route('superAdmin.order.destroy', $item) }}
-                                                      @elseif(Auth::user()->hasRole('client'))
-                                                      {{ route('order.destroy', $item) }}
-                                                      @endif">
+                                                      action="{{ route('order.destroy', $item) }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-primary">

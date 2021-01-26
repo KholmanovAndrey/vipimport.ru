@@ -3,7 +3,7 @@ $title = 'Создание/Редактирование заказов';
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => 'Все адреса',
@@ -33,17 +33,9 @@ $breadcrumbs = [
             <div class="card-body">
                 <form method="POST"
                       action="@if (!$order->id)
-                          @if(Auth::user()->hasRole('superAdmin'))
-                            {{ route('superAdmin.order.store') }}
-                          @elseif(Auth::user()->hasRole('client'))
-                            {{ route('order.store') }}
-                          @endif
+                          {{ route('order.store') }}
                       @else
-                          @if(Auth::user()->hasRole('superAdmin'))
-                            {{ route('superAdmin.order.update', $order) }}
-                          @elseif(Auth::user()->hasRole('client'))
-                            {{ route('order.update', $order) }}
-                          @endif
+                          {{ route('order.update', $order) }}
                       @endif">
                     @csrf
                     @if ($order->id) @method('PUT') @endif

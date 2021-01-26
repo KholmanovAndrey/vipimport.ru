@@ -3,7 +3,7 @@ $title = $item->title;
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => 'Все посылки',
@@ -49,18 +49,14 @@ $breadcrumbs = [
                         @auth
                         @can('canEditByStatus', $item)
                             <form method="POST"
-                                  action="{{ route('client.parcel-send-to-packaging', $item) }}">
+                                  action="{{ route('parcel.parcel-send-to-packaging', $item) }}">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-primary item__link">
                                     {{ __('Отправить на упаковку') }}
                                 </button>
                             </form>
-                            <a href="@if(Auth::user()->hasRole('superAdmin'))
-                                {{ route('superAdmin.parcel.edit', $item) }}
-                            @elseif(Auth::user()->hasRole('client'))
-                                {{ route('parcel.edit', $item) }}
-                            @endif" class="btn btn-primary item__link">Редактировать</a>
+                            <a href="{{ route('parcel.edit', $item) }}" class="btn btn-primary item__link">Редактировать</a>
                             <form method="POST"
                                   action="{{ route('parcel.destroy', $item) }}">
                                 @csrf
@@ -77,7 +73,7 @@ $breadcrumbs = [
                 @if(Auth::user()->hasRole('manager') && $item->manager !== null && $item->status_id != 6)
                 <div class="manager">
                     <form method="POST"
-                          action="{{ route('manager.parcel.status', $item) }}">
+                          action="{{ route('parcel.status', $item) }}">
                         @csrf
                         @method('PUT')
                         <select name="status_id"
@@ -96,7 +92,7 @@ $breadcrumbs = [
                     </form>
 
                     <form method="POST"
-                          action="{{ route('manager.parcel.transfer', $item) }}">
+                          action="{{ route('parcel.transfer', $item) }}">
                         @csrf
                         @method('PUT')
                         <select name="manager_id"
@@ -132,7 +128,7 @@ $breadcrumbs = [
                             @if((int)$item->status_id === 6)
                                 <div class="col-sm-2">
                                     <form method="POST"
-                                          action="{{ route('client.order-delete-parcel-id', $order) }}">
+                                          action="{{ route('parcel.order-delete-parcel-id', $order) }}">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-primary item__link">
@@ -146,7 +142,7 @@ $breadcrumbs = [
                 </section>
                 @if((int)$item->status_id === 6)
                     <form method="POST"
-                          action="{{ route('client.order-add-parcel-id', $item) }}">
+                          action="{{ route('parcel.order-add-parcel-id', $item) }}">
                         @csrf
                         @method('PUT')
                         <div class="form-group row">

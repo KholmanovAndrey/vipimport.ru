@@ -3,7 +3,7 @@ $title = 'Создание/Редактирование страны';
 $breadcrumbs = [
     [
         'name' => 'Мои аккаунт',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => 'Все страны',

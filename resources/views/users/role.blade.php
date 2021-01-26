@@ -3,11 +3,11 @@ $title = 'Роли пользователя';
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => 'Пользователи',
-        'route' => route('superAdmin.user.index'),
+        'route' => route('user.index'),
     ],
     [
         'name' => $title,
@@ -32,7 +32,7 @@ $breadcrumbs = [
                         {{ $user->profile['lastname'] }} {{ $user->profile['firstname'] }} {{ $user->profile['othername'] }}
                     @endif
                 </h1>
-                <form method="post" action="{{ route('superAdmin.user.role.update', $user) }}">
+                <form method="post" action="{{ route('user.role.update', $user) }}">
                     @csrf
                     @method('PUT')
                     <table class="table table-hover">

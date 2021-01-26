@@ -3,7 +3,7 @@ $title = 'Создание/Редактирование посылок';
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => 'Все посылки',
@@ -29,17 +29,9 @@ $breadcrumbs = [
             <div class="card-body">
                 <form method="POST"
                       action="@if (!$parcel->id)
-                          @if(Auth::user()->hasRole('superAdmin'))
-                            {{ route('superAdmin.parcel.store') }}
-                          @elseif(Auth::user()->hasRole('client'))
-                            {{ route('parcel.store') }}
-                          @endif
+                          {{ route('parcel.store') }}
                       @else
-                          @if(Auth::user()->hasRole('superAdmin'))
-                            {{ route('superAdmin.parcel.update', $parcel) }}
-                          @elseif(Auth::user()->hasRole('client'))
-                            {{ route('parcel.update', $parcel) }}
-                          @endif
+                          {{ route('parcel.update', $parcel) }}
                       @endif">
                     @csrf
                     @if ($parcel->id) @method('PUT') @endif

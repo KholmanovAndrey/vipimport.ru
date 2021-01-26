@@ -3,7 +3,7 @@ $title = 'Пользователи';
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => $title,
@@ -24,7 +24,7 @@ $breadcrumbs = [
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <div class="button-panel mb-4">
-                    <a href="{{ route('superAdmin.user.create') }}" class="btn btn-primary" title="Добавить пользователя">
+                    <a href="{{ route('user.create') }}" class="btn btn-primary" title="Добавить пользователя">
                         <i class="fas fa-plus mr-1"></i>Добавить пользователя</a>
                 </div>
                 <div class="table-responsive">
@@ -57,15 +57,15 @@ $breadcrumbs = [
                                 </td>
                                 <td class="align-middle text-center">
                                     <div class="d-flex justify-content-end">
-                                        <a href="{{ route('superAdmin.user.show', $item) }}" class="btn btn-primary mr-2">
+                                        <a href="{{ route('user.show', $item) }}" class="btn btn-primary mr-2">
                                             <i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('superAdmin.user.edit', $item) }}" class="btn btn-primary mr-2" title="Редактирование пользователя">
+                                        <a href="{{ route('user.edit', $item) }}" class="btn btn-primary mr-2" title="Редактирование пользователя">
                                             <i class="far fa-edit"></i></a>
-                                        <a href="{{ route('superAdmin.user.role', $item) }}" class="btn btn-primary mr-2" title="Назначение ролей пользователя">
+                                        <a href="{{ route('user.role', $item) }}" class="btn btn-primary mr-2" title="Назначение ролей пользователя">
                                             <i class="fas fa-user-tag"></i></a>
-                                        <a href="{{ route('superAdmin.order.index', ['search' => $item->email]) }}" class="btn btn-primary mr-2" title="Заказы пользователя">
+                                        <a href="{{ route('order.index', ['search' => $item->email]) }}" class="btn btn-primary mr-2" title="Заказы пользователя">
                                             <i class="fas fa-shopping-cart"></i></a>
-                                        <a href="{{ route('superAdmin.user-parcel', $item) }}" class="btn btn-primary" title="Посылки пользователя">
+                                        <a href="{{ route('parcel.index', ['search' => $item->email]) }}" class="btn btn-primary" title="Посылки пользователя">
                                             <i class="fas fa-shopping-basket"></i></a>
                                     </div>
                                 </td>

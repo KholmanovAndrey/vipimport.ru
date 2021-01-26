@@ -47,6 +47,10 @@ class OrderController extends Controller
     {
         $this->authorize('viewAny', Order::class);
 
+        if ($request->search) {
+            $this->search($request->search);
+        }
+
         $orders = Order::query()
             ->orderByDesc('id')
             ->where($this->whereName)
@@ -89,7 +93,6 @@ class OrderController extends Controller
         if ($request->search) {
             $this->search($request->search);
         }
-
 
         $whereUser = [];
         if (Auth::user()->hasRole('manager')) {
@@ -155,37 +158,18 @@ class OrderController extends Controller
 
             $this->validate($request, Order::rules());
 
-//            for ($i = 0; $i < count($request->title); $i++) {
-//                $order = new Order();
-//                $order->user_id = Auth::user()->id;
-//                $order->status_id = 1;
-//                $order->title = $request->title[$i];
-//                $order->count = $request->count[$i];
-//                $order->link = $request->link[$i];
-//                $order->price = $request->price[$i] ?? 0;
-//                $order->color = $request->color[$i];
-//                $order->size = $request->size[$i];
-//                $order->description = $request->description[$i];
-//                $order->save();
-//                $this->ship($request, $order->id);
-//            }
             $order = new Order();
             $order->fill($request->all());
             $order->status_id = 1;
             $order->price = $request->price ?? 0;
 
-            $route = '';
-            if (Auth::user()->hasRole('superAdmin')) {
-                $route = 'superAdmin.';
-            }
-
             if ($order->save()) {
-                $this->ship($request, $order->id, 'create');
-                return redirect()->route($route.'order.index')
+                //$this->ship($request, $order->id, 'create');
+                return redirect()->route(Auth::user()->hasRole('superAdmin') ? 'order.index' : 'order.my')
                     ->with('success', 'Данные успешно добавлены!');
             }
 
-            return redirect()->route($route.'order.create')
+            return redirect()->route('order.create')
                 ->with('error', 'Ошибка добавления данных!');
         }
     }
@@ -275,18 +259,13 @@ class OrderController extends Controller
 
             $order->fill($request->all());
 
-            $route = '';
-            if (Auth::user()->hasRole('superAdmin')) {
-                $route = 'superAdmin.';
-            }
-
             if ($order->save()) {
-                $this->ship($request, $order->id);
-                return redirect()->route($route.'order.index')
+                //$this->ship($request, $order->id);
+                return redirect()->route(Auth::user()->hasRole('superAdmin') ? 'order.index' : 'order.my')
                     ->with('success', 'Данные успешно обновленны!');
             }
 
-            return redirect()->route($route.'order.edit', $order)
+            return redirect()->route('order.edit', $order)
                 ->with('error', 'Ошибка обновления данных!');
         }
     }
@@ -359,13 +338,9 @@ class OrderController extends Controller
         if ($request->isMethod('delete')) {
             $request->flash();
 
-            //$this->validate($request, Order::rules());
-
-            $route = '';
             if (Auth::user()->hasRole('superAdmin')) {
-                $route = 'superAdmin.';
                 if ($order->delete()) {
-                    return redirect()->route('superAdmin.order.index')
+                    return redirect()->route('order.index')
                         ->with('success', 'Данные успешно удаленны!');
                 }
             }
@@ -373,13 +348,13 @@ class OrderController extends Controller
             if (Auth::user()->hasRole('client')) {
                 $order->isDeleted = 1;
 
-                if ($order->save()) {
-                    return redirect()->route('order.index')
+                if ($order->delete()) {
+                    return redirect()->route('order.my')
                         ->with('success', 'Данные успешно изменены!');
                 }
             }
 
-            return redirect()->route($route.'order.index')
+            return redirect()->route(Auth::user()->hasRole('superAdmin') ? 'order.index' : 'order.my')
                 ->with('error', 'Ошибка удаления данных!');
         }
     }

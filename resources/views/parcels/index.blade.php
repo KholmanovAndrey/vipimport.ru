@@ -3,7 +3,7 @@ $title = 'Все посылки';
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => $title,
@@ -25,20 +25,12 @@ $breadcrumbs = [
             <div class="card-body">
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('client'))
                     <div class="mb-2">
-                        <a href="@if(Auth::user()->hasRole('superAdmin'))
-                            {{ route('superAdmin.parcel.create') }}
-                        @elseif(Auth::user()->hasRole('client'))
-                            {{ route('parcel.create') }}
-                        @endif" class="btn btn-primary"><i class="fas fa-plus"></i> Добавить посылку</a>
+                        <a href="{{ route('parcel.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Добавить посылку</a>
                     </div>
                 @endif
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
                     <div class="search mb-2 position-relative">
-                        <form method="get" action="@if(Auth::user()->hasRole('superAdmin'))
-                            {{ route('superAdmin.parcel.index') }}
-                        @elseif(Auth::user()->hasRole('client'))
-                            {{ route('parcel.index') }}
-                        @endif" class="search__form">
+                        <form method="get" action="{{ route('parcel.index') }}" class="search__form">
                             <button type="submit" class="btn btn-primary position-absolute">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -50,6 +42,17 @@ $breadcrumbs = [
                         </form>
                     </div>
                 @endif
+                <div class="mb-2">
+                    @if(Auth::user()->hasRole('superAdmin'))
+                        <a href="{{ route('parcel.index', ['search' => $search]) }}">Все</a>
+                    @endif
+                    @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
+                        <a href="{{ route('parcel.new', ['search' => $search]) }}">Новые</a>
+                    @endif
+                    @if(Auth::user()->hasRole('manager') || Auth::user()->hasRole('client'))
+                        <a href="{{ route('parcel.my', ['search' => $search]) }}">Мои</a>
+                    @endif
+                </div>
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -89,7 +92,7 @@ $breadcrumbs = [
                                     <td class="align-middle">
                                         @if($item->client)
                                             <a href="@if(Auth::user()->hasRole('manager'))
-                                                {{ route('manager.user.show', $item->client) }}
+                                                {{ route('user.show', $item->client) }}
                                             @endif">{{ $item->client->name }}</a>
                                         @endif
                                     </td>
@@ -111,7 +114,7 @@ $breadcrumbs = [
                                         $item->manager_id === null &&
                                         $item->status_id != 6)
                                             <form method="POST"
-                                                  action="{{ route('manager.parcel.accept', $item) }}">
+                                                  action="{{ route('parcel.accept', $item) }}">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-primary mr-2" title="Принять заказ">
@@ -120,28 +123,14 @@ $breadcrumbs = [
                                             </form>
                                         @endif
 
-                                        <a href="@if(Auth::user()->hasRole('superAdmin') && !Auth::user()->hasRole('manager'))
-                                            {{ route('superAdmin.parcel.show', $item) }}
-                                        @elseif(Auth::user()->hasRole('manager'))
-                                            {{ route('manager.parcel.show', $item) }}
-                                        @elseif(Auth::user()->hasRole('client'))
-                                            {{ route('parcel.show', $item) }}
-                                        @endif" class="btn btn-primary mr-2">
+                                        <a href="{{ route('parcel.show', $item) }}" class="btn btn-primary">
                                             <i class="fas fa-eye"></i></a>
 
                                         @can('canEditByStatus', $item)
-                                            <a href="@if(Auth::user()->hasRole('superAdmin'))
-                                                {{ route('superAdmin.parcel.edit', $item) }}
-                                            @elseif(Auth::user()->hasRole('client'))
-                                                {{ route('parcel.edit', $item) }}
-                                            @endif" class="btn btn-primary mr-2">
+                                            <a href="{{ route('parcel.edit', $item) }}" class="btn btn-primary mx-2">
                                                 <i class="far fa-edit"></i></a>
                                             <form method="POST"
-                                                  action="@if(Auth::user()->hasRole('superAdmin'))
-                                                    {{ route('superAdmin.parcel.destroy', $item) }}
-                                                  @elseif(Auth::user()->hasRole('client'))
-                                                    {{ route('parcel.destroy', $item) }}
-                                                  @endif">
+                                                  action="{{ route('parcel.destroy', $item) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-primary">

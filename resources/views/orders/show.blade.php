@@ -3,7 +3,7 @@ $title = 'Все заказы';
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => 'Все заказы',
@@ -83,7 +83,7 @@ $breadcrumbs = [
 
                 @if(Auth::user()->hasRole('manager') && $item->manager !== null)
                     <form method="POST"
-                          action="{{ route('manager.order.status', $item) }}">
+                          action="{{ route('order.status', $item) }}">
                         @csrf
                         @method('PUT')
                         <select name="status_id"
@@ -102,7 +102,7 @@ $breadcrumbs = [
                     </form>
 
                     <form method="POST"
-                          action="{{ route('manager.order.transfer', $item) }}">
+                          action="{{ route('order.transfer', $item) }}">
                         @csrf
                         @method('PUT')
                         <select name="manager_id"

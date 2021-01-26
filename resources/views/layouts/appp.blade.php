@@ -14,8 +14,8 @@
     <!-- Scripts -->
     <script src="{{ asset('public/js/app.js') }}" defer></script>
     <script src="{{ asset('public/js/popup.js') }}" defer></script>
-@section('scripts')
-@show
+    @section('scripts')
+    @show
 
 <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

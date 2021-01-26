@@ -3,7 +3,7 @@ $title = 'Создание/Редактирование адресов';
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => 'Все адреса',
@@ -45,17 +45,9 @@ $breadcrumbs = [
                 @endif
                 <form method="POST"
                       action="@if (!$address->id)
-                          @if(Auth::user()->hasRole('superAdmin'))
-                            {{ route('superAdmin.address.store') }}
-                          @elseif(Auth::user()->hasRole('client'))
-                            {{ route('address.store') }}
-                          @endif
+                          {{ route('address.store') }}
                       @else
-                          @if(Auth::user()->hasRole('superAdmin'))
-                            {{ route('superAdmin.address.update', $address) }}
-                          @elseif(Auth::user()->hasRole('client'))
-                            {{ route('address.update', $address) }}
-                          @endif
+                          {{ route('address.update', $address) }}
                       @endif">
                     @csrf
                     @if ($address->id) @method('PUT') @endif

@@ -18,7 +18,19 @@ class SupportPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasRole('superAdmin');
+    }
+
+    public function viewNew(User $user)
+    {
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('manager');
+    }
+
+    public function viewMy(User $user)
+    {
+        return $user->hasRole('manager') ||
+            $user->hasRole('client');
     }
 
     /**
@@ -56,6 +68,11 @@ class SupportPolicy
     public function update(User $user, Support $support)
     {
         //
+    }
+
+    public function accept(User $user)
+    {
+        return $user->hasRole('manager');
     }
 
     /**

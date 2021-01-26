@@ -65,22 +65,27 @@ class AddressController extends Controller
     {
         $this->authorize('viewAny', Address::class);
 
-        $addresses = new Address();
-        if (Auth::user()->hasRole('superAdmin')) {
-            $where = $this->search($request->search);
-
-            $addresses = Address::query()
-                ->whereRaw($where)
-                ->get();
-        }elseif (Auth::user()->hasRole('client')) {
-            $addresses = Address::query()
-                ->where('user_id', '=', Auth::user()->id)
-                ->get();
-        }
+        $where = $this->search($request->search);
+        $addresses = Address::query()
+            ->whereRaw($where)
+            ->get();
 
         return view('addresses.index', [
             'addresses' => $addresses,
             'search' => $request->search
+        ]);
+    }
+
+    public function my()
+    {
+        $this->authorize('viewMy', Address::class);
+
+        $addresses = Address::query()
+            ->where('user_id', '=', Auth::user()->id)
+            ->get();
+
+        return view('addresses.index', [
+            'addresses' => $addresses
         ]);
     }
 
@@ -130,17 +135,12 @@ class AddressController extends Controller
             $address = new Address();
             $address->fill($request->all());
 
-            $route = '';
-            if (Auth::user()->hasRole('superAdmin')) {
-                $route = 'superAdmin.';
-            }
-
             if ($address->save()) {
-                return redirect()->route($route.'address.index')
+                return redirect()->route(Auth::user()->hasRole('superAdmin') ? 'address.index' : 'address.my')
                     ->with('success', 'Данные успешно добавлены!');
             }
 
-            return redirect()->route($route.'address.create')
+            return redirect()->route('address.create')
                 ->with('error', 'Ошибка добавления данных!');
         }
     }
@@ -209,17 +209,12 @@ class AddressController extends Controller
 
             $address->fill($request->all());
 
-            $route = '';
-            if (Auth::user()->hasRole('superAdmin')) {
-                $route = 'superAdmin.';
-            }
-
             if ($address->save()) {
-                return redirect()->route($route.'address.index')
+                return redirect()->route(Auth::user()->hasRole('superAdmin') ? 'address.index' : 'address.my')
                     ->with('success', 'Данные успешно обновленны!');
             }
 
-            return redirect()->route($route.'address.edit', $address)
+            return redirect()->route('address.edit', $address)
                 ->with('error', 'Ошибка обновления данных!');
 
         }
@@ -238,17 +233,12 @@ class AddressController extends Controller
         $this->authorize('delete', $address);
 
         if ($request->isMethod('delete')) {
-            $route = '';
-            if (Auth::user()->hasRole('superAdmin')) {
-                $route = 'superAdmin.';
-            }
-
             if ($address->delete()) {
-                return redirect()->route($route.'address.index')
+                return redirect()->back()
                     ->with('success', 'Данные успешно удаленны!');
             }
 
-            return redirect()->route($route.'address.index')
+            return redirect()->back()
                 ->with('error', 'Ошибка удаления данных!');
         }
     }

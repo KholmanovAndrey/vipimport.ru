@@ -18,18 +18,19 @@ class ParcelPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('superAdmin') ||
-            $user->hasRole('client');
+        return $user->hasRole('superAdmin');
     }
 
     public function viewNew(User $user)
     {
-        return $user->hasRole('manager');
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('manager');
     }
 
     public function viewMy(User $user)
     {
-        return $user->hasRole('manager');
+        return $user->hasRole('manager') ||
+            $user->hasRole('client');
     }
 
     /**
@@ -84,6 +85,24 @@ class ParcelPolicy
     public function transfer(User $user)
     {
         return $user->hasRole('manager');
+    }
+
+    public function orderAddParcelID(User $user)
+    {
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('client');
+    }
+
+    public function orderDeleteParcelID(User $user)
+    {
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('client');
+    }
+
+    public function parcelSendToPackaging(User $user)
+    {
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('client');
     }
 
     /**

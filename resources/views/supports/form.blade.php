@@ -3,11 +3,11 @@ $title = 'Создание/Редактирование запроса в под
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
-        'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+        'route' => route('home'),
     ],
     [
         'name' => 'Поддержка',
-        'route' => route('client.support-all'),
+        'route' => route('support.my'),
     ],
     [
         'name' => $title,

@@ -18,8 +18,12 @@ class AddressPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('superAdmin') ||
-            $user->hasRole('client');
+        return $user->hasRole('superAdmin');
+    }
+
+    public function viewMy(User $user)
+    {
+        return $user->hasRole('client');
     }
 
     /**

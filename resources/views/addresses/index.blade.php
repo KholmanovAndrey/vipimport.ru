@@ -3,7 +3,7 @@
     $breadcrumbs = [
         [
             'name' => 'Мои аккаунт',
-            'route' => route(\Illuminate\Support\Facades\Auth::user()->roles[0]->name . '.index'),
+            'route' => route('home'),
         ],
         [
             'name' => $title,
@@ -24,16 +24,12 @@
         <div class="card py-4 mb-4">
             <div class="card-body">
                 <div class="mb-2">
-                    <a href="@if(Auth::user()->hasRole('superAdmin'))
-                        {{ route('superAdmin.address.create') }}
-                    @elseif(Auth::user()->hasRole('client'))
-                        {{ route('address.create') }}
-                    @endif" class="btn btn-primary">
+                    <a href="{{ route('address.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Добавить адрес доставки</a>
                 </div>
                 @if(Auth::user()->hasRole('superAdmin'))
                     <div class="search mb-2 position-relative">
-                        <form method="get" action="{{ route('superAdmin.address.index') }}" class="search__form">
+                        <form method="get" action="{{ route('address.index') }}" class="search__form">
                             <button type="submit" class="btn btn-primary position-absolute">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -91,24 +87,12 @@
                                 </td>
                                 <td class="align-middle text-center">
                                     <div class="d-flex justify-content-end">
-                                        <a href="@if(Auth::user()->hasRole('superAdmin'))
-                                            {{ route('superAdmin.address.show', $item) }}
-                                        @elseif(Auth::user()->hasRole('client'))
-                                            {{ route('address.show', $item) }}
-                                        @endif" class="btn btn-primary mr-2">
+                                        <a href="{{ route('address.show', $item) }}" class="btn btn-primary mr-2">
                                             <i class="fas fa-eye"></i></a>
-                                        <a href="@if(Auth::user()->hasRole('superAdmin'))
-                                            {{ route('superAdmin.address.edit', $item) }}
-                                        @elseif(Auth::user()->hasRole('client'))
-                                            {{ route('address.edit', $item) }}
-                                        @endif" class="btn btn-primary mr-2">
+                                        <a href="{{ route('address.edit', $item) }}" class="btn btn-primary mr-2">
                                             <i class="far fa-edit"></i></a>
                                         <form method="POST"
-                                              action="@if(Auth::user()->hasRole('superAdmin'))
-                                                {{ route('superAdmin.address.destroy', $item) }}
-                                              @elseif(Auth::user()->hasRole('client'))
-                                                {{ route('address.destroy', $item) }}
-                                              @endif">
+                                              action="{{ route('address.destroy', $item) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-primary">

@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Parcel;
 use App\Support;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SupportController extends Controller
 {
+    public $whereName;
+    public $whereEmail;
+
     /**
      * SupportController constructor.
      */
@@ -19,15 +23,95 @@ class SupportController extends Controller
     }
 
     /**
+     * Поиск клиента по name or email
+     * @param $search
+     */
+    private function search($search)
+    {
+        $clients = User::query()->where('name', 'like', "%{$search}%")->get();
+        foreach ($clients as $client) {
+            $this->whereName[0] = ['client_id', '=', $client->id];
+        }
+        $clients = User::query()->where('email', 'like', "%{$search}%")->get();
+        foreach ($clients as $client) {
+            $this->whereEmail[0] = ['client_id', '=', $client->id];
+        }
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $supports = Support::query()->get();
+        $this->authorize('viewAny', Support::class);
+
+        if ($request->search) {
+            $this->search($request->search);
+        }
+
+        $supports = Support::query()
+            ->orderByDesc('id')
+            ->where($this->whereName)
+            ->orWhere($this->whereEmail)
+            ->get();
         return view('supports.index', [
-            'supports' => $supports
+            'supports' => $supports,
+            'search' => $request->search
+        ]);
+    }
+
+    public function new(Request $request)
+    {
+        $this->authorize('viewNew', Support::class);
+
+        if ($request->search) {
+            $this->search($request->search);
+        }
+
+        $supports = Support::query()
+            ->orderByDesc('id')
+            ->where('manager_id', '=', null)
+            ->where(function ($query) {
+                $query->where($this->whereName)
+                    ->orWhere($this->whereEmail);
+            })
+            ->get();
+
+        return view('supports.index', [
+            'supports' => $supports,
+            'search' => $request->search
+        ]);
+    }
+
+    public function my(Request $request)
+    {
+        $this->authorize('viewMy', Support::class);
+
+        if ($request->search) {
+            $this->search($request->search);
+        }
+
+        $whereUser = [];
+        if (Auth::user()->hasRole('manager')) {
+            $whereUser = ['manager_id', '=', Auth::user()->id];
+        } elseif (Auth::user()->hasRole('client')) {
+            $whereUser = ['client_id', '=', Auth::user()->id];
+        }
+
+        $supports = Support::query()
+            ->orderByDesc('id')
+            ->where($whereUser[0], $whereUser[1], $whereUser[2])
+            ->where(function ($query) {
+                $query->where($this->whereName)
+                    ->orWhere($this->whereEmail);
+            })
+            ->get();
+
+        return view('supports.index', [
+            'supports' => $supports,
+            'search' => $request->search
         ]);
     }
 
@@ -128,6 +212,24 @@ class SupportController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Функция для принятия запроса в тех. поддержку
+     * @param Request $request
+     * @param Support $support
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function accept(Request $request, Support $support)
+    {
+        $this->authorize('accept', $support);
+
+        if ($request->isMethod('put')) {
+            $support->manager_id = Auth::user()->id;
+            $support->save();
+        }
+
+        return redirect()->back();
     }
 
     /**
