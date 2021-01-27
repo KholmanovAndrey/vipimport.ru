@@ -50,7 +50,7 @@ $breadcrumbs = [
                     @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
                         <a href="{{ route('support.new', ['search' => $search]) }}">Новые</a>
                     @endif
-                    @if(Auth::user()->hasRole('manager') || Auth::user()->hasRole('client'))
+                    @if(Auth::user()->hasRole('manager'))
                         <a href="{{ route('support.my', ['search' => $search]) }}">Мои</a>
                     @endif
                 </div>

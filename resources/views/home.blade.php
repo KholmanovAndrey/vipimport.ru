@@ -2,91 +2,152 @@
 
 @section('title', 'Товары из США и других стран')
 
-@section('topbar')
-    @parent
-
-        <x-slider/>
-@endsection
-
-@section('index')
-    <section class="index-advantages text-center my-5" id="advantages">
-        <div class="container-fluid">
-            <h2 class="index-advantages-title">Наши преимущества</h2>
-            <div class="advantages row">
-                <div class="col-md-3 advantage"><i class="czi-smile"></i>Недорого и&nbsp;удобно</div>
-                <div class="col-md-3 advantage"><i class="czi-basket-alt"></i>Купим товары за&nbsp;вас</div>
-                <div class="col-md-3 advantage"><i class="czi-percent advantage-line-through"></i>Нет скрытых комиссий</div>
-                <div class="col-md-3 advantage"><i class="czi-dollar-circle advantage-line-through"></i>Базовые услуги бесплатны</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="index-about mb-5">
-        <div class="container-fluid">
-            <div class="index-about-content col-md-5">
-                <div class="headlines">
-                    <h2 class="index-about-title">Как мы работаем</h2>
-                    <h3 class="index-about-title-sub">Покупаем для вас!</h3>
-                </div>
-                <p>От Вас требуется только ссылка на товар и деньги, чтоб оплатить покупку и доставку. Не нужно регистрироваться в интернет-магазинах, все это мы сделаем за Вас!</p>
-                <p class="button">
-                    @guest
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="btn btn-primary btn-lg">
-                                <span class="czgb-button--inner">{{ __('Сделать заказ') }}</span><i class="czi czi-arrow-right ml-2 mr-n1"></i>
-                            </a>
-                        @endif
-                    @else
-                        <a href="{{ route('order.create') }}" class="btn btn-primary btn-lg">
-                            <span class="czgb-button--inner">{{ __('Сделать заказ') }}</span><i class="czi czi-arrow-right ml-2 mr-n1"></i>
-                        </a>
-                    @endguest
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="index-services text-center mb-5">
-        <div class="container-fluid">
-            <h2 class="index-services-title">А что с гарантиями?</h2>
-            <h3 class="index-services-title-sub">Мы&nbsp;доставили по&nbsp;всему миру более 1&nbsp;млн посылок с&nbsp;2008&nbsp;года</h3>
-            <div class="services row">
-                <div class="col-md-4 service">
-                    <i class="czi-check-circle"></i>
-                    <div class="h4 title">Проверим товар</div>
-                    <div class="description">Сфотографируем товар, проверим важные параметры по&nbsp;вашей просьбе</div>
-                </div>
-                <div class="col-md-4 service">
-                    <i class="czi-security-prohibition"></i>
-                    <div class="h4 title">Защитим посылку</div>
-                    <div class="description">Компенсируем потери, если с посылкой что-то случится в пути</div>
-                </div>
-                <div class="col-md-4 service">
-                    <i class="czi-reply"></i>
-                    <div class="h4 title">Поможем с&nbsp;возвратом</div>
-                    <div class="description">Поможем вернуть товар, если он&nbsp;не&nbsp;подошел или не&nbsp;понравился</div>
+@section('content')
+    <div class="mb-4 d-flex flex-wrap justify-content-around align-items-stretch">
+        @if(Auth::user()->hasRole('superAdmin'))@endif
+        @if(Auth::user()->hasRole('admin'))@endif
+        @if(Auth::user()->hasRole('manager'))@endif
+        @if(Auth::user()->hasRole('client'))
+            <div class="mb-4 col-12 col-lg-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="background-color-default">
+                                <tr>
+                                    <th scope="col" colspan="2">Заказы</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{--<tr>--}}
+                                    {{--<th>Новые</th>--}}
+                                    {{--<td class="align-middle text-right">0</td>--}}
+                                {{--</tr>--}}
+                                {{--<tr>--}}
+                                    {{--<th>Все</th>--}}
+                                    {{--<td class="align-middle text-right">0</td>--}}
+                                {{--</tr>--}}
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="d-flex justify-content-first flex-wrap">
+                                            <a href="{{ route('order.create') }}" class="btn btn-primary mb-2 mr-2">
+                                                <i class="fas fa-plus-square mr-2"></i>Новый заказ
+                                            </a>
+                                            <a href="{{ route('order.my') }}" class="btn btn-primary mb-2">
+                                                <i class="fas fa-shopping-cart mr-2"></i>Мой заказы
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section class="index-reg text-center">
-        <div class="container-fluid">
-            <h2>Начните покупать за&nbsp;рубежом сегодня!</h2>
-            <div class="button">
-                @guest
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="btn btn-warning btn-lg">
-                        <span class="czgb-button--inner">{{ __('Зарегистрироваться') }}</span><i class="czi czi-arrow-right ml-2 mr-n1"></i>
-                    </a>
-                @endif
-                @endguest
+            <div class="mb-4 col-12 col-lg-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="background-color-default">
+                                <tr>
+                                    <th scope="col" colspan="2">Посылки</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{--<tr>--}}
+                                    {{--<th>Новые</th>--}}
+                                    {{--<td class="align-middle text-right">0</td>--}}
+                                {{--</tr>--}}
+                                {{--<tr>--}}
+                                    {{--<th>Все</th>--}}
+                                    {{--<td class="align-middle text-right">0</td>--}}
+                                {{--</tr>--}}
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="d-flex justify-content-first flex-wrap">
+                                            <a href="{{ route('parcel.create') }}" class="btn btn-primary mb-2 mr-2">
+                                                <i class="fas fa-plus-square mr-2"></i>Новая посылка
+                                            </a>
+                                            <a href="{{ route('parcel.my') }}" class="btn btn-primary mb-2">
+                                                <i class="fas fa-shopping-basket mr-2"></i>Мой посылки
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <section class="index-seo" data-selector="index-seo">
-
-    </section>
-
+            <div class="mb-4 col-12 col-lg-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="background-color-default">
+                                <tr>
+                                    <th scope="col" colspan="2">Поддержка</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{--<tr>--}}
+                                    {{--<th>Кол-во запросов</th>--}}
+                                    {{--<td class="align-middle text-right">0</td>--}}
+                                {{--</tr>--}}
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="d-flex justify-content-first flex-wrap">
+                                            <a href="{{ route('support.create') }}" class="btn btn-primary mb-2 mr-2">
+                                                <i class="fas fa-plus-square mr-2"></i>{{ __('Написать в поддержку') }}
+                                            </a>
+                                            <a href="{{ route('support.my') }}" class="btn btn-primary mb-2">
+                                                <span><i class="fas fa-question-circle mr-2"></i>Поддержка</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4 col-12 col-lg-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="background-color-default">
+                                <tr>
+                                    <th scope="col" colspan="2">Адреса доставки</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{--<tr>--}}
+                                    {{--<th>Кол-во адресов</th>--}}
+                                    {{--<td class="align-middle text-right">0</td>--}}
+                                {{--</tr>--}}
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="d-flex justify-content-first flex-wrap">
+                                            <a href="{{ route('address.create') }}" class="btn btn-primary mb-2 mr-2">
+                                                <i class="fas fa-plus-square mr-2"></i>Новый адрес
+                                            </a>
+                                            <a href="{{ route('address.my') }}" class="btn btn-primary mb-2">
+                                                <i class="fas fa-map-marker-alt mr-2"></i>Мои адреса
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
 @endsection

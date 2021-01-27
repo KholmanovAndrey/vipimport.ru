@@ -49,7 +49,7 @@ $breadcrumbs = [
                     @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
                         <a href="{{ route('parcel.new', ['search' => $search]) }}">Новые</a>
                     @endif
-                    @if(Auth::user()->hasRole('manager') || Auth::user()->hasRole('client'))
+                    @if(Auth::user()->hasRole('manager'))
                         <a href="{{ route('parcel.my', ['search' => $search]) }}">Мои</a>
                     @endif
                 </div>
