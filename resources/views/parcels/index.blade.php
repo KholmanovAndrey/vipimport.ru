@@ -25,7 +25,8 @@ $breadcrumbs = [
             <div class="card-body">
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('client'))
                     <div class="mb-2">
-                        <a href="{{ route('parcel.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Добавить посылку</a>
+                        <a href="{{ route('parcel.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Добавить посылку</a>
                     </div>
                 @endif
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))

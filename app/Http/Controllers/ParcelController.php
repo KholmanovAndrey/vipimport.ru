@@ -384,6 +384,24 @@ class ParcelController extends Controller
     }
 
     /**
+     * Назначение трекера
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function tracker(Request $request, Parcel $parcel)
+    {
+        $this->authorize('tracker', $parcel);
+
+        if ($request->isMethod('put')) {
+            $parcel->tracker = htmlspecialchars(trim($request->tracker));
+            $parcel->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
      * Функция для добавления заказа в посылку
      * @param Request $request
      * @param Parcel $parcel

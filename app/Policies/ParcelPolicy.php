@@ -87,6 +87,12 @@ class ParcelPolicy
         return $user->hasRole('manager');
     }
 
+    public function tracker(User $user)
+    {
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('manager');
+    }
+
     public function orderAddParcelID(User $user)
     {
         return $user->hasRole('superAdmin') ||

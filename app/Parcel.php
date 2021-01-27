@@ -12,7 +12,8 @@ class Parcel extends Model
         'fio',
         'address',
         'phone',
-        'status_id'
+        'status_id',
+        'tracker'
     ];
 
     public static function rules()

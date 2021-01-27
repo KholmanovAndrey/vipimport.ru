@@ -36,6 +36,7 @@ $breadcrumbs = [
                             <div class="item__client">Клиент: {{ $item->client->name }}</div>
                             <div>Дата создания: {{ date('d.m.Y H:i', date_timestamp_get($item->created_at)) }}</div>
                             <div>Дата обновления: {{ date('d.m.Y H:i', date_timestamp_get($item->updated_at)) }}</div>
+                            <div>Трекер: {{ $item->tracker }}</div>
                             <div class="item__description">{{ $item->description }}</div>
                         </div>
                         <div class="col-md-6">
@@ -45,24 +46,29 @@ $breadcrumbs = [
                             <div class="item__phone">Телефон: {{ $item->phone }}</div>
                         </div>
                     </div>
-                    <footer class="item__footer">
+                    <footer class="mt-2 d-flex flex-wrap">
                         @auth
                         @can('canEditByStatus', $item)
                             <form method="POST"
                                   action="{{ route('parcel.parcel-send-to-packaging', $item) }}">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="btn btn-primary item__link">
-                                    {{ __('Отправить на упаковку') }}
+                                <button type="submit" class="btn btn-primary mb-2 mr-2" title="Отправить на упаковку">
+                                    <i class="fas fa-box-open"></i>
+                                    <span class="ml-2 d-lg-inline">{{ __('Отправить на упаковку') }}</span>
                                 </button>
                             </form>
-                            <a href="{{ route('parcel.edit', $item) }}" class="btn btn-primary item__link">Редактировать</a>
+                            <a href="{{ route('parcel.edit', $item) }}" class="btn btn-primary  mb-2 mr-2" title="Редактировать">
+                                <i class="far fa-edit"></i>
+                                <span class="ml-2 d-none d-lg-inline">{{ __('Редактировать') }}</span>
+                            </a>
                             <form method="POST"
                                   action="{{ route('parcel.destroy', $item) }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-primary item__link">
-                                    {{ __('Удалить') }}
+                                <button type="submit" class="btn btn-primary  mb-2" title="Удалить">
+                                    <i class="far fa-trash-alt"></i>
+                                    <span class="ml-2 d-none d-lg-inline">{{ __('Удалить') }}</span>
                                 </button>
                             </form>
                         @endcan
@@ -107,6 +113,20 @@ $breadcrumbs = [
                         </select>
                         <button type="submit" class="btn btn-danger item__link">
                             {{ __('Передать заказ') }}
+                        </button>
+                    </form>
+
+                    <form method="POST"
+                          action="{{ route('parcel.tracker', $item) }}">
+                        @csrf
+                        @method('PUT')
+                        <input name="tracker"
+                               id="tracker"
+                               class="form-control"
+                               value="{{ $item->tracker }}"
+                               required />
+                        <button type="submit" class="btn btn-danger">
+                            {{ __('Назначить трекер') }}
                         </button>
                     </form>
                 </div>
@@ -168,7 +188,7 @@ $breadcrumbs = [
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary item__link">
-                            {{ __('Добавить заказы в посылку') }}
+                            <i class="fas fa-plus mr-2"></i>{{ __('Добавить заказы в посылку') }}
                         </button>
                     </form>
                 @endif

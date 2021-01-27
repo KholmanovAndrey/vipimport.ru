@@ -22,7 +22,7 @@
         {{--</li>--}}
         <li class="{{ $css }}__list">
             <a href="{{ route('address.index') }}" class="{{ $css }}__link d-flex justify-content-between">
-                <i class="fas fa-map-marker-alt mr-2"></i>Адреса клиентов
+                <span><i class="fas fa-map-marker-alt mr-2"></i>Адреса клиентов</span>
             </a>
         </li>
         <li class="{{ $css }}__list">
