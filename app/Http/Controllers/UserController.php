@@ -125,13 +125,13 @@ class UserController extends Controller
         if ($request->isMethod('put')) {
             $request->flash();
 
-            $this->validate($request, User::rulesUpdate());
+            $this->validate($request, User::rulesUpdate($user));
 
             $user->fill($request->all());
-            $user->password = Hash::make($request['password']);
+//            $user->password = Hash::make($request['password']);
             $user->save();
 
-            return redirect()->route('superAdmin.user.index', $user)
+            return redirect()->route('user.index', $user)
                 ->with('success', 'Данные успешно добавлены!');
         }
     }

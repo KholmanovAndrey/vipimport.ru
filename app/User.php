@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -29,11 +30,12 @@ class User extends Authenticatable
         ];
     }
 
-    static public function rulesUpdate()
+    static public function rulesUpdate(User $user)
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+//            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
 

@@ -50,26 +50,25 @@ $breadcrumbs = [
                         </div>
                     </div>
 
-                    @if (!$user->id)
-                        <div class="form-group row">
-                            <div class="col">
-                                <label for="email" class="col-form-label text-md-right">{{ __('E-mail') }} <span class="star">*</span></label>
-                                <input id="email"
-                                       type="text"
-                                       class="form-control @error('email') is-invalid @enderror"
-                                       name="email"
-                                       value="{{ $user->email ?? old('email') }}"
-                                       placeholder="E-mail"
-                                       required>
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="email" class="col-form-label text-md-right">{{ __('E-mail') }} <span class="star">*</span></label>
+                            <input id="email"
+                                   type="text"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   name="email"
+                                   value="{{ $user->email ?? old('email') }}"
+                                   placeholder="E-mail"
+                                   required>
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
-                    @endif
+                    </div>
 
+                    @if (!$user->id)
                     <div class="form-group row">
                         <div class="col">
                             <label for="password" class="col-form-label text-md-right">{{ __('Пароль') }} <span class="star">*</span></label>
@@ -105,6 +104,7 @@ $breadcrumbs = [
                             @enderror
                         </div>
                     </div>
+                    @endif
 
                     <div class="form-group row mb-0">
                         <div class="col">
