@@ -77,7 +77,7 @@ class UserController extends Controller
                 ]);
             }
 
-            return redirect()->route('superAdmin.user.index', $user)
+            return redirect()->route('user.index', $user)
                 ->with('success', 'Данные успешно добавлены!');
         }
     }
