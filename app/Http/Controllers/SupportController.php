@@ -186,6 +186,13 @@ class SupportController extends Controller
     {
         $this->authorize('view', $support);
 
+        if (Auth::user()->hasRole('client')) {
+            $support->client_view_at = date('Y-m-d H:i:s');
+        } else {
+            $support->manager_view_at = date('Y-m-d H:i:s');
+        }
+        $support->save();
+
         return view('supports.view', [
             'item' => $support
         ]);

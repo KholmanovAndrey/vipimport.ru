@@ -13,7 +13,9 @@ class Support extends Model
         'order_id',
         'parcel_id',
         'client_add_at',
-        'manager_add_at'
+        'manager_add_at',
+        'client_view_at',
+        'manager_view_at'
     ];
 
     public static function rules()

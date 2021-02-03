@@ -70,7 +70,7 @@ class Office extends Component
             ->get();
         $messages = [];
         foreach ($messages_new_for_manager as $key => $message) {
-            if ($message->client_add_at > $message->manager_add_at) {
+            if ($message->client_add_at > $message->manager_add_at && $message->client_add_at > $message->manager_view_at) {
                 $messages[] = $message;
             }
         }
@@ -83,7 +83,7 @@ class Office extends Component
             ->get();
         $messages = [];
         foreach ($messages_new_for_client as $key => $message) {
-            if ($message->client_add_at < $message->manager_add_at) {
+            if ($message->client_add_at < $message->manager_add_at && $message->client_view_at < $message->manager_add_at) {
                 $messages[] = $message;
             }
         }

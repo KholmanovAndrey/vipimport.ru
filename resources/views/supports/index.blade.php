@@ -115,13 +115,13 @@ $breadcrumbs = [
                                     @endif
                                 </td>
                                 <td class="align-middle text-center">
-                                    @if(Auth::user()->hasRole('superAdmin') && $item->client_add_at > $item->manager_add_at)
+                                    @if(Auth::user()->hasRole('superAdmin') && $item->client_add_at > $item->manager_add_at && $item->client_add_at > $item->manager_view_at)
                                         есть новые сообщения
                                     @endif
-                                    @if(Auth::user()->hasRole('manager') && $item->client_add_at > $item->manager_add_at)
+                                    @if(Auth::user()->hasRole('manager') && $item->client_add_at > $item->manager_add_at && $item->client_add_at > $item->manager_view_at)
                                         есть новые сообщения
                                     @endif
-                                    @if(Auth::user()->hasRole('client') && $item->client_add_at < $item->manager_add_at)
+                                    @if(Auth::user()->hasRole('client') && $item->client_add_at < $item->manager_add_at && $item->client_view_at < $item->manager_add_at)
                                         есть новые сообщения
                                     @endif
                                 </td>
