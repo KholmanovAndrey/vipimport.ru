@@ -45,6 +45,7 @@ Route::middleware('auth')->put('/parcel/{parcel}/accept', 'ParcelController@acce
 Route::middleware('auth')->put('/parcel/{parcel}/status', 'ParcelController@status')->name('parcel.status');
 Route::middleware('auth')->put('/parcel/{parcel}/transfer', 'ParcelController@transfer')->name('parcel.transfer');
 Route::middleware('auth')->put('/parcel/{parcel}/tracker', 'ParcelController@tracker')->name('parcel.tracker');
+Route::middleware('auth')->put('/parcel/{parcel}/price', 'ParcelController@price')->name('parcel.price');
 Route::middleware('auth')->put('/parcel/{parcel}/order-add-parcel-id', 'ParcelController@orderAddParcelID')->name('parcel.order-add-parcel-id');
 Route::middleware('auth')->put('/parcel/{order}/order-delete-parcel-id', 'ParcelController@orderDeleteParcelID')->name('parcel.order-delete-parcel-id');
 Route::middleware('auth')->put('/parcel/{parcel}/parcel-send-to-packaging', 'ParcelController@parcelSendToPackaging')->name('parcel.parcel-send-to-packaging');

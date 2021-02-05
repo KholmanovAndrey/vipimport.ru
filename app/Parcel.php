@@ -13,7 +13,8 @@ class Parcel extends Model
         'address',
         'phone',
         'status_id',
-        'tracker'
+        'tracker',
+        'price'
     ];
 
     public static function rules()

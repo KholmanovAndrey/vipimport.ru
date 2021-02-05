@@ -402,6 +402,24 @@ class ParcelController extends Controller
     }
 
     /**
+     * Назначение цены
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function price(Request $request, Parcel $parcel)
+    {
+        $this->authorize('price', $parcel);
+
+        if ($request->isMethod('put')) {
+            $parcel->price = $request->price;
+            $parcel->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
      * Функция для добавления заказа в посылку
      * @param Request $request
      * @param Parcel $parcel

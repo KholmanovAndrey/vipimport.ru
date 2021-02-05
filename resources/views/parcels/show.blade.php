@@ -129,6 +129,19 @@ $breadcrumbs = [
                             {{ __('Назначить трекер') }}
                         </button>
                     </form>
+                    <form method="POST"
+                          action="{{ route('parcel.price', $item) }}">
+                        @csrf
+                        @method('PUT')
+                        <input name="price"
+                               id="price"
+                               class="form-control"
+                               value="{{ $item->price }}"
+                               required />
+                        <button type="submit" class="btn btn-danger">
+                            {{ __('Назначить цену доставки') }}
+                        </button>
+                    </form>
                 </div>
                 @endif
 
