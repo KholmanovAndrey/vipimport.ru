@@ -73,7 +73,7 @@
                 @endif
             </a>
         </li>
-        <li class="{{ $css }}__list"><a href="{{ route('order.my') }}" class="{{ $css }}__link d-flex justify-content-between">Мой заказы</a></li>
+        <li class="{{ $css }}__list"><a href="{{ route('order.my') }}" class="{{ $css }}__link d-flex justify-content-between">Мои заказы</a></li>
         <li class="{{ $css }}__list">
             <a href="{{ route('parcel.new') }}" class="{{ $css }}__link d-flex justify-content-between">
                 Новые посылки
@@ -82,7 +82,7 @@
                 @endif
             </a>
         </li>
-        <li class="{{ $css }}__list"><a href="{{ route('parcel.my') }}" class="{{ $css }}__link d-flex justify-content-between">Мой посылки</a></li>
+        <li class="{{ $css }}__list"><a href="{{ route('parcel.my') }}" class="{{ $css }}__link d-flex justify-content-between">Мои посылки</a></li>
         <li class="{{ $css }}__list">
             <a href="{{ route('support.new') }}" class="{{ $css }}__link d-flex justify-content-between">
                 Запросы в поддрежку
@@ -112,7 +112,7 @@
         </li>
         <li class="{{ $css }}__list">
             <a href="{{ route('order.my') }}" class="{{ $css }}__link d-flex">
-                <i class="fas fa-shopping-cart mr-2"></i>Мой заказы
+                <i class="fas fa-shopping-cart mr-2"></i>Мои заказы
             </a>
         </li>
         <li class="{{ $css }}__list">
@@ -122,7 +122,7 @@
         </li>
         <li class="{{ $css }}__list">
             <a href="{{ route('parcel.my') }}" class="{{ $css }}__link">
-                <i class="fas fa-shopping-basket mr-2"></i>Мой посылки
+                <i class="fas fa-shopping-basket mr-2"></i>Мои посылки
             </a>
         </li>
         <li class="{{ $css }}__list">
