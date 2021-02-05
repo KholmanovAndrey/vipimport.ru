@@ -37,6 +37,9 @@ $breadcrumbs = [
                             <div>Дата создания: {{ date('d.m.Y H:i', date_timestamp_get($item->created_at)) }}</div>
                             <div>Дата обновления: {{ date('d.m.Y H:i', date_timestamp_get($item->updated_at)) }}</div>
                             <div>Трекер: {{ $item->tracker }}</div>
+                            @if($item->price)
+                                <div>Цена доставки: {{ $item->price }} руб.</div>
+                            @endif
                             <div class="item__description">{{ $item->description }}</div>
                         </div>
                         <div class="col-md-6">
