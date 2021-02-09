@@ -471,11 +471,19 @@ class ParcelController extends Controller
         $this->authorize('parcelSendToPackaging', $parcel);
 
         if ($request->isMethod('put')) {
+
+            $orders = Order::query()->where('parcel_id', '=', $parcel->id)->get();
+            if (empty($orders->toArray())) {
+                return redirect()->back()
+                    ->with('error', 'Нельзя отправить на упаковку! Необходимо прекрепить хотя бы один заказ!');
+            }
+
             $parcel->status_id = 7;
             $parcel->save();
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('success', 'Посылка отправлена на упоковку!');
     }
 
     /**

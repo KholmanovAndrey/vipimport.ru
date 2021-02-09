@@ -31,6 +31,22 @@ $breadcrumbs = [
                     <header><h1 class="item__title">{{ $item->title }}
                             <span class="badge badge-warning">{{ $item->status->title }}</span>
                         </h1></header>
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div class="item__text row">
                         <div class="col-md-6">
                             <div class="item__client">Клиент: {{ $item->client->name }}</div>
