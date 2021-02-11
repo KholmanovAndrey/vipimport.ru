@@ -60,6 +60,9 @@ Route::middleware('auth')->put('/support/{support}/accept', 'SupportController@a
 Route::middleware('auth')->resource('/support', 'SupportController');
 // Message
 Route::middleware('auth')->resource('/message', 'MessageController');
+// Search
+Route::middleware('auth')->get('/balance', 'SearchController@balance')->name('search.balance');
+
 
 //Route::get('/contacts', 'ContactController@view')->name('contact.view');
 //Route::resource('/contact', 'ContactController');
