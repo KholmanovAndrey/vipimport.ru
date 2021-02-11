@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class ParcelController extends Controller
 {
@@ -215,7 +216,7 @@ class ParcelController extends Controller
         $statuses = Status::query()
             ->where([
                 ['table_name', '=', 'parcels'],
-                ['id', '!=', 6]
+                ['id', '>', 9]
             ])
             ->get();
         $managers = User::query()
@@ -362,7 +363,8 @@ class ParcelController extends Controller
             $parcel->save();
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('success', 'Статус изменен!');
     }
 
     /**
@@ -394,11 +396,17 @@ class ParcelController extends Controller
         $this->authorize('tracker', $parcel);
 
         if ($request->isMethod('put')) {
+            if (!$request->tracker) {
+                return redirect()->back()
+                    ->with('error', 'Поле трекера не должно быть пустым!');
+            }
+
             $parcel->tracker = htmlspecialchars(trim($request->tracker));
             $parcel->save();
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('success', 'Трекер добавлена!');
     }
 
     /**
@@ -412,11 +420,57 @@ class ParcelController extends Controller
         $this->authorize('price', $parcel);
 
         if ($request->isMethod('put')) {
+            $file = $request->file('receipt');
+
+            if (!$request->price) {
+                return redirect()->back()
+                    ->with('error', 'Поле цены не должно быть пустым или равным 0!');
+            }
+
+            if (!$file) {
+                return redirect()->back()
+                    ->with('error', 'Счет должен быть прекреплен!');
+            }
+
+            //перемещаем загруженный файл
+            $destinationPath = 'public/files/receipts';
+            Storage::putFileAs($destinationPath, $file, $file->getClientOriginalName());
+
             $parcel->price = $request->price;
+            $parcel->receipt = $file->getClientOriginalName();
+            $parcel->status_id = 8;
             $parcel->save();
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('success', 'Цена и статус изменены!');
+    }
+
+    /**
+     * Оплачено
+     * @param Request $request
+     * @param Parcel $parcel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function isPaid(Request $request, Parcel $parcel)
+    {
+        $this->authorize('isPaid', $parcel);
+
+        if ($request->isMethod('put')) {
+            if ((boolean)$request->isPaid !== true) {
+                return redirect()->back()
+                    ->with('error', 'Ошибка оплаты, обратитесь к администратору сайта!');
+            }
+
+            if ((boolean)$request->isPaid) {
+                $parcel->isPaid = 1;
+                $parcel->status_id = 9;
+                $parcel->save();
+            }
+        }
+
+        return redirect()->back()
+            ->with('success', 'Посылка оплачена!');
     }
 
     /**

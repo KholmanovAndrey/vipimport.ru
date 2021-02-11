@@ -87,6 +87,17 @@ class OrderPolicy
         return $user->hasRole('manager');
     }
 
+    public function price(User $user)
+    {
+        return $user->hasRole('manager');
+    }
+
+    public function isPaid(User $user)
+    {
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('manager');
+    }
+
     /**
      * Determine whether the user can delete the model.
      *

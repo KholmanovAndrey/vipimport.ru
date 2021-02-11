@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -187,7 +188,7 @@ class OrderController extends Controller
         $statuses = Status::query()
             ->where([
                 ['table_name', '=', 'orders'],
-                ['id', '!=', 1]
+                ['id', '>', 4],
             ])
             ->get();
         $managers = User::query()
@@ -282,6 +283,7 @@ class OrderController extends Controller
 
         if ($request->isMethod('put')) {
             $order->manager_id = Auth::user()->id;
+            $order->status_id = 2;
             $order->save();
         }
 
@@ -322,6 +324,70 @@ class OrderController extends Controller
         }
 
         return redirect()->route('manager.order.my');
+    }
+
+    /**
+     * Назначение цены
+     * @param Request $request
+     * @param Order $order
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function price(Request $request, Order $order)
+    {
+        $this->authorize('price', $order);
+
+        if ($request->isMethod('put')) {
+            $file = $request->file('receipt');
+
+            if (!$request->price) {
+                return redirect()->back()
+                    ->with('error', 'Поле цены не должно быть пустым или равным 0!');
+            }
+
+            if (!$file) {
+                return redirect()->back()
+                    ->with('error', 'Счет должен быть прекреплен!');
+            }
+
+            //перемещаем загруженный файл
+            $destinationPath = 'public/files/receipts';
+            Storage::putFileAs($destinationPath, $file, $file->getClientOriginalName());
+
+            $order->price = $request->price;
+            $order->receipt = $file->getClientOriginalName();
+            $order->status_id = 3;
+            $order->save();
+        }
+
+        return redirect()->back()
+            ->with('success', 'Цена и статус изменены!');
+    }
+
+    /**
+     * Оплачено
+     * @param Request $request
+     * @param Order $order
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function isPaid(Request $request, Order $order)
+    {
+        $this->authorize('isPaid', $order);
+
+        if ($request->isMethod('put')) {
+            if ((boolean)$request->isPaid !== true) {
+                return redirect()->back()
+                    ->with('error', 'Ошибка оплаты, обратитесь к администратору сайта!');
+            }
+
+            if ((boolean)$request->isPaid) {
+                $order->isPaid = 1;
+                $order->status_id = 4;
+                $order->save();
+            }
+        }
+
+        return redirect()->back()
+            ->with('success', 'Заказ оплачен!');
     }
 
     /**

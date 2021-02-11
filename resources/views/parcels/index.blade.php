@@ -109,6 +109,7 @@ $breadcrumbs = [
                                     @if($item->isDeleted)
                                         <span class="badge badge-danger">На удалении</span>
                                     @endif
+                                    @if($item->isPaid)<span class="badge badge-danger">Оплачено</span>@endif
                                 </td>
                                 <td class="align-middle">
                                     @if($item->price)

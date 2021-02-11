@@ -99,6 +99,12 @@ class ParcelPolicy
             $user->hasRole('manager');
     }
 
+    public function isPaid(User $user)
+    {
+        return $user->hasRole('superAdmin') ||
+            $user->hasRole('manager');
+    }
+
     public function orderAddParcelID(User $user)
     {
         return $user->hasRole('superAdmin') ||

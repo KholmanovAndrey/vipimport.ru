@@ -80,6 +80,7 @@ $breadcrumbs = [
                             @endif
                             <th scope="col">Менеджер</th>
                             <th scope="col">Статус</th>
+                            <th scope="col">Цена</th>
                             <th scope="col" class="align-middle text-right">Действия</th>
                         </tr>
                         </thead>
@@ -106,6 +107,14 @@ $breadcrumbs = [
                                     <span class="badge badge-warning">{{ $item->status->title }}</span>
                                     @if($item->isDeleted)
                                         <span class="badge badge-danger">На удалении</span>
+                                    @endif
+                                    @if($item->isPaid)<span class="badge badge-danger">Оплачено</span>@endif
+                                </td>
+                                <td class="align-middle">
+                                    @if($item->price)
+                                        {{ $item->price }} руб.
+                                    @else
+                                        <span>Цена неопределена</span>
                                     @endif
                                 </td>
                                 <td class="align-middle text-right">

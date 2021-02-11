@@ -15,7 +15,9 @@ class Order extends Model
         'color',
         'size',
         'description',
-        'isDeleted'
+        'isDeleted',
+        'isPaid',
+        'receipt'
     ];
 
     public static function rules()

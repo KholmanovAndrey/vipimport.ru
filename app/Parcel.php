@@ -14,7 +14,9 @@ class Parcel extends Model
         'phone',
         'status_id',
         'tracker',
-        'price'
+        'price',
+        'isPaid',
+        'receipt'
     ];
 
     public static function rules()

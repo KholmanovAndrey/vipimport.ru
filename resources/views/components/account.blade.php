@@ -7,6 +7,10 @@
     @endif
 @endguest
 @auth
+    @if(Auth::user()->hasRole('client'))
+        <a href="#" class="user__link mx-2">
+            <i class="fas fa-money-bill-wave mr-1"></i><span class="d-none d-lg-inline">Баланс: {{ $balance }}</span></a>
+    @endif
     @if(!$profile = \App\Profile::query()->where('user_id', '=', Auth::user()->id)->first())
         <a href="{{ route('profile.create') }}" class="user__link mx-2">
             <i class="fas fa-user-cog mr-1"></i><span class="d-none d-lg-inline">{{ Auth::user()->name }}</span></a>
