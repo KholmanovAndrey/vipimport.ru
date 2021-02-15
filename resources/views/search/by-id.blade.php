@@ -1,5 +1,5 @@
 <?php
-$title = 'Баланс';
+$title = 'Поиск по ID';
 $breadcrumbs = [
     [
         'name' => 'Личный кабинет',
@@ -25,13 +25,6 @@ $breadcrumbs = [
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col" colspan="4" class="align-middle text-right">Ожидает оплаты:</th>
-                        <th scope="col" class="background-color-default">{{ $balance }} руб.</th>
-                        <th scope="col" class="align-middle text-right"></th>
-                    </tr>
-                    </thead>
                     <thead class="background-color-default">
                     <tr>
                         <th scope="col" class="align-middle text-center">#</th>

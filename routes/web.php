@@ -62,6 +62,7 @@ Route::middleware('auth')->resource('/support', 'SupportController');
 Route::middleware('auth')->resource('/message', 'MessageController');
 // Search
 Route::middleware('auth')->get('/balance', 'SearchController@balance')->name('search.balance');
+Route::middleware('auth')->get('/by-id', 'SearchController@byID')->name('search.by-id');
 
 
 //Route::get('/contacts', 'ContactController@view')->name('contact.view');

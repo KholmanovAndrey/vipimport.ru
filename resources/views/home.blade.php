@@ -4,6 +4,24 @@
 
 @section('content')
     <div class="mb-4 d-flex flex-wrap justify-content-around align-items-stretch">
+        <div class="mb-4 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="search mb-2 position-relative">
+                        <form method="get" action="{{ route('search.by-id') }}" class="search__form">
+                            <button type="submit" class="btn btn-primary position-absolute">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <input type="text"
+                                   name="search"
+                                   class="form-control pl-5"
+                                   value="{{ $search ?? '' }}"
+                                   placeholder="Введите ID код посылки или заказа для поиска">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         @if(Auth::user()->hasRole('superAdmin'))@endif
         @if(Auth::user()->hasRole('admin'))@endif
         @if(Auth::user()->hasRole('manager'))@endif

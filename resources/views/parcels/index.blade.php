@@ -31,7 +31,7 @@ $breadcrumbs = [
                 @endif
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
                     <div class="search mb-2 position-relative">
-                        <form method="get" action="{{ route('parcel.index') }}" class="search__form">
+                        <form method="get" action="{{ route(Route::currentRouteName()) }}" class="search__form">
                             <button type="submit" class="btn btn-primary position-absolute">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -45,10 +45,10 @@ $breadcrumbs = [
                 @endif
                 <div class="mb-2">
                     @if(Auth::user()->hasRole('superAdmin'))
-                        <a href="{{ route('parcel.index', ['search' => $search]) }}">Все</a>
+                        <a href="{{ route('parcel.index', ['search' => $search]) }}">Все</a> |
                     @endif
                     @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
-                        | <a href="{{ route('parcel.new', ['search' => $search]) }}">Новые</a>
+                        <a href="{{ route('parcel.new', ['search' => $search]) }}">Новые</a>
                     @endif
                     @if(Auth::user()->hasRole('manager'))
                         | <a href="{{ route('parcel.my', ['search' => $search]) }}">Мои</a>

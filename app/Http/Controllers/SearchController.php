@@ -42,4 +42,33 @@ class SearchController extends Controller
             'parcels' => $parcels
         ]);
     }
+
+    public function byID(Request $request) {
+        if (Auth::user()->hasRole('superAdmin')) {
+            $whereUser = ['user_id', '>', 0];
+        } elseif (Auth::user()->hasRole('manager')) {
+            $whereUser = ['manager_id', '=', Auth::user()->id];
+        } elseif (Auth::user()->hasRole('client')) {
+            $whereUser = ['user_id', '=', Auth::user()->id];
+        }
+
+        $orders = Order::query()
+            ->where([
+                $whereUser,
+                ['id', '=', (int)$request->search]
+            ])
+            ->get();
+
+        $parcels = Parcel::query()
+            ->where([
+                $whereUser,
+                ['id', '=', (int)$request->search]
+            ])
+            ->get();
+
+        return view('search.by-id', [
+            'orders' => $orders,
+            'parcels' => $parcels
+        ]);
+    }
 }

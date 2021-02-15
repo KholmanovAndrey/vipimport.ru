@@ -30,7 +30,7 @@ $breadcrumbs = [
                 @endif
                 @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
                     <div class="search mb-2 position-relative">
-                        <form method="get" action="{{ route('order.index') }}" class="search__form">
+                        <form method="get" action="{{ route(Route::currentRouteName()) }}" class="search__form">
                             <button type="submit" class="btn btn-primary position-absolute">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -44,10 +44,10 @@ $breadcrumbs = [
                 @endif
                 <div class="mb-2">
                     @if(Auth::user()->hasRole('superAdmin'))
-                        <a href="{{ route('order.index', ['search' => $search]) }}">Все</a>
+                        <a href="{{ route('order.index', ['search' => $search]) }}">Все</a> |
                     @endif
                     @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
-                        | <a href="{{ route('order.new', ['search' => $search]) }}">Новые</a>
+                        <a href="{{ route('order.new', ['search' => $search]) }}">Новые</a>
                     @endif
                     @if(Auth::user()->hasRole('manager'))
                         | <a href="{{ route('order.my', ['search' => $search]) }}">Мои</a>
