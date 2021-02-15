@@ -52,15 +52,29 @@ class OrderController extends Controller
             $this->search($request->search);
         }
 
+        if ($request->status_id) {
+            $whereStatus = ['status_id', '=', (int)$request->status_id];
+        } else {
+            $whereStatus = ['status_id', '>', 0];
+        }
+
         $orders = Order::query()
             ->orderByDesc('id')
-            ->where($this->whereName)
-            ->orWhere($this->whereEmail)
+            ->where([
+                $whereStatus
+            ])
+            ->where(function ($query) {
+                $query->where($this->whereName)
+                    ->orWhere($this->whereEmail);
+            })
             ->get();
+
+        $statuses = Status::query()->where('table_name', '=', 'orders')->get();
 
         return view('orders.index', [
             'orders' => $orders,
-            'search' => $request->search
+            'search' => $request->search,
+            'statuses' => $statuses
         ]);
     }
 
@@ -95,6 +109,12 @@ class OrderController extends Controller
             $this->search($request->search);
         }
 
+        if ($request->status_id) {
+            $whereStatus = ['status_id', '=', (int)$request->status_id];
+        } else {
+            $whereStatus = ['status_id', '>', 0];
+        }
+
         $whereUser = [];
         if (Auth::user()->hasRole('manager')) {
             $whereUser = ['manager_id', '=', Auth::user()->id];
@@ -104,16 +124,22 @@ class OrderController extends Controller
 
         $orders = Order::query()
             ->orderByDesc('id')
-            ->where($whereUser[0], $whereUser[1], $whereUser[2])
+            ->where([
+                [$whereUser[0], $whereUser[1], $whereUser[2]],
+                $whereStatus
+            ])
             ->where(function ($query) {
                 $query->where($this->whereName)
                     ->orWhere($this->whereEmail);
             })
             ->get();
 
+        $statuses = Status::query()->where('table_name', '=', 'orders')->get();
+
         return view('orders.index', [
             'orders' => $orders,
-            'search' => $request->search
+            'search' => $request->search,
+            'statuses' => $statuses
         ]);
     }
 

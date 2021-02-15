@@ -47,12 +47,20 @@ $breadcrumbs = [
                         <a href="{{ route('order.index', ['search' => $search]) }}">Все</a>
                     @endif
                     @if(Auth::user()->hasRole('superAdmin') || Auth::user()->hasRole('manager'))
-                        <a href="{{ route('order.new', ['search' => $search]) }}">Новые</a>
+                        | <a href="{{ route('order.new', ['search' => $search]) }}">Новые</a>
                     @endif
                     @if(Auth::user()->hasRole('manager'))
-                        <a href="{{ route('order.my', ['search' => $search]) }}">Мои</a>
+                        | <a href="{{ route('order.my', ['search' => $search]) }}">Мои</a>
                     @endif
                 </div>
+                @if(Route::currentRouteName() === 'order.my' || Route::currentRouteName() === 'order.index')
+                    <div class="mb-2">
+                        <a href="{{ route(Route::currentRouteName(), ['search' => $search]) }}">Все</a>
+                        @foreach($statuses as $item)
+                            | <a href="{{ route(Route::currentRouteName(), ['status_id' => $item->id, 'search' => $search]) }}">{{ $item->title }}</a>
+                        @endforeach
+                    </div>
+                @endif
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}

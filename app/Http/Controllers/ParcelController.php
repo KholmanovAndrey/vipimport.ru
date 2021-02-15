@@ -56,15 +56,29 @@ class ParcelController extends Controller
             $this->search($request->search);
         }
 
+        if ($request->status_id) {
+            $whereStatus = ['status_id', '=', (int)$request->status_id];
+        } else {
+            $whereStatus = ['status_id', '>', 0];
+        }
+
         $parcels = Parcel::query()
             ->orderByDesc('id')
-            ->where($this->whereName)
-            ->orWhere($this->whereEmail)
+            ->where([
+                $whereStatus
+            ])
+            ->where(function ($query) {
+                $query->where($this->whereName)
+                    ->orWhere($this->whereEmail);
+            })
             ->get();
+
+        $statuses = Status::query()->where('table_name', '=', 'parcels')->get();
 
         return view('parcels.index', [
             'parcels' => $parcels,
-            'search' => $request->search
+            'search' => $request->search,
+            'statuses' => $statuses
         ]);
     }
 
@@ -88,9 +102,12 @@ class ParcelController extends Controller
             })
             ->get();
 
+        $statuses = Status::query()->where('table_name', '=', 'parcels')->get();
+
         return view('parcels.index', [
             'parcels' => $parcels,
-            'search' => $request->search
+            'search' => $request->search,
+            'statuses' => $statuses
         ]);
     }
 
@@ -102,6 +119,12 @@ class ParcelController extends Controller
             $this->search($request->search);
         }
 
+        if ($request->status_id) {
+            $whereStatus = ['status_id', '=', (int)$request->status_id];
+        } else {
+            $whereStatus = ['status_id', '>', 0];
+        }
+
         $whereUser = [];
         if (Auth::user()->hasRole('manager')) {
             $whereUser = ['manager_id', '=', Auth::user()->id];
@@ -111,16 +134,22 @@ class ParcelController extends Controller
 
         $parcels = Parcel::query()
             ->orderByDesc('id')
-            ->where($whereUser[0], $whereUser[1], $whereUser[2])
+            ->where([
+                [$whereUser[0], $whereUser[1], $whereUser[2]],
+                $whereStatus
+            ])
             ->where(function ($query) {
                 $query->where($this->whereName)
                     ->orWhere($this->whereEmail);
             })
             ->get();
 
+        $statuses = Status::query()->where('table_name', '=', 'parcels')->get();
+
         return view('parcels.index', [
             'parcels' => $parcels,
-            'search' => $request->search
+            'search' => $request->search,
+            'statuses' => $statuses
         ]);
     }
 
